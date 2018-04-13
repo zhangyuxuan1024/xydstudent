@@ -1,0 +1,238 @@
+package com.xyd.student.xydexamanalysis.adapter;
+
+import java.util.List;
+
+import com.xyd.student.xydexamanalysis.R;
+import com.xyd.student.xydexamanalysis.entity.SingleExam;
+import com.xyd.student.xydexamanalysis.entity.SingleReport;
+import com.xyd.student.xydexamanalysis.entity.Exam.ExamInfo;
+import com.xyd.student.xydexamanalysis.entity.Exam.SingleInfo;
+import com.xyd.student.xydexamanalysis.utils.ExamUtils;
+
+import android.R.integer;
+import android.content.Context;
+import android.content.res.ColorStateList;
+import android.database.DataSetObserver;
+import android.graphics.Color;
+import android.os.Handler;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ExpandableListAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class ExamExpandAdapter implements ExpandableListAdapter {
+	private Context context;
+	private List<ExamInfo> list;
+
+	public ExamExpandAdapter(Context context, List<ExamInfo> list) {
+		this.context = context;
+		this.list = list;
+	}
+
+	public void setList(List<ExamInfo> data) {
+		if (data != null) {
+			list.addAll(data);
+		}
+	}
+
+	@Override
+	public void registerDataSetObserver(DataSetObserver observer) {
+
+	}
+
+	@Override
+	public void unregisterDataSetObserver(DataSetObserver observer) {
+
+	}
+
+	// 获取分组个数
+	public int getGroupCount() {
+		int ret = 0;
+		if (list != null) {
+			ret = list.size();
+		}
+		return ret;
+	}
+
+	// 获取groupPosition分组，子列表数量
+	@Override
+	public int getChildrenCount(int groupPosition) {
+		int ret = 0;
+		if (list.get(groupPosition) != null
+				&& list.get(groupPosition).getList() != null) {
+			ret = list.get(groupPosition).getList().size();
+		}
+		return ret;
+	}
+
+	@Override
+	public Object getGroup(int groupPosition) {
+		return list.get(groupPosition);
+	}
+
+	@Override
+	public Object getChild(int groupPosition, int childPosition) {
+		return list.get(groupPosition).getList().get(childPosition);
+	}
+
+	@Override
+	public long getGroupId(int groupPosition) {
+		return groupPosition;
+	}
+
+	@Override
+	public long getChildId(int groupPosition, int childPosition) {
+		return childPosition;
+	}
+
+	@Override
+	public boolean hasStableIds() {
+		return true;
+	}
+
+	@Override
+	public View getGroupView(int groupPosition, boolean isExpanded,
+			View convertView, ViewGroup parent) {
+		GroupViewHolder holder = null;
+		if (convertView == null) {
+			convertView = LayoutInflater.from(context).inflate(
+					R.layout.exam_title_item, parent, false);
+			holder = new GroupViewHolder();
+			holder.img = (ImageView) convertView
+					.findViewById(R.id.exam_title_item_img_new);
+			holder.tv_name = (TextView) convertView
+					.findViewById(R.id.exam_title_item_tv_name);
+			holder.img_icon = (ImageView) convertView
+					.findViewById(R.id.exam_title_item_img_right);
+			holder.tv_new = (TextView) convertView
+					.findViewById(R.id.exam_title_item_tv_new);
+			convertView.setTag(holder);
+		} else {
+			holder = (GroupViewHolder) convertView.getTag();
+		}
+		ExamInfo single = list.get(groupPosition);
+		if (single != null) {
+			holder.tv_name.setText(single.getMeName());
+			int count = getNewCount(single);
+			if (count > 0) {
+				holder.img.setVisibility(View.VISIBLE);
+				holder.tv_name.setTextColor(context.getResources().getColor(
+						R.color.titlebar_color));
+			} else {
+				holder.img.setVisibility(View.INVISIBLE);
+				holder.tv_name.setTextColor(Color.parseColor("#868686"));
+			}
+			holder.tv_new.setText(count + "");
+		}
+		if (isExpanded) {
+			holder.img_icon.setImageResource(R.drawable.kaoshi_xiala);
+		} else {
+			holder.img_icon.setImageResource(R.drawable.kaoshi_moren);
+		}
+		return convertView;
+	}
+
+	@Override
+	public View getChildView(int groupPosition, int childPosition,
+			boolean isLastChild, View convertView, ViewGroup parent) {
+		ChildViewHolder holder = null;
+		if (convertView == null) {
+			convertView = LayoutInflater.from(context).inflate(
+					R.layout.exam_content_item, parent, false);
+			holder = new ChildViewHolder();
+			holder.img = (ImageView) convertView
+					.findViewById(R.id.exam_content_item_img);
+			holder.img_unread = (ImageView) convertView
+					.findViewById(R.id.exam_content_item_img_unread);
+			holder.tv_name = (TextView) convertView
+					.findViewById(R.id.exam_content_item_tv_name);
+			holder.tv_score = (TextView) convertView
+					.findViewById(R.id.exam_content_item_tv_score);
+			holder.tv_time = (TextView) convertView
+					.findViewById(R.id.exam_content_item_tv_time);
+			convertView.setTag(holder);
+		} else {
+			holder = (ChildViewHolder) convertView.getTag();
+		}
+
+		SingleInfo single = list.get(groupPosition).getList()
+				.get(childPosition);
+		if (single != null) {
+			int courseid = single.getCourseId();
+			holder.tv_name.setText(ExamUtils.getCourseName(courseid) + "成绩");
+			holder.tv_score.setText(single.getPersonalScore() + "分");
+			ExamUtils.setCourserImage(holder.img, courseid);
+			if (single.getIsReaded() == 0) {
+				holder.img_unread.setVisibility(View.VISIBLE);
+			} else {
+				holder.img_unread.setVisibility(View.INVISIBLE);
+			}
+		}
+		holder.tv_time.setVisibility(View.INVISIBLE);
+		return convertView;
+	}
+
+	@Override
+	public boolean isChildSelectable(int groupPosition, int childPosition) {
+		return true;
+	}
+
+	@Override
+	public boolean areAllItemsEnabled() {
+		return false;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return false;
+	}
+
+	@Override
+	public void onGroupExpanded(int groupPosition) {
+
+	}
+
+	@Override
+	public void onGroupCollapsed(int groupPosition) {
+
+	}
+
+	@Override
+	public long getCombinedChildId(long groupId, long childId) {
+		return 0;
+	}
+
+	@Override
+	public long getCombinedGroupId(long groupId) {
+		return 0;
+	}
+
+	private int getNewCount(ExamInfo single) {
+		int ret = 0;
+		if (single != null) {
+			List<SingleInfo> list = single.getList();
+			if (list != null && list.size() > 0) {
+				for (int i = 0; i < list.size(); i++) {
+					SingleInfo info = list.get(i);
+					if (info.getIsReaded() == 0) {
+						ret++;
+					}
+				}
+			}
+		}
+		return ret;
+	}
+
+	class GroupViewHolder {
+		ImageView img, img_icon;
+		TextView tv_name, tv_new;
+	}
+
+	class ChildViewHolder {
+		ImageView img, img_unread;
+		TextView tv_name, tv_score, tv_time;
+	}
+}

@@ -1,0 +1,518 @@
+package com.xyd.student.xydexamanalysis.ui;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.umeng.analytics.MobclickAgent;
+import com.xyd.student.xydexamanalysis.R;
+import com.xyd.student.xydexamanalysis.Fragment.ExamFragment;
+import com.xyd.student.xydexamanalysis.Fragment.NoticeFragment;
+import com.xyd.student.xydexamanalysis.adapter.GradeSituationAdapter;
+import com.xyd.student.xydexamanalysis.constant.Constants;
+import com.xyd.student.xydexamanalysis.entity.Casa_detail;
+import com.xyd.student.xydexamanalysis.entity.Gasa_detal;
+import com.xyd.student.xydexamanalysis.entity.Grade_CourseScore;
+import com.xyd.student.xydexamanalysis.entity.Grade_Report;
+import com.xyd.student.xydexamanalysis.entity.UnbalanceInfo;
+import com.xyd.student.xydexamanalysis.entity.Unbalance_detail;
+import com.xyd.student.xydexamanalysis.utils.DoubleUtils;
+import com.xyd.student.xydexamanalysis.utils.GsonUtil;
+import com.xyd.student.xydexamanalysis.utils.JsonUtils;
+import com.xyd.student.xydexamanalysis.utils.LoginUtils;
+import com.xyd.student.xydexamanalysis.utils.MyHttpUtil;
+import com.xyd.student.xydexamanalysis.utils.StringUtils;
+import com.xyd.student.xydexamanalysis.utils.ToastUtils;
+import com.xyd.student.xydexamanalysis.utils.UIUtils;
+import com.xyd.student.xydexamanalysis.view.DetailTitle;
+import com.xyd.student.xydexamanalysis.view.LoadingHelper;
+import com.xyd.student.xydexamanalysis.view.LoadingListener;
+import com.xyd.student.xydexamanalysis.view.MyBarView;
+import com.xyd.student.xydexamanalysis.view.MyGradeScrollListView;
+import com.xyd.student.xydexamanalysis.view.MyScrollListView;
+import com.xyd.student.xydexamanalysis.view.TitleBar;
+import com.xyd.student.xydexamanalysis.view.TitleBar.TitleOnClickListener;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.text.SpannableStringBuilder;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class GradeReportActivity extends Activity implements LoadingListener,
+		TitleOnClickListener {
+	private ImageView image_loadmore;
+	private TextView total_situation, dine_situation, grade_report_title2;
+	private TitleBar titleBar;
+	private LinearLayout dine_bar_ll, class_bar_ll, grade_bar_ll;
+	// private MyScrollListView gradeListView;
+	private MyGradeScrollListView gradeListView;
+	private ArrayList<String> kemuList, unbalance_kelist, casa_kelist,
+			gasa_kelist, grade_avgList, class_avgList;
+	private ArrayList<Integer> pingjiaList, unbalance_offsetList;
+	private ArrayList<Double> defenList, casa_offset, gasa_offset;
+	private DisplayMetrics metrics;// DisplayMetircs类可以很方便的获取分辨率。
+	private GradeSituationAdapter myAdapter;
+	private JSONObject param;
+	private LoadingHelper loadingHelper;
+	private DetailTitle mDetailTitle;
+	private int UP_SUCCESS = 1;
+	private int UP_ERROR = 2;
+	private int avgDegreeRate;
+	private String studentId;
+	private int schoolId;
+	private int meID;
+	private String courseMark;
+	private Bundle bundle;
+	private LoginUtils login;
+	private String Query_multia_URL;
+	private int list_total_len;
+	private boolean loadmore;
+	private ArrayList<Map<String, Object>> datas;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.grade_report_activity);
+		this.bundle = this.getIntent().getExtras();
+		login = new LoginUtils();
+		initView();
+		loadingHelper = new LoadingHelper(
+				findViewById(R.id.loading_prompt_linear),
+				findViewById(R.id.loading_empty_prompt_linear));
+		loadingHelper.ShowLoading();
+		loadingHelper.SetListener(this);
+		SharedPreferences msharedPreferences = this.getSharedPreferences(
+				Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+		Query_multia_URL = msharedPreferences.getString("ReportServUrl", "");
+		if (Query_multia_URL.equals("")) {
+			ToastUtils.show(this, "获取服务器地址错误，请重新登录");
+			finish();
+			return;
+		} else {
+			Query_multia_URL = Query_multia_URL + "sac/querymultiana";
+			Log.i("info", "全科的请求接口：" + Query_multia_URL);
+		}
+		readData();
+	}
+
+	private Handler handler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+
+			switch (msg.what) {
+			case 1:
+				Bundle bundle = msg.getData();
+				String result = (String) bundle.get("result");
+				if (result != null && GsonUtil.checkJson(result)) {
+					loadingHelper.HideLoading(View.INVISIBLE);
+					noticeListUpdate();
+					getInfoSuccess(result);
+				} else {
+					loadingHelper.ShowError(GradeReportActivity.this
+							.getString(R.string.s_loading_no_data));
+				}
+				break;
+			case 2:
+				Bundle bundle2 = msg.getData();
+				String errorMsg = (String) bundle2.get("errorMsg");
+				loadingHelper.ShowError(errorMsg);
+				break;
+			default:
+				break;
+			}
+
+		}
+	};
+
+	private void noticeListUpdate() {
+		// TODO Auto-generated method stub
+		Intent it = new Intent(this, MainActivity.class);
+		Bundle v_it = new Bundle();
+
+		if (bundle.getInt("currentindex") >= 0) {
+			v_it.putInt("currentindex", bundle.getInt("currentindex"));
+			v_it.putInt("isReaded", bundle.getInt("isReaded"));
+			it.putExtras(v_it);
+			Log.i("setResult", bundle.getInt("currentindex") + "/////////////"
+					+ bundle.getInt("isReaded"));
+			setResult(NoticeFragment.NOTICE_CODE_SHIFENTI_ACTIVITY_RESULT, it);
+		}
+
+	};
+
+	private void readData() {
+		// TODO Auto-generated method stub
+		MyHttpUtil httpUtil = MyHttpUtil.getInstance(UIUtils.getContext());
+		LoginUtils loginUtils = new LoginUtils();
+		try {
+			param = new JSONObject();
+			param.put("type", "QueryMultiAnalyzingReqInfo");
+			// param.put("studentName", loginUtils.getStudentname());
+			param.put("studentId", bundle.getString("studentId"));
+			param.put("schoolId", bundle.getInt("schoolId"));
+			param.put("meId", bundle.getInt("meId"));
+			param.put("isReaded", bundle.getInt("isReaded"));
+			// param.put("userId", login.getLoginUserId());
+			if (bundle.getInt("msgId") > 0) {
+				param.put("msgId", bundle.getInt("msgId"));
+			}
+			Query_multia_URL = "http://a.iclassmate.cn:9000/sac/querymultiana";
+			Log.i("info", "全科=" + param);
+			Log.i("info", "全科=" + Query_multia_URL);
+			httpUtil.request(Query_multia_URL, param,
+					new MyHttpUtil.HttpCallback() {
+						@Override
+						public void success(String result) {
+							// TODO Auto-generated method stub
+							System.out.println(result);
+							Message message = new Message();
+							message.what = UP_SUCCESS;
+							Bundle bundle = new Bundle();
+							bundle.putString("result", result);
+							message.setData(bundle);
+							handler.sendMessage(message);
+							Log.i("info", "在GradeReportActivity中请求到全科的数据："
+									+ result);
+						}
+
+						@Override
+						public void error(int state, String errorMsg) {
+							// TODO Auto-generated method stub
+							Message message = new Message();
+							message.what = UP_ERROR;
+							Bundle bundle = new Bundle();
+							bundle.putString("errorMsg", errorMsg);
+							message.setData(bundle);
+							handler.sendMessage(message);
+						}
+					});
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	private void getInfoSuccess(String result) {
+
+		// table数据
+		kemuList = new ArrayList<String>();
+		defenList = new ArrayList<Double>();
+		grade_avgList = new ArrayList<String>();
+		class_avgList = new ArrayList<String>();
+		pingjiaList = new ArrayList<Integer>();
+		unbalance_offsetList = new ArrayList<Integer>();
+		unbalance_kelist = new ArrayList<String>();
+		gasa_kelist = new ArrayList<String>();
+		casa_kelist = new ArrayList<String>();
+		gasa_offset = new ArrayList<Double>();
+		casa_offset = new ArrayList<Double>();
+
+		Grade_Report grade_Report = JsonUtils.jsontoGradeList(result);
+		courseMark = grade_Report.getCourseMark();
+		ArrayList<Grade_CourseScore> courselist = grade_Report.getCourselist();
+		if (null != courselist) {
+			for (int i = 0; i < courselist.size(); i++) {
+				Grade_CourseScore courseScore = courselist.get(i);
+				kemuList.add(courseScore.getCourseName());
+				defenList.add(courseScore.getScore());
+				class_avgList.add(DoubleUtils.doubletwo(courseScore
+						.getClassAvgScore()));
+				grade_avgList.add(DoubleUtils.doubletwo(courseScore
+						.getGradeAvgScore()));
+				pingjiaList.add(courseScore.getScorePercentRate());
+			}
+		}
+		initTable();
+
+		// 偏科数据
+		UnbalanceInfo unbalanceInfo = grade_Report.getUnbalanceInfo();
+		if (null != unbalanceInfo) {
+			String markInfo = unbalanceInfo.getMarkInfo();
+			String S_dine_situation = "\t\t\t\t" + StringUtils.ToDBC(markInfo);
+			SpannableStringBuilder msp_dine_situation = StringUtils
+					.getSpannableStringBuilder(S_dine_situation);
+			dine_situation.setText(msp_dine_situation);
+			avgDegreeRate = unbalanceInfo.getAvgDegreeRate();
+			ArrayList<Unbalance_detail> unbalanceList = unbalanceInfo
+					.getUnbalanceList();
+			if (null != unbalanceList) {
+				for (int i = 0; i < unbalanceList.size(); i++) {
+					Unbalance_detail detail = unbalanceList.get(i);
+					unbalance_offsetList.add(detail.getDegreeRateOffset());
+					unbalance_kelist.add(detail.getCourseName());
+				}
+			}
+		}
+
+		// 班级数据
+		ArrayList<Casa_detail> casaList = grade_Report.getCasaList();
+		if (null != casaList) {
+			for (int i = 0; i < casaList.size(); i++) {
+				Casa_detail casa_detail = casaList.get(i);
+				casa_kelist.add(casa_detail.getCourseName());
+				casa_offset.add(casa_detail.getOffset());
+			}
+		}
+
+		// 年级数据
+		ArrayList<Gasa_detal> gasaList = grade_Report.getGasaList();
+		if (null != gasaList) {
+			for (int i = 0; i < gasaList.size(); i++) {
+				Gasa_detal gasa_detal = gasaList.get(i);
+				gasa_kelist.add(gasa_detal.getCourseName());
+				gasa_offset.add(gasa_detal.getOffset());
+			}
+		}
+		initBar();
+
+	}
+
+	private void initView() {
+		// TODO Auto-generated method stub
+		loadmore = false;
+		datas = new ArrayList<Map<String, Object>>();
+		image_loadmore = (ImageView) findViewById(R.id.grade_loade_more);
+		imageLoadMore();
+
+		metrics = new DisplayMetrics();
+		titleBar = (TitleBar) findViewById(R.id.title_bar);
+		titleBar.setTitle(getResources().getString(R.string.grade_analyze));
+		titleBar.setLeftIcon(R.drawable.back_icon);
+		total_situation = (TextView) findViewById(R.id.total_situation);
+		dine_situation = (TextView) findViewById(R.id.dine_situation);
+		dine_bar_ll = (LinearLayout) findViewById(R.id.dine_bar);
+		class_bar_ll = (LinearLayout) findViewById(R.id.class_bar);
+		grade_bar_ll = (LinearLayout) findViewById(R.id.grade_bar);
+		gradeListView = (MyGradeScrollListView) findViewById(R.id.grade_list);
+		// mDetailTitle = (DetailTitle) findViewById(R.id.grade_report_title);
+		grade_report_title2 = (TextView) findViewById(R.id.grade_report_title2);
+		titleBar.setTitleClickListener(this);
+
+		String exam_time = bundle.getString("time");
+		String exam_name = bundle.getString("name");
+		grade_report_title2.setText(exam_name);
+		// mDetailTitle.setTitle(R.drawable.t_zong,
+		// exam_name,exam_time.substring(0, 10));
+
+	}
+
+	private void imageLoadMore() {
+		image_loadmore.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				if (loadmore) {
+					image_loadmore.setImageResource(R.drawable.xia);
+				} else {
+					image_loadmore.setImageResource(R.drawable.shang);
+				}
+				loadmore = !loadmore;
+				if (list_total_len <= 4 && loadmore) {
+					Toast.makeText(GradeReportActivity.this, "没有更多数据！",
+							Toast.LENGTH_SHORT).show();
+				}
+				showGrade();
+			}
+		});
+	}
+
+	private void initTable() {
+		// TODO Auto-generated method stub
+
+		// ArrayList<Map<String, Object>> mData = new ArrayList<Map<String,
+		// Object>>();
+
+		int listleng = kemuList.size();
+		String S_courseMark = "\t\t\t" + StringUtils.ToDBC(courseMark);
+		SpannableStringBuilder msp_courseMark = StringUtils
+				.getSpannableStringBuilder(S_courseMark);// 设置字体
+		total_situation.setText(msp_courseMark);
+		list_total_len = listleng;
+		for (int i = 0; i < listleng; i++) {
+			Map<String, Object> item = new HashMap<String, Object>();
+			item.put("name", kemuList.get(i));
+			item.put("defen", defenList.get(i));
+			item.put("classAvg", class_avgList.get(i));
+			item.put("gradeAvg", grade_avgList.get(i));
+			item.put("pingjia", getDefenStar(pingjiaList.get(i)));
+			// mData.add(item);
+			datas.add(item);
+		}
+
+		// GradeSituationAdapter myAdapter = new GradeSituationAdapter(this,
+		// mData, R.layout.grade_list_item, new String[] { "name",
+		// "defen", "classAvg","gradeAvg","pingjia" }, new int[] { R.id.kemu,
+		// R.id.defen, R.id.class_avg,R.id.grade_avg,R.id.pingjia });
+		// gradeListView.setAdapter(myAdapter);
+		// gradeListView.setClickable(false);
+		showGrade();
+	}
+
+	private ArrayList<Map<String, Object>> getData(int len) {
+		ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+		if (datas != null) {
+			for (int i = 0; i < len; i++) {
+				data.add(datas.get(i));
+			}
+		}
+		return data;
+	}
+
+	private void showGrade() {
+		int listlen = 0;
+		if (!loadmore) {
+			listlen = list_total_len > 4 ? 4 : list_total_len;
+		} else {
+			listlen = list_total_len;
+		}
+
+		GradeSituationAdapter myAdapter = new GradeSituationAdapter(this,
+				getData(listlen), R.layout.grade_list_item, new String[] {
+						"name", "defen", "classAvg", "gradeAvg", "pingjia" },
+				new int[] { R.id.kemu, R.id.defen, R.id.class_avg,
+						R.id.grade_avg, R.id.pingjia });
+		gradeListView.setAdapter(myAdapter);
+		gradeListView.setClickable(false);
+	}
+
+	private void initBar() {
+		// TODO Auto-generated method stub
+		FrameLayout content1 = new FrameLayout(this);
+		FrameLayout content2 = new FrameLayout(this);
+		FrameLayout content3 = new FrameLayout(this);
+		// 缩放控件放置在FrameLayout的上层，用于放大缩小图表
+		FrameLayout.LayoutParams frameParm = new FrameLayout.LayoutParams(
+				LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		frameParm.gravity = Gravity.BOTTOM | Gravity.RIGHT;
+		// 设置表格的宽和高
+		// 图表显示范围在占屏幕大小的90%的区域内
+		DisplayMetrics dm = getResources().getDisplayMetrics();
+		int scrWidth = (int) (dm.widthPixels);
+		int scrHeight = (int) (dm.heightPixels * 0.4);
+		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+				scrWidth, scrHeight);
+		// 居中显示
+		layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+		// 图表view放入布局中，也可直接将图表view放入Activity对应的xml文件中
+		final RelativeLayout chartLayout1 = new RelativeLayout(this);
+		final RelativeLayout chartLayout2 = new RelativeLayout(this);
+		final RelativeLayout chartLayout3 = new RelativeLayout(this);
+		chartLayout1.addView(new MyBarView(this, unbalance_kelist, null,
+				unbalance_offsetList, avgDegreeRate, 1), layoutParams);
+
+		chartLayout2.addView(new MyBarView(this, casa_kelist, casa_offset,
+				null, 0, 2), layoutParams);
+
+		chartLayout3.addView(new MyBarView(this, gasa_kelist, gasa_offset,
+				null, 0, 3), layoutParams);
+		// 增加控件
+		((ViewGroup) content1).addView(chartLayout1);
+		dine_bar_ll.addView(content1);
+		((ViewGroup) content2).addView(chartLayout2);
+		class_bar_ll.addView(content2);
+		((ViewGroup) content3).addView(chartLayout3);
+		grade_bar_ll.addView(content3);
+	}
+
+	private int getDefenStar(int d) {
+
+		if (d >= 0 && d < 5)
+			return R.drawable.star0;
+		else if (d >= 5 && d < 15)
+			return R.drawable.star1;
+		else if (d >= 15 && d < 25)
+			return R.drawable.star2;
+		else if (d >= 25 && d < 35)
+			return R.drawable.star3;
+		else if (d >= 35 && d < 45)
+			return R.drawable.star4;
+		else if (d >= 45 && d < 55)
+			return R.drawable.star5;
+		else if (d >= 55 && d < 65)
+			return R.drawable.star6;
+		else if (d >= 65 && d < 75)
+			return R.drawable.star7;
+		else if (d >= 75 && d < 85)
+			return R.drawable.star8;
+		else if (d >= 85 && d < 95)
+			return R.drawable.star9;
+		else if (d >= 95 && d <= 100)
+			return R.drawable.star10;
+		else
+			return R.drawable.star0;
+	}
+
+	@Override
+	public void OnRetryClick() {
+		// TODO Auto-generated method stub
+		loadingHelper.ShowLoading();
+		readData();
+	}
+
+	@Override
+	public void leftClick() {
+		// TODO Auto-generated method stub
+
+		// Intent intent = new Intent(this, MainActivity.class);
+		// startActivity(intent);
+		this.finish();
+		overridePendingTransition(R.anim.in_anim2, R.anim.out_anim);
+	}
+
+	@Override
+	public void rightClick() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void titleClick() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		this.finish();
+		overridePendingTransition(R.anim.in_anim2, R.anim.out_anim);
+	}
+
+	/**
+	 * 友盟统计
+	 */
+	@Override
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onPageStart("GradeReportActivity");
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPageEnd("GradeReportActivity");
+		MobclickAgent.onPause(this);
+	}
+
+}

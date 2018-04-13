@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <com.xyd.student.xydexamanalysis.view.TitleBar
+        android:id="@+id/pay_cancel_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height" >
+    </com.xyd.student.xydexamanalysis.view.TitleBar>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="155dp"
+        android:text="取消支付不能继续查看"
+        android:textColor="#333333"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/tv_exam_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="13dp"
+        android:textColor="@color/app_color"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tv_course_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="13dp"
+        android:textColor="@color/app_color"
+        android:textSize="18sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageButton
+            android:id="@+id/btn_cancel_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/queding"
+            android:contentDescription="@string/app_name" />
+    </RelativeLayout>
+
+</LinearLayout>

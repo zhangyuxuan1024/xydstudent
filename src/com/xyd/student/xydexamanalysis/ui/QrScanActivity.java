@@ -1,0 +1,331 @@
+package com.xyd.student.xydexamanalysis.ui;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Rect;
+import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.media.SoundPool;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.Result;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;
+import com.xyd.student.xydexamanalysis.R;
+import com.xyd.student.xydexamanalysis.constant.Constant;
+import com.xyd.student.xydexamanalysis.constant.Constants;
+import com.xyd.student.xydexamanalysis.ui.weike.DelwkSelectActivity;
+import com.xyd.student.xydexamanalysis.utils.NetWorkUtils;
+import com.xyd.student.xydexamanalysis.utils.VibratorUtil;
+import com.xyd.student.xydexamanalysis.zxinglib.ScanView.ZXingScannerViewNew;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class QrScanActivity extends Activity implements
+		ZXingScannerViewNew.ResultHandler, ZXingScannerViewNew.QrSize,
+		OnClickListener {
+	ZXingScannerViewNew scanView;
+	private TextView result;
+	private ImageView img_close;
+	private String userId, userType, wkName, wkUrl;
+	private int schoolId;
+	private boolean isLoaded;
+	private String reStr;
+	public static final int REQUES_PLAY = 3;
+	private String result2;
+	private Context mContext;
+	private boolean isFail;
+	private Handler mHandler = new Handler();
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		scanView = new ZXingScannerViewNew(this);
+		scanView.setContentView(R.layout.logistics_scan_qr);
+		scanView.setQrSize(this);
+		setContentView(scanView);
+		mContext = this;
+		initUI();
+		setupFormats();
+	}
+
+	private void initUI() {
+		result = (TextView) findViewById(R.id.editText);
+		img_close = (ImageView) findViewById(R.id.weike_img_close);
+
+		img_close.setOnClickListener(this);
+		isLoaded = false;
+		isFail = false;
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		try {
+			scanView.setResultHandler(this);
+			scanView.startCamera(-1);
+			scanView.setFlash(false);
+			scanView.setAutoFocus(true);
+			if (!scanView.cameraAvailable()) {
+				scanView.stopCamera();
+				isFail = true;
+			}
+		} catch (Exception e) {
+			isFail = true;
+		} finally {
+			if (isFail) {
+				Toast.makeText(mContext, "无法启动相机，请在程序设置为心意答开放相机权限",
+						Toast.LENGTH_LONG).show();
+				this.finish();
+			}
+		}
+	}
+
+	@Override
+	public void handleResult(final Result rawResult) {
+		result2 = rawResult.toString();
+		soundRing(this);
+		if (!NetWorkUtils.isNetworkAvailable(this)) {
+			Toast.makeText(this, "请检查您的网络连接！", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		if (!isWifiActive(this)) {
+			Intent intent = new Intent(QrScanActivity.this,
+					DelwkSelectActivity.class);
+			intent.putExtra("title", "您正在使用非wifi网络，播放将产生费用，继续播放？");
+			intent.putExtra("left", "取消");
+			intent.putExtra("right", "确认");
+			intent.putExtra("type", 1);
+			startActivityForResult(intent, REQUES_PLAY);
+			return;
+		}
+		result.setText(rawResult.toString());
+		toActivty();
+	}
+
+	private void soundRing(Context context) {
+		try {
+			MediaPlayer mPlayer = MediaPlayer.create(this, R.raw.scan_sucess);
+			mPlayer.start();
+			VibratorUtil.Vibrate(QrScanActivity.this, 500); // 震动300ms
+		} catch (Exception e) {
+
+		}
+	}
+
+	private void toActivty() {
+		Intent intent = new Intent(this, WebViewActivity.class);
+		intent.putExtra("url", result2);
+		startActivity(intent);
+		// this.finish();
+		if (result2.contains("http://weike.iclassmate.cn/")
+				&& result2.contains("=")) {
+			HttpUtils httpUtils = new HttpUtils();
+			final String ids = result2.substring(result2.indexOf("=") + 1);
+			httpUtils.send(HttpMethod.POST,
+					String.format(Constant.GET_WEIKE_INFO, ids),
+					new RequestCallBack<String>() {
+						@Override
+						public void onFailure(HttpException arg0, String arg1) {
+							Log.i("info", "数据请求失败！");
+						}
+
+						@Override
+						public void onSuccess(ResponseInfo<String> arg0) {
+							// Log.i("info", "szy=数据请求成功！" + arg0.result);
+							String result = arg0.result;
+							SharedPreferences share = QrScanActivity.this
+									.getSharedPreferences(
+											Constants.SHARED_PREFERENCES,
+											Context.MODE_PRIVATE);
+							userId = share.getString("userId", "");
+							schoolId = share.getInt("schoolId", -1);
+							userType = "2";
+							try {
+								JSONObject object = new JSONObject(result);
+								wkName = object.getString("title");
+							} catch (JSONException e) {
+
+							}
+							wkUrl = result2;
+
+							new Thread(new Runnable() {
+								@Override
+								public void run() {
+									JSONObject object = new JSONObject();
+									try {
+										object.put("userId", userId);
+										object.put("schoolId", schoolId);
+										object.put("userType", userType);
+										object.put("wkName", wkName);
+										object.put("wkUrl", wkUrl);
+										final String jsonstr = object
+												.toString();
+										URL url = new URL(Constant.SAVE_WEIKE);
+										HttpURLConnection conn = (HttpURLConnection) url
+												.openConnection();
+										conn.setDoInput(true);
+										conn.setDoOutput(true);
+										conn.setRequestMethod("POST");
+										conn.setRequestProperty("Content-Type",
+												"application/json;charset=UTF-8");
+										OutputStreamWriter osw = new OutputStreamWriter(
+												conn.getOutputStream(), "utf-8");
+										osw.write(jsonstr);
+										osw.flush();
+
+										conn.setConnectTimeout(1000 * 100);
+										conn.setReadTimeout(1000 * 100);
+										if (conn.getResponseCode() == 200) {
+											BufferedReader br = new BufferedReader(
+													new InputStreamReader(conn
+															.getInputStream(),
+															"utf-8"));
+											String str = "";
+											while ((str = br.readLine()) != null) {
+												reStr += str;
+											}
+											br.close();
+											conn.disconnect();
+										}
+										mHandler.post(new Runnable() {
+											@Override
+											public void run() {
+												// Toast.makeText(
+												// QrScanActivity.this,
+												// "数据发送成功" + jsonstr
+												// + ",result="
+												// + reStr,
+												// Toast.LENGTH_LONG)
+												// .show();
+											}
+										});
+									} catch (JSONException e) {
+										e.printStackTrace();
+									} catch (MalformedURLException e) {
+										e.printStackTrace();
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
+							}).start();
+						}
+					});
+		}
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		scanView.stopCamera();
+	}
+
+	public void setupFormats() {
+		List<BarcodeFormat> formats = new ArrayList<BarcodeFormat>();
+		formats.add(BarcodeFormat.QR_CODE);
+		if (scanView != null) {
+			scanView.setFormats(formats);
+		}
+	}
+
+	@Override
+	public Rect getDetectRect() {
+		View view = findViewById(R.id.scan_window);
+		int top = ((View) view.getParent()).getTop() + view.getTop();
+		int left = view.getLeft();
+		int width = view.getWidth();
+		int height = view.getHeight();
+		Rect rect = null;
+		if (width != 0 && height != 0) {
+			rect = new Rect(left, top, left + width, top + height);
+			addLineAnim(rect);
+		}
+		return rect;
+	}
+
+	private void addLineAnim(Rect rect) {
+		ImageView imageView = (ImageView) findViewById(R.id.scanner_line);
+		imageView.setVisibility(View.VISIBLE);
+		if (imageView.getAnimation() == null) {
+			TranslateAnimation anim = new TranslateAnimation(0, 0, 0,
+					rect.height());
+			anim.setDuration(1500);
+			anim.setRepeatCount(Animation.INFINITE);
+			imageView.startAnimation(anim);
+		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.weike_img_close:
+			this.finish();
+			break;
+		}
+
+	}
+
+	public static boolean isWifiActive(Context icontext) {
+		Context context = icontext.getApplicationContext();
+		ConnectivityManager connectivity = (ConnectivityManager) context
+				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo[] info;
+		if (connectivity != null) {
+			info = connectivity.getAllNetworkInfo();
+			if (info != null) {
+				for (int i = 0; i < info.length; i++) {
+					if (info[i].getTypeName().equals("WIFI")
+							&& info[i].isConnected()) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == REQUES_PLAY && resultCode == RESULT_OK) {
+			toActivty();
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		scanView.stopCamera();
+		scanView = null;
+	}
+}

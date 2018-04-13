@@ -1,0 +1,1065 @@
+package com.xyd.student.xydexamanalysis.ui;
+
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLayoutChangeListener;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
+import cn.jpush.android.api.JPushInterface;
+import cn.jpush.android.api.TagAliasCallback;
+
+import com.umeng.analytics.MobclickAgent;
+import com.xyd.student.xydexamanalysis.InputCodeActivity;
+import com.xyd.student.xydexamanalysis.R;
+import com.xyd.student.xydexamanalysis.RegisterAndForPwdActivity;
+import com.xyd.student.xydexamanalysis.constant.Constants;
+import com.xyd.student.xydexamanalysis.entity.Login;
+import com.xyd.student.xydexamanalysis.entity.Login_school_config;
+import com.xyd.student.xydexamanalysis.entity.Login_use;
+import com.xyd.student.xydexamanalysis.utils.JsonUtils;
+import com.xyd.student.xydexamanalysis.utils.LoginUtils;
+import com.xyd.student.xydexamanalysis.utils.LoginUtils.LoginCallback;
+import com.xyd.student.xydexamanalysis.utils.MyHttpUtil;
+import com.xyd.student.xydexamanalysis.utils.MyHttpUtil.HttpCallback;
+import com.xyd.student.xydexamanalysis.utils.NetWorkUtils;
+import com.xyd.student.xydexamanalysis.utils.StringUtils;
+import com.xyd.student.xydexamanalysis.utils.ToastUtils;
+import com.xyd.student.xydexamanalysis.utils.UIUtils;
+import com.xyd.student.xydexamanalysis.utils.UpdateManager;
+import com.xyd.student.xydexamanalysis.view.TitleBar;
+
+@SuppressLint("NewApi")
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+public class LoginActivity extends Activity implements LoginCallback,
+		OnLayoutChangeListener {
+	public static final int NOTICE_START_ACTIVITY_SCHOOL_CODE = 400;
+	public static final int NOTICE_CODE_SCHOOL_ACTIVITY_RESULT = 401;
+	private LoginUtils mLoginUtils;
+	private View loadingbar;
+	private Context mContext;
+	private SharedPreferences msharedPreferences;
+	private EditText usercode, username;
+	private TextView school_name, register, forget_Pwd, tv_login_exam_num,
+			tv_login_phone_num;
+	private Login_school_config loginschoolconfig;
+	private Login loginuserInfo;
+	private ToggleButton check_remind_pwd;
+	private Button login_btn, login_exam_btn, login_phone_btn;
+	private LinearLayout changeSchoolLayout;
+	private View view;
+
+	private LinearLayout.LayoutParams params;
+	private LinearLayout rootLayout;
+	private ImageView icon, usernameIcon, passwordIcon;// identity,
+
+	private String loginTime;
+	private JSONObject param;
+	private Login_use login;
+	private boolean hadlogin;
+	private UpdateManager updateManager;
+
+	private String phoneLoginUrl;
+
+	private boolean isExamCode, isPhoneNumber;
+
+	private static final String TAG = "JPush";
+	Boolean remberpwd;
+	private boolean isPhoneLogin;
+	private int index_exam, index_phone;
+	private boolean isLogin;
+	private TitleBar titleBar;
+	private ScrollView scrollView_login;
+	private Handler mHandler = new Handler();
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.login_activity_layout);
+		getActionBar().hide();
+		mContext = this;
+		msharedPreferences = mContext.getSharedPreferences(
+				Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+		hadlogin = msharedPreferences.getBoolean("had_login", false);
+		int schoolId = msharedPreferences.getInt("schoolId", -1);
+		String userCode = msharedPreferences.getString("userCode", "");
+		String userName = msharedPreferences.getString("userName", "");
+		String userId = msharedPreferences.getString("userId", "");
+
+		String phone = msharedPreferences.getString("login_phone", "");
+		String password = msharedPreferences.getString("login_password", "");
+		boolean isphone = msharedPreferences.getBoolean("isphone", false);
+		isLogin = false;
+		isExamCode = true;
+		isPhoneNumber = false;
+
+		updateManager = new UpdateManager(mContext);
+		initView();
+		setLoginStyle(isphone);
+		// 设置setAlias
+		if (userId != null) {
+			setAlias(userId);
+			MobclickAgent.onProfileSignIn("userId");
+		}
+
+		String urlPath = msharedPreferences.getString("LoginServUrl", "");
+		// Log.i("Lichg", "hadlogin=" + hadlogin + "------schoolId=" + schoolId
+		// + "----userCode=" + userCode + "-----userName=" + userName
+		// + "-----userId=" + userId + "urlPath=" + urlPath);
+
+		if (hadlogin && schoolId != -1 && !urlPath.equals("")) {
+			if (!isphone && !userCode.equals("") && !userName.equals("")) {
+				isLogin = true;
+			} else if (isphone && !phone.equals("") && !password.equals("")) {
+				isLogin = true;
+			}
+			if (isLogin) {
+				postUserInfo();
+				startActivity(new Intent(LoginActivity.this, MainActivity.class));
+				this.finish();
+			}
+		}
+		mLoginUtils = new LoginUtils();
+		mLoginUtils.setLoginCallback(this);
+
+		if (!remberpwd) {
+			school_name.setText("");
+			usercode.setText("");
+			username.setText("");
+		}
+	}
+
+	private final TagAliasCallback mAliasCallback = new TagAliasCallback() {
+
+		@Override
+		public void gotResult(int code, String alias, Set<String> tags) {
+			String logs;
+			switch (code) {
+			case 0:
+				logs = "Set tag and alias success";
+				Log.i(TAG, logs);
+				break;
+			default:
+				logs = "Failed with errorCode = " + code;
+				Log.e(TAG, logs);
+			}
+
+		}
+
+	};
+
+	private void setAlias(String userId) {
+		String alias = userId;
+		JPushInterface.setAlias(getApplicationContext(), alias, mAliasCallback);
+	}
+
+	private void initView() {
+		loadingbar = findViewById(R.id.loadingbar);
+		TextView tvLoad = (TextView) findViewById(R.id.pull_to_load_footer_hint_textview);
+		tvLoad.setText("正在登录,请稍候");
+
+		login_exam_btn = (Button) findViewById(R.id.btn_exam);
+		login_phone_btn = (Button) findViewById(R.id.btn_phone);
+		register = (TextView) findViewById(R.id.tv_register);
+		forget_Pwd = (TextView) findViewById(R.id.tv_forget_pwd);
+		forget_Pwd.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+		register.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+		changeSchoolLayout = (LinearLayout) findViewById(R.id.change_school_out_layout);
+		view = findViewById(R.id.view_line);
+
+		usernameIcon = (ImageView) findViewById(R.id.username_icon);
+		passwordIcon = (ImageView) findViewById(R.id.password_icon);
+
+		register.setOnClickListener(onclick);
+		forget_Pwd.setOnClickListener(onclick);
+		login_exam_btn.setOnClickListener(onclick);
+		login_phone_btn.setOnClickListener(onclick);
+
+		LinearLayout changeschool_layout = (LinearLayout) findViewById(R.id.change_school_layout);
+		usercode = (EditText) findViewById(R.id.usecode);
+		username = (EditText) findViewById(R.id.usename);
+		school_name = (TextView) findViewById(R.id.school_name);
+		check_remind_pwd = (ToggleButton) findViewById(R.id.check_remind_pwd);
+		login_btn = (Button) findViewById(R.id.login_btn);
+		rootLayout = (LinearLayout) findViewById(R.id.root_layout);
+		// identity = (ImageView) findViewById(R.id.img_identity);
+		icon = (ImageView) findViewById(R.id.image_icon);
+
+		params = (LinearLayout.LayoutParams) icon.getLayoutParams();
+
+		changeschool_layout.setOnClickListener(onclick);
+		login_btn.setOnClickListener(onclick);
+		check_remind_pwd.setOnCheckedChangeListener(onchackchangelistener);
+		// check_remind_pwd.setChecked(true);
+		school_name.setText(msharedPreferences.getString("login_school_name",
+				""));
+
+		// String schoolInfo = getIntent().getStringExtra("schoolInfo");
+		// if (school_name != null) {
+		// school_name.setText(schoolInfo);
+		// }
+
+		remberpwd = msharedPreferences.getBoolean("rempw", true);
+		check_remind_pwd.setChecked(remberpwd);
+		isPhoneLogin = false;
+		index_exam = -1;
+		index_phone = -1;
+
+		titleBar = (TitleBar) findViewById(R.id.login_titlebar);
+		titleBar.setTitle("学生端");
+		tv_login_exam_num = (TextView) findViewById(R.id.tv_login_exam_num);
+		tv_login_phone_num = (TextView) findViewById(R.id.tv_login_phone_num);
+		tv_login_exam_num.setOnClickListener(onclick);
+		tv_login_phone_num.setOnClickListener(onclick);
+		scrollView_login = (ScrollView) findViewById(R.id.scroll_login);
+	}
+
+	private OnCheckedChangeListener onchackchangelistener = new OnCheckedChangeListener() {
+
+		@Override
+		public void onCheckedChanged(CompoundButton buttonView,
+				boolean isChecked) {
+			// TODO Auto-generated method stub
+			// Log.d("checkbox", "checkbox values is:" + isChecked);
+			// msharedPreferences.edit().putBoolean("rempw",
+			// isChecked).commit();
+			// msharedPreferences.edit().putBoolean("rempw",
+			// isChecked).commit();
+		}
+	};
+
+	@SuppressLint("NewApi")
+	private View.OnClickListener onclick = new View.OnClickListener() {
+
+		@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+		@SuppressLint({ "SimpleDateFormat", "NewApi" })
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			switch (v.getId()) {
+			case R.id.login_btn:
+				if (school_name.getText().toString().trim().equals("")) {
+					msharedPreferences.edit()
+							.putString("LoginServUrl", Constants.BASELOGINURL)
+							.commit();
+					msharedPreferences.edit()
+							.putString("FileServUrl", Constants.BASEFILEURL)
+							.commit();
+					msharedPreferences.edit()
+							.putString("ReportServUrl", Constants.BASE_URL)
+							.commit();
+					msharedPreferences.edit()
+							.putString("weiKeServUrl", Constants.BSAEWEIKEURL)
+							.commit();
+				}
+				if (isExamCode) {
+					// 考号姓名登录
+					if (ischecklogin()) {
+						long currentTime = System.currentTimeMillis();
+						Log.i("lxw", "点击登陆按钮的时间：" + currentTime);
+						SimpleDateFormat format = new SimpleDateFormat(
+								"yyyy-MM-dd HH:mm:ss");
+						Date d1 = new Date(currentTime);
+						loginTime = format.format(d1);
+						loadingbar.setVisibility(View.VISIBLE);
+						login = new Login_use();
+						if (!school_name.getText().toString().equals("")) {
+							try {
+								int schoolId = msharedPreferences.getInt(
+										"schoolId", 0);
+								String url = msharedPreferences.getString(
+										"LoginServUrl", "");
+								login.setSchoolId(schoolId);
+								login.setUrlPath(url);
+							} catch (Exception e) {
+								ToastUtils.show(mContext,
+										"所选学校错误或考号姓名不正确，请重新输入！");
+							}
+
+						} else {
+							login.setSchoolId(0);
+							// login.setUrlPath("http://report.iclassmate.cn:8080/BaseCenter/rest/service/loginM");
+							login.setUrlPath(Constants.BASELOGINURL);
+						}
+						login.setAppId("10003");
+						login.setUserCode(usercode.getText().toString());
+						login.setUserName(username.getText().toString());
+						login.setUserId(msharedPreferences.getString("userId",
+								""));
+
+						// //loginServUrl":"http://report.iclassmate.cn:8080/","fileServUrl":"report.iclassmate.cn:80/","reportServUrl":"http://report.iclassmate.cn:8080/"
+						mLoginUtils.login(mContext, login);
+
+					}
+				} else if (isPhoneNumber) {
+					// 帐号密码登录
+					phoneLoginUrl = Constants.PHONE_LOGIN;
+					if (usercode.getText().toString().trim().equals("")) {
+						Toast.makeText(mContext, "请输入您的手机号", Toast.LENGTH_SHORT)
+								.show();
+						return;
+					}
+					String value = usercode.getText().toString().trim();
+					Pattern p = Pattern
+							.compile("^((13[0-9])|(14[0-9])|(15[^4,\\D])|(18[0-9])|(17[0-9]))\\d{8}$");
+					Matcher m = p.matcher(value);
+					if (!m.matches()) {
+						ToastUtils.show(UIUtils.getContext(), "输入手机号不正确");
+						return;
+					}
+					String un = username.getText().toString();
+					if (un.equals("")) {
+						Toast.makeText(mContext, "请输入密码", Toast.LENGTH_SHORT)
+								.show();
+						return;
+					}
+					if (un.length() < 6 || un.length() > 16) {
+						ToastUtils.show(UIUtils.getContext(), "密码输入不正确");
+						return;
+					}
+					if (ischecklogin()) {
+						long currentTime = System.currentTimeMillis();
+						// Log.i("lxw", "点击登陆按钮的时间：" + currentTime);
+						SimpleDateFormat format = new SimpleDateFormat(
+								"yyyy-MM-dd HH:mm:ss");
+						Date d1 = new Date(currentTime);
+						loginTime = format.format(d1);
+						loadingbar.setVisibility(View.VISIBLE);
+
+						JSONObject param = new JSONObject();
+						try {
+							param.put("userCode", usercode.getText().toString()
+									.trim());
+							param.put("password", username.getText().toString()
+									.trim());
+							param.put("appId", "20001");
+						} catch (JSONException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						// ToastUtils.show(UIUtils.getContext(),
+						// "登陆请求参数="+param);
+						// ToastUtils.show(UIUtils.getContext(),
+						// "登陆地址="+phoneLoginUrl);
+						MyHttpUtil httpUtil = MyHttpUtil.getInstance(UIUtils
+								.getContext());
+						httpUtil.request(phoneLoginUrl, param,
+								new HttpCallback() {
+
+									@Override
+									public void success(String result) {
+										// TODO Auto-generated method stub
+										successMsg(result);
+									}
+
+									@Override
+									public void error(int state, String errorMsg) {
+										// TODO Auto-generated method stub
+										loadingbar
+												.setVisibility(View.INVISIBLE);
+										ToastUtils.show(UIUtils.getContext(),
+												errorMsg);
+									}
+								});
+					}
+				}
+
+				break;
+			case R.id.change_school_layout:
+				Intent intent = new Intent(mContext,
+						LoginSearchSchoolActivity.class);
+				// 将学校名称传给学校搜索界面
+				if (!school_name.getText().toString().equals("")) {
+					intent.putExtra("school_name", school_name.getText()
+							.toString());
+				}
+				startActivityForResult(intent,
+						NOTICE_START_ACTIVITY_SCHOOL_CODE);
+
+				break;
+			// 考号登陆
+			case R.id.tv_login_exam_num:
+				tv_login_exam_num.setTextColor(Color.parseColor("#ff9f44"));
+				tv_login_phone_num.setTextColor(Color.parseColor("#212121"));
+			case R.id.btn_exam:
+				isPhoneLogin = false;
+				isPhoneNumber = false;
+				isExamCode = true;
+				login_exam_btn.setBackground(getResources().getDrawable(
+						R.drawable.bt_khdl_hover));
+				login_phone_btn.setBackground(getResources().getDrawable(
+						R.drawable.bt_sjhdl));
+				changeSchoolLayout.setVisibility(View.VISIBLE);
+				usercode.setHint(R.string.login_username_hit);
+				username.setHint(R.string.login_password_hit);
+				view.setVisibility(View.VISIBLE);
+				forget_Pwd.setVisibility(View.GONE);
+				usernameIcon.setBackground(getResources().getDrawable(
+						R.drawable.login_usename));
+				passwordIcon.setBackground(getResources().getDrawable(
+						R.drawable.login_pwd));
+				username.setTransformationMethod(HideReturnsTransformationMethod
+						.getInstance());
+				usercode.setTransformationMethod(HideReturnsTransformationMethod
+						.getInstance());
+
+				if (remberpwd && isExamCode) {
+					usercode.setText(msharedPreferences.getString("userCode",
+							""));
+					username.setText(msharedPreferences.getString("userName",
+							""));
+				} else {
+					usercode.setText("");
+					username.setText("");
+				}
+				usercode.setInputType(InputType.TYPE_CLASS_TEXT);
+				if (usercode.isFocused()) {
+					if (index_exam == -1) {
+						index_exam = usercode.getSelectionStart();
+					} else {
+						usercode.setSelection(index_exam);
+					}
+				} else if (username.isFocused()) {
+					if (index_exam == -1) {
+						index_exam = username.getSelectionStart();
+					} else {
+						username.setSelection(index_exam);
+					}
+				}
+				msharedPreferences.edit().putBoolean("isphone", false).commit();
+				usercode.setText(msharedPreferences.getString("userCode", ""));
+				username.setText(msharedPreferences.getString("userName", ""));
+				String value = username.getText().toString();
+				Pattern p = Pattern
+						.compile("^((13[0-9])|(14[0-9])|(15[^4,\\D])|(18[0-9])|(17[0-9]))\\d{8}$");
+				Matcher m = p.matcher(value);
+				if (m.matches()) {
+					username.setText("");
+					usercode.setText("");
+				}
+				break;
+			// 手机号登陆
+			case R.id.tv_login_phone_num:
+				tv_login_exam_num.setTextColor(Color.parseColor("#212121"));
+				tv_login_phone_num.setTextColor(Color.parseColor("#ff9f44"));
+			case R.id.btn_phone:
+				isPhoneLogin = true;
+				isExamCode = false;
+				isPhoneNumber = true;
+				login_exam_btn.setBackground(getResources().getDrawable(
+						R.drawable.bt_khdl));
+				login_phone_btn.setBackground(getResources().getDrawable(
+						R.drawable.bt_sjhdl_hover));
+				changeSchoolLayout.setVisibility(View.GONE);
+				view.setVisibility(View.GONE);
+				forget_Pwd.setVisibility(View.VISIBLE);
+				usercode.setHint(R.string.phone_number);
+				username.setHint(R.string.phone_pwd);
+				usercode.setText("");
+				username.setText("");
+				usercode.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+				if (remberpwd && isPhoneNumber) {
+					usercode.setText(msharedPreferences.getString(
+							"login_phone", ""));
+					username.setText(msharedPreferences.getString(
+							"login_password", ""));
+				} else {
+					usercode.setText("");
+					username.setText("");
+				}
+
+				if (usercode.isFocused()) {
+					if (index_phone == -1) {
+						index_phone = usercode.getSelectionStart();
+					} else {
+						usercode.setSelection(index_phone);
+					}
+				} else if (username.isFocused()) {
+					if (index_phone == -1) {
+						index_phone = username.getSelectionStart();
+					} else {
+						username.setSelection(index_phone);
+					}
+				}
+
+				usernameIcon.setBackground(getResources().getDrawable(
+						R.drawable.ic_zhanghao));
+				passwordIcon.setBackground(getResources().getDrawable(
+						R.drawable.ic_mima));
+				username.setTransformationMethod(PasswordTransformationMethod
+						.getInstance());
+				msharedPreferences.edit().putBoolean("isphone", true).commit();
+				break;
+			// 注册
+			case R.id.tv_register:
+				Intent i = new Intent(LoginActivity.this,
+						RegisterAndForPwdActivity.class);
+				i.putExtra("name", "LoginActivity");
+				startActivity(i);
+				break;
+			// 忘记密码
+			case R.id.tv_forget_pwd:
+				Intent i2 = new Intent(LoginActivity.this,
+						InputCodeActivity.class);
+				i2.putExtra("name", "LoginActivity");
+				startActivity(i2);
+				break;
+			default:
+				break;
+			}
+		}
+	};
+
+	private Boolean ischecklogin() {
+		String use_code = usercode.getText().toString().trim();
+		String use_name = username.getText().toString().trim();
+		// String login_school_name = school_name.getText().toString();
+		if (!NetWorkUtils.isNetworkAvailable(mContext)) {
+			// Dialog dialog = NetworkNotAvilableDialog(mContext);
+			// dialog.show();
+			Toast.makeText(mContext, "请检查网络", Toast.LENGTH_SHORT).show();
+			return false;
+		} else if (StringUtils.isEmpty(use_code)) {
+			if (isPhoneLogin) {
+				Toast.makeText(mContext, "请输入您的手机号", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(mContext, "请输入您的考号", Toast.LENGTH_SHORT).show();
+			}
+			return false;
+		} else if (StringUtils.isEmpty(use_name)) {
+			if (isPhoneLogin) {
+				Toast.makeText(mContext, "请输入密码", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(mContext, "请输入您的姓名", Toast.LENGTH_SHORT).show();
+			}
+			return false;
+			// } else if (StringUtils.isEmpty(login_school_name)) {
+			// Toast.makeText(mContext, "请选择学校", Toast.LENGTH_SHORT).show();
+			// return false;
+		} else
+			return true;
+	}
+
+	private Dialog NetworkNotAvilableDialog(Context mContext) {
+		final Dialog dialog = new Dialog(mContext, R.style.dialog);
+		dialog.setCanceledOnTouchOutside(false);
+		LayoutInflater inflater = LayoutInflater.from(mContext);
+		View view = inflater.inflate(R.layout.networknotavilable_dialog, null);
+		Button confirm_btn = (Button) view
+				.findViewById(R.id.netwroknotavil_confirm_btn);
+		dialog.setContentView(view);
+		confirm_btn.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				dialog.dismiss();
+			}
+		});
+		return dialog;
+	}
+
+	@Override
+	public void successMsg(String msg) {
+
+		try {
+			if (msg != null && msg.length() > 0) {
+				loginuserInfo = JsonUtils.jsontologinuserInfo(msg);
+				loadingbar.setVisibility(View.INVISIBLE);
+				if (loginuserInfo != null) {
+					if (!isPhoneLogin
+							&& loginuserInfo.getUserInfoList().getSchoolId() == 0) {
+						Toast.makeText(mContext, "所选学校错误或考号姓名不正确，请重新输入！",
+								Toast.LENGTH_SHORT).show();
+						return;
+					} else {
+						getinsystem();
+						// 发送用户信息
+						postUserInfo();
+					}
+
+				} else {
+					if (isPhoneLogin) {
+						Toast.makeText(mContext, "账号不存在或者账号密码不匹配！",
+								Toast.LENGTH_SHORT).show();
+						return;
+					}
+					if (StringUtils.isEmpty(school_name.getText().toString()))
+						// Toast.makeText(mContext, " 请尝试切换选择你所在的学校后登陆！",
+						// Toast.LENGTH_SHORT).show();
+
+						loadingbar.setVisibility(View.INVISIBLE);
+					Toast.makeText(mContext, "所选学校错误或考号姓名不正确，请重新输入！",
+							Toast.LENGTH_SHORT).show();
+				}
+
+			} else {
+				loadingbar.setVisibility(View.INVISIBLE);
+				Toast.makeText(mContext, "登陆失败，请重试！", Toast.LENGTH_SHORT)
+						.show();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			loadingbar.setVisibility(View.INVISIBLE);
+			Toast.makeText(mContext, "登陆失败，请重试！", Toast.LENGTH_SHORT).show();
+		}
+
+	}
+
+	private void postUserInfo() {
+		// Log.i("USER_LOGIN_INFO", school_name.getHint() + "");
+
+		String serverIp = Constants.BASE_URL;
+		if (!school_name.getText().toString().equals("")) {
+			if (loginschoolconfig != null) {
+				serverIp = loginschoolconfig.getFileServUrl();
+			} else {
+				serverIp = msharedPreferences.getString("FileServUrl", "");
+			}
+			Log.i("USER_LOGIN_INFO", serverIp);
+		}
+		Log.i("USER_LOGIN_INFO", serverIp);
+		Log.i("USER_LOGIN_INFO", "success2");
+		String loginIp = getLocalIpAddress();
+		String versionName = updateManager.getVersionName(mContext);
+		String device = android.os.Build.MODEL;
+		String osVersion = android.os.Build.VERSION.RELEASE;
+		param = new JSONObject();
+		try {
+			if (!hadlogin) {
+				param.put("userCode", loginuserInfo.getUserInfoList()
+						.getUserCode());
+				param.put("userId", loginuserInfo.getUserInfoList().getUserId());
+				param.put("userName", loginuserInfo.getUserInfoList().getName());
+				param.put("schoolId", loginuserInfo.getUserInfoList()
+						.getSchoolId());
+			} else {
+				param.put("userCode",
+						msharedPreferences.getString("userCode", ""));
+				param.put("userId", msharedPreferences.getString("userId", ""));
+				param.put("userName",
+						msharedPreferences.getString("userName", ""));
+				param.put("schoolId", msharedPreferences.getInt("schoolId", -1));
+			}
+			param.put("type", "UserLoginInfo");
+			param.put("userType", 2);
+			param.put("loginIp", loginIp);
+			param.put("loginTime", loginTime);
+			param.put("logoutTime", "");
+			param.put("appId", "20001");
+			param.put("serverIp", serverIp);
+			param.put("appVersion", versionName);
+			param.put("platform", "android");
+			param.put("device", device);
+			param.put("osVersion", osVersion);
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		MyHttpUtil httpUtil = MyHttpUtil.getInstance(mContext);
+		httpUtil.request(Constants.USER_LOGIN_INFO, param,
+				new MyHttpUtil.HttpCallback() {
+					@Override
+					public void success(String result) {
+						Log.i("USER_LOGIN_INFO", "success");
+					}
+
+					@Override
+					public void error(int state, String errorMsg) {
+						Log.i("USER_LOGIN_INFO", "error" + errorMsg);
+					}
+				});
+
+	}
+
+	public String getLocalIpAddress() {
+		String ipaddress = "";
+
+		try {
+			for (Enumeration<NetworkInterface> en = NetworkInterface
+					.getNetworkInterfaces(); en.hasMoreElements();) {
+				NetworkInterface intf = en.nextElement();
+				for (Enumeration<InetAddress> enumIpAddr = intf
+						.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+					InetAddress inetAddress = enumIpAddr.nextElement();
+					ipaddress = inetAddress.getHostAddress().toString();
+				}
+			}
+		} catch (SocketException ex) {
+			Log.e("WifiPreference IpAddress", ex.toString());
+		}
+
+		return ipaddress;
+	}
+
+	public void getinsystem() {
+		if (loadingbar != null) {
+			loadingbar.setVisibility(View.GONE);
+		}
+		Toast.makeText(mContext, "登录成功！", Toast.LENGTH_SHORT).show();
+		msharedPreferences
+				.edit()
+				.putInt("schoolId",
+						loginuserInfo.getUserInfoList().getSchoolId()).commit();
+		if (isExamCode) {
+			msharedPreferences
+					.edit()
+					.putString("userCode",
+							loginuserInfo.getUserInfoList().getUserCode())
+					.commit();
+			msharedPreferences
+					.edit()
+					.putString("userName",
+							loginuserInfo.getUserInfoList().getName()).commit();
+			msharedPreferences.edit().putBoolean("isphone", false).commit();
+		} else if (isPhoneNumber) {
+			msharedPreferences.edit().putBoolean("isphone", true).commit();
+			msharedPreferences
+					.edit()
+					.putString("userCode",
+							loginuserInfo.getUserInfoList().getUserCode())
+					.commit();
+			msharedPreferences
+					.edit()
+					.putString("userName",
+							loginuserInfo.getUserInfoList().getName()).commit();
+			msharedPreferences
+					.edit()
+					.putString("login_phone",
+							loginuserInfo.getUserInfoList().getUserCode())
+					.commit();
+			msharedPreferences
+					.edit()
+					.putString("login_password",
+							loginuserInfo.getUserInfoList().getName()).commit();
+		}
+		msharedPreferences
+				.edit()
+				.putString("userId",
+						loginuserInfo.getUserInfoList().getUserId()).commit();
+		if (StringUtils.isEmpty(school_name.getText().toString())) {
+			msharedPreferences.edit()
+					.putString("LoginServUrl", Constants.BASELOGINURL).commit();
+			msharedPreferences.edit()
+					.putString("FileServUrl", Constants.BASEFILEURL).commit();
+			// msharedPreferences.edit().putString("ReportServUrl","http://report.iclassmate.cn:8080/").commit();
+			msharedPreferences.edit()
+					.putString("ReportServUrl", Constants.BASE_URL).commit();
+			msharedPreferences.edit()
+					.putString("weiKeServUrl", Constants.BSAEWEIKEURL).commit();
+		} else {
+			if (loginschoolconfig != null) {
+				msharedPreferences
+						.edit()
+						.putString("LoginServUrl",
+								loginschoolconfig.getLoginServUrl()).commit();
+				msharedPreferences
+						.edit()
+						.putString("FileServUrl",
+								loginschoolconfig.getFileServUrl()).commit();
+				msharedPreferences
+						.edit()
+						.putString("ReportServUrl",
+								loginschoolconfig.getReportServUrl()).commit();
+				msharedPreferences
+						.edit()
+						.putString("weiKeServUrl",
+								loginschoolconfig.getWeiKeServUrl()).commit();
+			}
+		}
+
+		if (check_remind_pwd.isChecked()) {
+			msharedPreferences.edit().putBoolean("rempw", true).commit();
+			msharedPreferences.edit().putBoolean("had_login", true).commit();
+		} else {
+			msharedPreferences.edit().putBoolean("rempw", false).commit();
+			msharedPreferences.edit().putBoolean("had_login", false).commit();
+		}
+
+		if (isPhoneLogin) {
+			msharedPreferences.edit()
+					.putString("login_password", username.getText().toString())
+					.commit();
+		}
+		startActivity(new Intent(LoginActivity.this, MainActivity.class));
+		this.finish();
+	}
+
+	@Override
+	public void errorMsg(String errorMsg) {
+		loadingbar.setVisibility(View.INVISIBLE);
+		// Toast.makeText(mContext, errorMsg, Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+		if (requestCode == NOTICE_START_ACTIVITY_SCHOOL_CODE) {
+			switch (resultCode) {
+			case NOTICE_CODE_SCHOOL_ACTIVITY_RESULT:
+				loginschoolconfig = (Login_school_config) intent.getExtras()
+						.getSerializable("schoolconfig");
+				school_name.setText(loginschoolconfig.getSchoolName());
+				msharedPreferences
+						.edit()
+						.putString("login_school_name",
+								loginschoolconfig.getSchoolName()).commit();
+				msharedPreferences.edit()
+						.putInt("schoolId", loginschoolconfig.getSchoolId())
+						.commit();
+				msharedPreferences
+						.edit()
+						.putString("LoginServUrl",
+								loginschoolconfig.getLoginServUrl()).commit();
+				msharedPreferences
+						.edit()
+						.putString("FileServUrl",
+								loginschoolconfig.getFileServUrl()).commit();
+				msharedPreferences
+						.edit()
+						.putString("ReportServUrl",
+								loginschoolconfig.getReportServUrl()).commit();
+				msharedPreferences
+						.edit()
+						.putString("weiKeServUrl",
+								loginschoolconfig.getWeiKeServUrl()).commit();
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		boolean isphone = msharedPreferences.getBoolean("isphone", false);
+		if (isphone && remberpwd) {
+			usercode.setText(msharedPreferences.getString("login_phone", ""));
+			username.setText(msharedPreferences.getString("login_password", ""));
+		} else if (!isphone && remberpwd) {
+			usercode.setText(msharedPreferences.getString("userCode", ""));
+			username.setText(msharedPreferences.getString("userName", ""));
+		} else {
+			usercode.setText("");
+			username.setText("");
+		}
+	}
+
+	/**
+	 * 友盟统计
+	 */
+	@Override
+	public void onResume() {
+		super.onResume();
+		this.rootLayout.addOnLayoutChangeListener(this);
+		MobclickAgent.onPageStart("LoginActivity");
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPageEnd("LoginActivity");
+		MobclickAgent.onPause(this);
+	}
+
+	@Override
+	public void onLayoutChange(View v, int left, int top, int right,
+			final int bottom, int oldLeft, int oldTop, int oldRight,
+			final int oldBottom) {
+		if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > 100)) {
+
+			// this.identity.setVisibility(View.GONE);
+			// params.topMargin = dp2px(this, 10);
+			// this.icon.setLayoutParams(params);
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							if (!isPhoneLogin) {
+								scrollView_login.smoothScrollTo(0, oldBottom
+										- bottom + 420);
+							} else {
+								scrollView_login.smoothScrollTo(0, oldBottom
+										- bottom + 170);
+							}
+						}
+					});
+				}
+			}).start();
+		} else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > 0)) {
+
+			// params.topMargin = dp2px(this, 70);
+			// this.icon.setLayoutParams(params);
+			// this.identity.setVisibility(View.VISIBLE);
+			mHandler.post(new Runnable() {
+				@Override
+				public void run() {
+					scrollView_login.smoothScrollTo(0, 0);
+				}
+			});
+		}
+	}
+
+	// DP转PX
+	public static int dp2px(Context context, float dpValue) {
+		final float scale = context.getResources().getDisplayMetrics().density;
+		return (int) (dpValue * scale + 0.5f);
+	}
+
+	private void setLoginStyle(boolean isphone) {
+		if (!isphone) {
+			isPhoneLogin = false;
+			isPhoneNumber = false;
+			isExamCode = true;
+			login_exam_btn.setBackground(getResources().getDrawable(
+					R.drawable.bt_khdl_hover));
+			login_phone_btn.setBackground(getResources().getDrawable(
+					R.drawable.bt_sjhdl));
+			changeSchoolLayout.setVisibility(View.VISIBLE);
+			usercode.setHint(R.string.login_username_hit);
+			username.setHint(R.string.login_password_hit);
+			view.setVisibility(View.VISIBLE);
+			forget_Pwd.setVisibility(View.GONE);
+			usernameIcon.setBackground(getResources().getDrawable(
+					R.drawable.login_usename));
+			passwordIcon.setBackground(getResources().getDrawable(
+					R.drawable.login_pwd));
+			username.setTransformationMethod(HideReturnsTransformationMethod
+					.getInstance());
+			usercode.setTransformationMethod(HideReturnsTransformationMethod
+					.getInstance());
+
+			if (remberpwd) {
+				usercode.setText(msharedPreferences.getString("userCode", ""));
+				username.setText(msharedPreferences.getString("userName", ""));
+			} else {
+				usercode.setText("");
+				username.setText("");
+			}
+
+			usercode.setInputType(InputType.TYPE_CLASS_TEXT);
+			if (usercode.isFocused()) {
+				if (index_exam == -1) {
+					index_exam = usercode.getSelectionStart();
+				} else {
+					usercode.setSelection(index_exam);
+				}
+			} else if (username.isFocused()) {
+				if (index_exam == -1) {
+					index_exam = username.getSelectionStart();
+				} else {
+					username.setSelection(index_exam);
+				}
+			}
+			msharedPreferences.edit().putBoolean("isphone", false).commit();
+			usercode.setText(msharedPreferences.getString("userCode", ""));
+			username.setText(msharedPreferences.getString("userName", ""));
+			String value = username.getText().toString();
+			Pattern p = Pattern
+					.compile("^((13[0-9])|(14[0-9])|(15[^4,\\D])|(18[0-9])|(17[0-9]))\\d{8}$");
+			Matcher m = p.matcher(value);
+			if (m.matches()) {
+				username.setText("");
+				usercode.setText("");
+			}
+
+			tv_login_exam_num.setTextColor(Color.parseColor("#ff9f44"));
+			tv_login_phone_num.setTextColor(Color.parseColor("#212121"));
+		} else {
+			isPhoneLogin = true;
+			isExamCode = false;
+			isPhoneNumber = true;
+			login_exam_btn.setBackground(getResources().getDrawable(
+					R.drawable.bt_khdl));
+			login_phone_btn.setBackground(getResources().getDrawable(
+					R.drawable.bt_sjhdl_hover));
+			changeSchoolLayout.setVisibility(View.GONE);
+			view.setVisibility(View.GONE);
+			forget_Pwd.setVisibility(View.VISIBLE);
+			usercode.setHint(R.string.phone_number);
+			username.setHint(R.string.phone_pwd);
+			usercode.setText("");
+			username.setText("");
+			usercode.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+			if (remberpwd) {
+				usercode.setText(msharedPreferences
+						.getString("login_phone", ""));
+				username.setText(msharedPreferences.getString("login_password",
+						""));
+			} else {
+				usercode.setText("");
+				username.setText("");
+			}
+
+			if (usercode.isFocused()) {
+				if (index_phone == -1) {
+					index_phone = usercode.getSelectionStart();
+				} else {
+					usercode.setSelection(index_phone);
+				}
+			} else if (username.isFocused()) {
+				if (index_phone == -1) {
+					index_phone = username.getSelectionStart();
+				} else {
+					username.setSelection(index_phone);
+				}
+			}
+
+			usernameIcon.setBackground(getResources().getDrawable(
+					R.drawable.ic_zhanghao));
+			passwordIcon.setBackground(getResources().getDrawable(
+					R.drawable.ic_mima));
+			username.setTransformationMethod(PasswordTransformationMethod
+					.getInstance());
+			msharedPreferences.edit().putBoolean("isphone", true).commit();
+
+			tv_login_exam_num.setTextColor(Color.parseColor("#212121"));
+			tv_login_phone_num.setTextColor(Color.parseColor("#ff9f44"));
+		}
+	}
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    >
+
+    <TextView
+        android:id="@+id/item_title_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="10dip"
+        android:paddingTop="10dip"
+        android:textColor="#999999"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:id="@+id/item_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/item_exam_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/item_exam_name1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dip"
+                android:layout_marginRight="40dip"
+                android:layout_marginTop="13dip"
+                android:gravity="center_horizontal"
+                android:textColor="@color/titlecolor"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/item_exam_name2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dip"
+                android:layout_marginLeft="29dip"
+                android:layout_marginRight="29dip"
+                android:layout_marginTop="3dip"
+                android:gravity="center_horizontal"
+                android:textColor="#929292"
+                android:textSize="11sp" />
+<!-- 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#d8d8d8"
+                android:contentDescription="@string/app_name" />
+             -->
+        </LinearLayout>
+
+        <com.xyd.student.xydexamanalysis.view.MyItemListView
+            android:id="@+id/listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dip"
+            android:layout_marginRight="3dip"
+            android:scrollbars="none"
+            android:listSelector="#00000000"
+            android:dividerHeight="1dip" >
+        </com.xyd.student.xydexamanalysis.view.MyItemListView>
+    </LinearLayout>
+
+</LinearLayout>

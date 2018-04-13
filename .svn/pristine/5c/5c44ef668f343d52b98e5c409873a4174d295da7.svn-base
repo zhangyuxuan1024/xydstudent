@@ -1,0 +1,78 @@
+package com.xyd.student.xydexamanalysis.Fragment;
+
+import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+
+import java.util.HashMap;
+
+/**
+ * Lichg2015.8.21
+ * 
+ * 首页Tab形式 功能页 的Fragments 管理
+ */
+public class FragmentFactory {
+
+	public static final int TAB_NOTICE = 0x000;
+	public static final int TAB_EXAM = 0x000;
+	public static final int TAB_WEIKE = 0x001;
+	public static final int TAB_OWNER = 0x002;
+	// 缓存所有的fragment对象
+	public static HashMap<Integer, Fragment> mFragmentMap = new HashMap<Integer, Fragment>();
+
+	// private static Fragment mBaseFragment;
+
+	public static Fragment createFragment(int position, Context context) {
+		Log.i("lxw", "createFragment+position" + position);
+
+		/*
+		 * Fragment mBaseFragment = mFragmentMap.get(position);
+		 * 
+		 * if (mBaseFragment == null) { switch (position) { case TAB_NOTICE:
+		 * mBaseFragment = new NoticeFragment(context); break; case TAB_EXAM:
+		 * mBaseFragment = new ExamFragment(context); break; case TAB_OWNER:
+		 * mBaseFragment = new OwnerFragment(context); break; }
+		 * mFragmentMap.put(position, mBaseFragment); } return mBaseFragment;
+		 */
+
+		Fragment mBaseFragment = null;
+		switch (position) {
+//		case TAB_NOTICE:
+//			mBaseFragment = new NoticeFragment(context);
+//			break;
+		case TAB_EXAM:
+			mBaseFragment = new ExamFragment(context);
+			break;
+		case TAB_WEIKE:
+			mBaseFragment = new WeikeFragment(context);
+			break;
+		case TAB_OWNER:
+			mBaseFragment = new OwnerFragment(context);
+			break;
+		}
+		return mBaseFragment;
+
+	}
+
+	public static void flushitem(int position) {
+
+		switch (position) {
+//		case TAB_NOTICE:
+//			NoticeFragment NoticeFragment = (NoticeFragment) mFragmentMap
+//					.get(position);
+//			if (NoticeFragment != null)
+//				NoticeFragment.update();
+//			break;
+		case TAB_EXAM:
+			ExamFragment ExamFragment = (ExamFragment) mFragmentMap
+					.get(position);
+			if (ExamFragment != null)
+				ExamFragment.update();
+			break;
+		case TAB_WEIKE:
+			break;
+		case TAB_OWNER:
+			break;
+		}
+	}
+}

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/aboutxyd_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#ff9f44" >
+
+        <ImageView
+            android:id="@+id/aboutxyd_back"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:paddingBottom="13dp"
+            android:paddingTop="13dp"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="关于心意答"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/aboutxyd_logo"
+        android:layout_width="131.5dp"
+        android:layout_height="38dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:src="@drawable/update_logal" />
+
+    <TextView
+        android:id="@+id/aboutxyd_version_code"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/aboutxyd_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:text="V1.1.3" />
+
+    <RelativeLayout
+        android:id="@+id/aboutxyd_checkupload"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_below="@+id/aboutxyd_version_code"
+        android:layout_marginTop="88dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="72dp"
+            android:text="检查更新"
+            android:textColor="#a7a7a7"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/no_update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="37dp"
+            android:textColor="#a7a7a7"
+            android:text="当前是最新版本" />
+
+        <ImageView
+            android:id="@+id/update"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="37dp" 
+            android:src="@drawable/ic_zhanghao"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="37dp"
+            android:layout_marginRight="37dp"
+            android:background="#eeeeee" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/aboutxyd_help"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_below="@+id/aboutxyd_checkupload" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="72dp"
+            android:text="使用帮助"
+            android:textColor="#a7a7a7"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="37dp" 
+            android:src="@drawable/ic_next"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="37dp"
+            android:layout_marginRight="37dp"
+            android:background="#eeeeee" />
+    </RelativeLayout>
+
+</RelativeLayout>

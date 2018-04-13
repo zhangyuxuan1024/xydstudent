@@ -1,0 +1,381 @@
+package com.xyd.student.xydexamanalysis;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.xyd.student.xydexamanalysis.constant.Constants;
+import com.xyd.student.xydexamanalysis.entity.Login;
+import com.xyd.student.xydexamanalysis.ui.LoginActivity;
+import com.xyd.student.xydexamanalysis.ui.MainActivity;
+import com.xyd.student.xydexamanalysis.utils.MyHttpUtil;
+import com.xyd.student.xydexamanalysis.utils.MyHttpUtil.HttpCallback;
+import com.xyd.student.xydexamanalysis.utils.JsonUtils;
+import com.xyd.student.xydexamanalysis.utils.NetWorkUtils;
+import com.xyd.student.xydexamanalysis.utils.TimeUtils;
+import com.xyd.student.xydexamanalysis.utils.ToastUtils;
+import com.xyd.student.xydexamanalysis.utils.UIUtils;
+import com.xyd.student.xydexamanalysis.view.TitleBar;
+import com.xyd.student.xydexamanalysis.view.TitleBar.TitleOnClickListener;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class InputCodeActivity extends Activity implements TitleOnClickListener {
+	private TitleBar titleBar;
+	private TextView tv_name;
+	private Button input, eye;
+	private EditText input_et;
+
+	private JSONObject param;
+	private long now_time;
+	private boolean isLogin;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_input_code);
+		initView();
+
+		String name = getIntent().getStringExtra("name");
+		if (name.equals("LoginActivity")) {
+			isLogin = true;
+			titleBar.setTitle("忘记密码");
+			tv_name.setText("账号");
+			input.setText("确认");
+			eye.setVisibility(View.INVISIBLE);
+			input_et.setInputType(InputType.TYPE_CLASS_NUMBER);
+			input_et.setHint("输入手机号或帐号");
+			input.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					final String phoneNumber = input_et.getText().toString()
+							.trim();
+					String url = Constants.INPUT_PHONE + "/" + phoneNumber;
+
+					Log.i("获得手机号接口", url + "number" + phoneNumber);
+					if (!NetWorkUtils.isNetworkAvailable(UIUtils.getContext())) {
+						ToastUtils.show(UIUtils.getContext(), "请检查网络");
+					} else {
+						if (!phoneNumber.equals("")) {
+							String value = phoneNumber;
+							// Pattern p =
+							// Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9])|(17[0,5-9]))\\d{8}$");
+							Pattern p = Pattern
+									.compile("^((13[0-9])|(14[0-9])|(15[^4,\\D])|(18[0-9])|(17[0-9]))\\d{8}$");
+							Matcher m = p.matcher(value);
+							if (!m.matches()) {
+								ToastUtils.show(UIUtils.getContext(),
+										"输入手机号不正确");
+								return;
+							}
+							/*
+							 * param=new JSONObject();
+							 * 
+							 * try { param.put("userCode",phoneNumber); } catch
+							 * (JSONException e) { // TODO Auto-generated catch
+							 * block e.printStackTrace(); }
+							 */
+							MyHttpUtil httpUtil = MyHttpUtil
+									.getInstance(InputCodeActivity.this);
+							httpUtil.requestMethdget(url, new HttpCallback() {
+								@Override
+								public void success(String result) {
+									// TODO Auto-generated method stub
+									Log.i("获得手机号", result);
+									try {
+										if (result != null
+												&& result.contains(phoneNumber)) {
+											JSONObject jsonObject = new JSONObject(
+													result);
+											String number = jsonObject
+													.getString("phoneNum");
+											if (System.currentTimeMillis()
+													- now_time < 3 * 1000) {
+												return;
+											}
+											now_time = System
+													.currentTimeMillis();
+											Intent i = new Intent(
+													InputCodeActivity.this,
+													RegisterAndForPwdActivity.class);
+											i.putExtra("name",
+													"InputCodeActivity");
+											i.putExtra("phoneNumber", number);
+											startActivity(i);
+											// finish();
+										} else {
+											Toast.makeText(
+													InputCodeActivity.this,
+													"您的手机号没有注册",
+													Toast.LENGTH_SHORT).show();
+										}
+									} catch (JSONException e) {
+										e.printStackTrace();
+									}
+
+								}
+
+								@Override
+								public void error(int state, String errorMsg) {
+									// TODO Auto-generated method stub
+
+								}
+							});
+						} else {
+							ToastUtils.show(UIUtils.getContext(), "请输入账号或手机号");
+						}
+					}
+
+				}
+			});
+		} else {
+			isLogin = false;
+			titleBar.setTitle("设置密码");
+			tv_name.setText("密码");
+			input.setText("完成");
+			eye.setVisibility(View.VISIBLE);
+			input_et.setHint("密码为6-16位");
+			// input_et.setInputType(InputType.TYPE_Clas_PASSWORD);
+			final String number = getIntent().getStringExtra("phoneNum");
+
+			// 注册
+			input.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					String registerUrl = Constants.PHONE_REGISTER;
+					final String password = input_et.getText().toString()
+							.trim();
+					int length = password.length();
+
+					Log.i("密码输入长度", length + "");
+					if (!NetWorkUtils.isNetworkAvailable(UIUtils.getContext())) {
+						ToastUtils.show(UIUtils.getContext(), "请检查网络");
+					} else {
+						if (!password.equals("")) {
+							if (length < 6) {
+								ToastUtils.show(UIUtils.getContext(),
+										"请输入大于6位的密码");
+							} else {
+								MyHttpUtil httpUtil = MyHttpUtil
+										.getInstance(InputCodeActivity.this);
+								JSONObject params = new JSONObject();
+								try {
+									params.put("mobile", number);
+									params.put("userCode", number);
+									params.put("password", password);
+									params.put("userType", 2);
+									params.put("appId", "20001");
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+
+								httpUtil.request(registerUrl, params,
+										new HttpCallback() {
+
+											@Override
+											public void success(String result) {
+												// TODO Auto-generated method
+												// stub
+												Log.i("手机号码注册", result);
+												// try {
+												// JSONObject jsonObject=new
+												// JSONObject(result);
+												// int
+												// resultCode=jsonObject.getInt("resultCode");
+												// if (resultCode==-5){
+												// ToastUtils.show(UIUtils.getContext(),
+												// "服务器繁忙");
+												// }else if (resultCode==0){
+												// //注册成功
+												// ToastUtils.show(UIUtils.getContext(),
+												// "注册成功");
+												// finish();
+												// }
+												// } catch (JSONException e) {
+												// e.printStackTrace();
+												// }
+												if (result != null) {
+													String userId = "";
+													String studentId = "";
+													String name = "";
+													ToastUtils.show(UIUtils
+															.getContext(),
+															"注册成功");
+
+													Login loginuserInfo = JsonUtils
+															.jsontologinuserInfo(result);
+
+													try {
+														SharedPreferences share = getSharedPreferences(
+																Constants.SHARED_PREFERENCES,
+																Context.MODE_PRIVATE);
+														share.edit()
+																.putBoolean(
+																		"isphone",
+																		true)
+																.commit();
+														share.edit()
+																.putString(
+																		"login_phone",
+																		number)
+																.commit();
+														share.edit()
+																.putString(
+																		"login_password",
+																		password)
+																.commit();
+														share.edit().putInt(
+																"schoolId", 0);
+														share.edit()
+																.putString(
+																		"LoginServUrl",
+																		Constants.PHONE_LOGIN)
+																.commit();
+														share.edit()
+																.putString(
+																		"ReportServUrl",
+																		Constants.BASE_URL)
+																.commit();
+														share.edit()
+																.putString(
+																		"userCode",
+																		loginuserInfo
+																				.getUserInfoList()
+																				.getUserCode())
+																.commit();
+														share.edit()
+																.putString(
+																		"userName",
+																		loginuserInfo
+																				.getUserInfoList()
+																				.getName())
+																.commit();
+														share.edit()
+																.putString(
+																		"userId",
+																		loginuserInfo
+																				.getUserInfoList()
+																				.getUserId())
+																.commit();
+													} catch (Exception e) {
+
+													} finally {
+														Intent intent = new Intent(
+																InputCodeActivity.this,
+																MainActivity.class);
+														startActivity(intent);
+														finish();
+													}
+												}
+											}
+
+											@Override
+											public void error(int state,
+													String errorMsg) {
+												// TODO Auto-generated method
+												// stub
+												// ToastUtils.show(UIUtils.getContext(),
+												// errorMsg);
+											}
+										});
+							}
+
+						} else {
+							ToastUtils.show(UIUtils.getContext(), "密码不能为空");
+						}
+					}
+
+				}
+			});
+		}
+
+	}
+
+	class ImageTouchListener implements OnTouchListener {
+
+		@Override
+		public boolean onTouch(View v, MotionEvent event) {
+			// TODO Auto-generated method stub
+			if (v.getId() == R.id.input_look) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					/* 设定EditText的内容为可见的 */
+
+					// ToastUtils.show(UIUtils.getContext(), "按下");
+					input_et.setTransformationMethod(HideReturnsTransformationMethod
+							.getInstance());
+				}
+				if (event.getAction() == MotionEvent.ACTION_UP) {
+					/* 设定EditText的内容为隐藏的 */
+
+					// ToastUtils.show(UIUtils.getContext(), "抬起");
+					input_et.setTransformationMethod(PasswordTransformationMethod
+							.getInstance());
+				}
+			}
+			return false;
+		}
+
+	}
+
+	private void initView() {
+		ImageTouchListener i = new ImageTouchListener();
+		titleBar = (TitleBar) findViewById(R.id.input_code_title);
+		titleBar.setLeftIcon(R.drawable.back_icon);
+		titleBar.setTitleClickListener(this);
+
+		tv_name = (TextView) findViewById(R.id.input_name);
+		input = (Button) findViewById(R.id.input_btn);
+		eye = (Button) findViewById(R.id.input_look);
+		input_et = (EditText) findViewById(R.id.input_edt);
+
+		eye.setOnTouchListener(i);
+	}
+
+	@Override
+	public void leftClick() {
+		// TODO Auto-generated method stub
+		if (!isLogin) {
+			Toast.makeText(InputCodeActivity.this, "注册失败", Toast.LENGTH_SHORT)
+					.show();
+		}
+		finish();
+	}
+
+	@Override
+	public void rightClick() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void titleClick() {
+		// TODO Auto-generated method stub
+
+	}
+}

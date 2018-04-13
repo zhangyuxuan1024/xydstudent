@@ -1,0 +1,178 @@
+package com.xyd.student.xydexamanalysis.application;
+
+import java.io.File;
+import java.io.IOException;
+
+import cn.jpush.android.api.JPushInterface;
+
+import com.nostra13.universalimageloader.cache.disc.impl.ext.LruDiscCache;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+
+import android.app.Application;
+import android.content.Context;
+import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+
+/**
+ * Created by Lichg.
+ */
+public class BaseApplication extends Application {
+	// 获取到主线程的上下文
+	private static BaseApplication mContext;
+	// 获取到主线程的hander;
+	private static Handler mMainThreadHander;
+	// 获取到主线程的looper
+	private static Looper mMainThreadLooper;
+	// 获取到主线程
+	private static Thread mMainThead;
+	// 获取到主线程的id
+	private static int mMainTheadId;
+
+	// 版本信息类
+	private double versionCode;
+	private double versionSize;
+	private String versionMark;
+	private String versionUrl;
+	private String versionName;
+
+	public String getVersionName() {
+		return versionName;
+	}
+
+	public void setVersionName(String versionName) {
+		this.versionName = versionName;
+	}
+
+	public double getVersionCode() {
+		return versionCode;
+	}
+
+	public void setVersionCode(double versionCode) {
+		this.versionCode = versionCode;
+	}
+
+	public double getVersionSize() {
+		return versionSize;
+	}
+
+	public void setVersionSize(double versionSize) {
+		this.versionSize = versionSize;
+	}
+
+	public String getVersionMark() {
+		return versionMark;
+	}
+
+	public void setVersionMark(String versionMark) {
+		this.versionMark = versionMark;
+	}
+
+	public String getVersionUrl() {
+		return versionUrl;
+	}
+
+	public void setVersionUrl(String versionUrl) {
+		this.versionUrl = versionUrl;
+	}
+
+	@Override
+	public void onCreate() {
+
+		super.onCreate();
+		// 极光推送部分
+		JPushInterface.setDebugMode(true);
+		JPushInterface.init(this);
+
+		mContext = this;
+		mMainThreadHander = new Handler();
+		mMainThreadLooper = getMainLooper();
+		mMainThead = Thread.currentThread();
+		mMainTheadId = android.os.Process.myTid();
+		initImageLoader(mContext);
+
+		/*
+		 * Thread decodebitmapThread = new Thread(decodebitmaprunnable);
+		 * decodebitmapThread.start();
+		 */
+	}
+
+	/*
+	 * private Runnable decodebitmaprunnable = new Runnable() {
+	 * 
+	 * @Override public void run() { // TODO Auto-generated method stub try {
+	 * for(int i = 0;i< ImageBitmapUtil.drawableids.length;i++){ Bitmap
+	 * iconbitmp
+	 * =BitmapFactory.decodeResource(getResources(),ImageBitmapUtil.drawableids
+	 * [i]); if(iconbitmp!=null){
+	 * ImageBitmapUtil.decodeimagemap.put(Integer.valueOf
+	 * (ImageBitmapUtil.drawableids[i]), iconbitmp); } Thread.sleep(100); }
+	 * 
+	 * 
+	 * } catch (Exception e) { // TODO: handle exception }
+	 * 
+	 * 
+	 * 
+	 * 
+	 * } };
+	 */
+
+	public static BaseApplication getApplication() {
+		return mContext;
+	}
+
+	public static Handler getMainThreadHandler() {
+		return mMainThreadHander;
+	}
+
+	public static Looper getMainThreadLooper() {
+		return mMainThreadLooper;
+	}
+
+	public static Thread getMainThread() {
+		return mMainThead;
+	}
+
+	public static int getMainThreadId() {
+		return mMainTheadId;
+	}
+
+	private void initImageLoader(Context mContext) {
+
+		int memoryCacheSize = (int) (Runtime.getRuntime().maxMemory() / 16);
+		ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(
+				mContext);
+		config.memoryCache(new LruMemoryCache(memoryCacheSize));
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+			String dirpath = Environment.getExternalStorageDirectory()
+					.getAbsolutePath()
+					+ File.separator
+					+ getPackageName()
+					+ File.separator + "images";
+			File cachdir = new File(dirpath);
+			if (!cachdir.exists() || !cachdir.isDirectory()) {
+				cachdir.mkdirs();
+			}
+			LruDiscCache discCache = null;
+			try {
+				discCache = new LruDiscCache(cachdir,new Md5FileNameGenerator(), 20 * 1024 * 1024);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if (discCache != null) {
+				config.diskCache(discCache);
+			}
+		}
+		config.denyCacheImageMultipleSizesInMemory();
+		config.tasksProcessingOrder(QueueProcessingType.LIFO);
+		config.threadPoolSize(4);
+		config.threadPriority(Thread.NORM_PRIORITY - 2);
+		ImageLoader.getInstance().init(config.build());
+	}
+
+}

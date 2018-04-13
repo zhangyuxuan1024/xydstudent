@@ -1,0 +1,833 @@
+package com.xyd.student.xydexamanalysis.ui;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.FrameLayout.LayoutParams;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import cn.jpush.im.proto.ba;
+import cn.jpush.im.proto.v;
+
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.umeng.analytics.MobclickAgent;
+import com.xyd.student.xydexamanalysis.R;
+import com.xyd.student.xydexamanalysis.entity.Single_pageList;
+import com.xyd.student.xydexamanalysis.entity.Single_scoreList;
+import com.xyd.student.xydexamanalysis.utils.DoubleUtils;
+import com.xyd.student.xydexamanalysis.utils.LoginUtils;
+import com.xyd.student.xydexamanalysis.utils.SubjectIconUtil;
+import com.xyd.student.xydexamanalysis.utils.ToastUtils;
+import com.xyd.student.xydexamanalysis.view.DetailTitle;
+import com.xyd.student.xydexamanalysis.view.TitleBar;
+import com.xyd.student.xydexamanalysis.view.TitleBar.TitleOnClickListener;
+import com.xyd.student.xydexamanalysis.view.ZoomImageView;
+
+public class SingleQuestionActivity extends Activity implements
+		TitleOnClickListener {
+
+	private Intent intent;
+	private Bundle bunde;
+	private TitleBar titleBar;
+	private DetailTitle titleDetail;
+	private Single_scoreList Single_score;
+	private LoginUtils loginUtils;
+	private ArrayList<Single_scoreList> scoreList;
+	private HorizontalScrollView scrollView;
+	private LinearLayout scroll_ll;
+	private int temp;
+	private String displayName;
+	private HashMap<Integer, TextView> hashMap;
+	private ImageView iconjudge;
+	private TextView title_name,single_question_title,single_question_course,single_question_time;
+	private ImageView icon_jiang;
+	private ImageView icon_you;
+	private TextView man_fen;
+	private ImageView icon_your_xingxing;
+	private TextView text_personScore;
+	private TextView text_classScore;
+	private TextView text_gradeScore;
+	private TextView your_fen;
+	private int scrWidth;
+	private int target;
+	private DisplayMetrics dm;
+	private Bitmap currentbitmp;
+	private ArrayList<Single_pageList> PageList;
+	private int scroindex;
+	private DisplayImageOptions imageOptions;
+	private String currentimagurl = "";
+	private FrameLayout ScroimagLayout;
+	private Double totalscore;
+	// private LargeImageView scroImageview;
+	// private ImageSurfaceView scroImageview;
+	private ZoomImageView scroImageview;
+
+	private Context mContext;
+
+	private String fileurl;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		mContext = this;
+		setContentView(R.layout.activity_single_question);
+		ScroimagLayout = (FrameLayout) findViewById(R.id.scro_image_layout);
+
+		this.intent = this.getIntent();
+		this.bunde = intent.getExtras();
+		loginUtils = new LoginUtils();
+		// Single_score = (Single_scoreList) bunde.getSerializable("info");
+		scoreList = (ArrayList<Single_scoreList>) bunde.getSerializable("list");
+		PageList = (ArrayList<Single_pageList>) bunde.getSerializable("pagelist");
+
+		totalscore = bunde.getDouble("score");
+		scroindex = bunde.getInt("scroindex");
+		Single_score = scoreList.get(scroindex);
+		displayName = Single_score.getDisplayName();
+
+		fileurl = bunde.getString("fileurl");
+		Log.e("scroindex", "scroindex:" + scroindex + "pagelist.size:"+ PageList.size());
+
+		imageOptions = initDisplayImageOptions();
+		initTitle();
+		initViewInfo();
+	}
+
+	private void initTitle() {
+		titleBar = (TitleBar) findViewById(R.id.single_question_titlebar);
+		titleBar.setLeftIcon(R.drawable.back_icon);
+		titleBar.setTitle("答题情况-"+bunde.getString("subject"));
+		titleBar.setTitleClickListener(this);
+//		titleDetail = (DetailTitle) findViewById(R.id.single_question_title);
+		single_question_title = (TextView) findViewById(R.id.single_question_title);
+		single_question_course = (TextView) findViewById(R.id.single_question_course);
+		single_question_time = (TextView) findViewById(R.id.single_question_time);
+		String time = bunde.getString("time");
+//		titleDetail.setTitle(SubjectIconUtil.getIcon(bunde.getString("subject")),bunde.getString("examname"), time.substring(0, 10));
+		
+		single_question_title.setText(bunde.getString("examname"));
+//		single_question_course.setText(bunde.getString("subject")+"");
+		single_question_time.setText(time.substring(0, 10));
+		scrollView = (HorizontalScrollView) findViewById(R.id.HorizontalScrollView);
+		scroll_ll = (LinearLayout) findViewById(R.id.scroll_ll);
+	}
+
+	private void initViewInfo() {
+		hashMap = new HashMap<Integer, TextView>();
+		DisplayMetrics dm = getResources().getDisplayMetrics();
+		scrWidth = (int) (dm.widthPixels);
+		for (int i = 0; i < scoreList.size(); i++) {
+			final int j = i;
+			final Single_scoreList single_scoreList = scoreList.get(i);
+			final TextView textView = new TextView(this);
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					(scrWidth) / 5, LinearLayout.LayoutParams.MATCH_PARENT);
+			textView.setLayoutParams(params);
+			textView.setText(single_scoreList.getDisplayName());
+			textView.setTextColor(getResources().getColor(R.color.single_text));
+
+			textView.setGravity(Gravity.CENTER);
+			textView.setSingleLine(true);
+			textView.setTextColor(getResources().getColor(R.color.single_text));
+			hashMap.put(i, textView);
+			scroll_ll.addView(textView);
+			if (displayName.equals(single_scoreList.getDisplayName())) {
+				temp = i;
+				target = i;
+				textView.setBackgroundResource(R.color.app_color);
+				textView.setTextColor(getResources().getColor(R.color.white));
+			}
+			textView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					if (temp != j) {
+
+						textView.setBackgroundResource(R.color.app_color);
+						textView.setTextColor(getResources().getColor(
+								R.color.white));
+						hashMap.get(temp).setBackgroundResource(R.color.white);
+						hashMap.get(temp).setTextColor(
+								getResources().getColor(R.color.single_text));
+						temp = j;
+						setInfo(single_scoreList);
+						String pageurl = PageList.get(
+								single_scoreList.getPageIndex() - 1)
+								.getPageUrl();
+						setiamgeload(pageurl, single_scoreList);
+					}
+				}
+			});
+		}
+
+		iconjudge = (ImageView) findViewById(R.id.icon_judge);
+		title_name = (TextView) findViewById(R.id.ti_title_name);
+		icon_jiang = (ImageView) findViewById(R.id.icon_jiang);
+		icon_you = (ImageView) findViewById(R.id.icon_you);
+		man_fen = (TextView) findViewById(R.id.man_fen);
+		icon_your_xingxing = (ImageView) findViewById(R.id.icon_your_xingxing);
+		text_personScore = (TextView) findViewById(R.id.text_personScore);
+		text_classScore = (TextView) findViewById(R.id.text_classScore);
+		text_gradeScore = (TextView) findViewById(R.id.text_gradeScore);
+		your_fen = (TextView) findViewById(R.id.your_fen);
+
+		setInfo(Single_score);
+		String pageurl = PageList.get(Single_score.getPageIndex() - 1)
+				.getPageUrl();
+		setiamgeload(pageurl, Single_score);
+		final TextView view = hashMap.get(target);
+		Runnable runnable = new Runnable() {
+			@SuppressLint("NewApi")
+			@Override
+			public void run() {
+				scrollView.scrollTo((int) view.getX(), 0);
+
+			}
+		};
+		Handler handler = new Handler();
+		handler.postDelayed(runnable, 200);
+	}
+
+	public void setInfo(final Single_scoreList Single_score) {
+
+		if (Single_score.getScoreFlag() == 1)
+			iconjudge.setBackgroundResource(R.drawable.dui);
+		else if (Single_score.getScoreFlag() == 2)
+			iconjudge.setBackgroundResource(R.drawable.bandui);
+		else
+			iconjudge.setBackgroundResource(R.drawable.cuo);
+		title_name.setText(Single_score.getDisplayName());
+		if (Single_score.getWkFlag() == 0) {
+			icon_jiang.setBackgroundResource(R.drawable.jiang_disabled);
+			icon_jiang.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Toast.makeText(SingleQuestionActivity.this, "暂无视频资源!!",
+							Toast.LENGTH_SHORT).show();
+				}
+			});
+		} else {
+			icon_jiang.setBackgroundResource(R.drawable.jiang_selector);
+			icon_jiang.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Intent intentwk = new Intent(SingleQuestionActivity.this,
+							ViewVideoActivity.class);
+					intentwk.putExtra("wk_reourceid", Single_score.getWkId());
+					intentwk.putExtra("wk_url", loginUtils.getWeiKeServUrl()
+							+ "WeiKe/resource/");
+					startActivity(intentwk);
+				}
+			});
+		}
+		if (Single_score.getExcellentFlag() == 0) {
+			icon_you.setBackgroundResource(R.drawable.you_disabled);
+			icon_you.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					Toast.makeText(SingleQuestionActivity.this, "暂无优秀答案!!",
+							Toast.LENGTH_SHORT).show();
+				}
+			});
+		} else {
+			icon_you.setBackgroundResource(R.drawable.you_selector);
+		}
+
+		if (Single_score.getFullScore() % 1.0 == 0) {
+
+			man_fen.setText("满分："
+					+ DoubleUtils.doubletoint(Single_score.getFullScore())
+					+ "分");
+
+		} else {
+
+			man_fen.setText("满分：" + Single_score.getFullScore() + "分");
+
+		}
+
+		Log.i("Lichg", Single_score.getEqDiffculty() + "");
+		double t = Single_score.getEqDiffculty();
+
+		if (t >= 0 && t < 0.05)
+			icon_your_xingxing.setBackgroundResource(R.drawable.star0);
+		else if (t >= 0.05 && t < 0.15)
+			icon_your_xingxing.setBackgroundResource(R.drawable.star1);
+		else if (t >= 0.15 && t < 0.25)
+			icon_your_xingxing.setBackgroundResource(R.drawable.star2);
+		else if (t >= 0.25 && t < 0.35)
+			icon_your_xingxing.setBackgroundResource(R.drawable.star3);
+		else if (t >= 0.35 && t < 0.45)
+			icon_your_xingxing.setBackgroundResource(R.drawable.star4);
+		else if (t >= 0.45 && t < 0.55)
+			icon_your_xingxing.setBackgroundResource(R.drawable.star5);
+		else if (t >= 0.55 && t < 0.65)
+			icon_your_xingxing.setBackgroundResource(R.drawable.star6);
+		else if (t >= 0.65 && t < 0.75)
+			icon_your_xingxing.setBackgroundResource(R.drawable.star7);
+		else if (t >= 0.75 && t < 0.85)
+			icon_your_xingxing.setBackgroundResource(R.drawable.star8);
+		else if (t >= 0.85 && t < 0.95)
+			icon_your_xingxing.setBackgroundResource(R.drawable.star9);
+		else
+			icon_your_xingxing.setBackgroundResource(R.drawable.star10);
+		text_personScore.setText("个人得分率 : "
+				+ DoubleUtils.doubletodouble((double) (Single_score
+						.getPersonScore() / Single_score.getFullScore() * 100))
+				+ "%");
+		text_classScore.setText("班级得分率 : "
+				+ DoubleUtils.doubletodouble((double) (Single_score
+						.getClassScore() / Single_score.getFullScore() * 100))
+				+ "%");
+		text_gradeScore.setText("年级得分率 : "
+				+ DoubleUtils.doubletodouble((double) (Single_score
+						.getGradeScore() / Single_score.getFullScore() * 100))
+				+ "%");
+
+		if (Single_score.getPersonScore() % 1.0 == 0) {
+
+			your_fen.setText(DoubleUtils.doubletoint(Single_score
+					.getPersonScore()) + "分");
+		} else {
+
+			your_fen.setText(Single_score.getPersonScore() + "分");
+
+		}
+	}
+
+	void setiamgeload(String imageurl, Single_scoreList scoreList) {
+		if (scoreList == null) {
+			ToastUtils.show(mContext, "数据获取错误!");
+			return;
+		}
+		if (imageurl != null && !imageurl.equals(currentimagurl)) {
+			// LoginUtils login = new LoginUtils();
+
+			String url = null;
+			if (fileurl != null) {
+				url = fileurl + imageurl.substring(1, imageurl.length());
+			}
+			Log.e("setiamgeload", "url:" + url + "-----" + currentimagurl);
+			ImageloadListener simpleloadlistener = new ImageloadListener(
+					scoreList);
+			// 清空掉之前的图片
+			ScroimagLayout.removeAllViews();
+			ImageLoader.getInstance().loadImage(url, imageOptions,
+					simpleloadlistener);
+			currentimagurl = imageurl;
+		} else if (imageurl != null && imageurl.endsWith(currentimagurl)) {
+			if (scroImageview != null) {
+				String contentXy = scoreList.getContentXy();
+				String[] xy = contentXy.split(",");
+				Log.e("setiamgeload", "contentXy:" + contentXy);
+				// System.out.println("==========" + xy);
+				int left = Integer.parseInt(xy[0]);
+				int top = Integer.parseInt(xy[1]);
+				int width = Integer.parseInt(xy[2]);
+				int height = Integer.parseInt(xy[3]);
+				scroImageview.setShowImageQuesRect(left, top, width, height);
+			} else {
+				ToastUtils.show(mContext, "暂无试卷");
+
+			}
+		}
+	}
+
+	@Override
+	public void leftClick() {
+		// TODO Auto-generated method stub
+		SingleQuestionActivity.this.finish();
+		overridePendingTransition(R.anim.in_anim2, R.anim.out_anim);
+	}
+
+	@Override
+	public void rightClick() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void titleClick() {
+		// TODO Auto-generated method stub
+
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		SingleQuestionActivity.this.finish();
+		overridePendingTransition(R.anim.in_anim2, R.anim.out_anim);
+	}
+
+	private DisplayImageOptions initDisplayImageOptions() {
+		DisplayImageOptions.Builder options = new DisplayImageOptions.Builder();
+		options.showImageForEmptyUri(R.drawable.sjloading);
+		options.showImageOnFail(R.drawable.sjfail);
+		options.resetViewBeforeLoading(true);
+		options.cacheInMemory(true);
+		options.cacheOnDisk(true);
+		options.imageScaleType(ImageScaleType.NONE);
+		options.bitmapConfig(Bitmap.Config.RGB_565);
+		options.considerExifParams(true);
+		options.displayer(new FadeInBitmapDisplayer(300));
+		return options.build();
+	}
+
+	private void drawScore(Canvas cv, double score, int x, int y,
+			Matrix matrix, float scaleWidth, float scaleHeight, int i) {
+		// TODO Auto-generated method stub
+
+		String scoreString = String.valueOf(score);
+		char[] charArray = scoreString.toCharArray();
+		int sX = x + i;
+		int sY = y;
+		for (int j = 0; j < charArray.length; j++) {
+			char c = charArray[j];
+			switch (c) {
+			case '1':
+				// Bitmap
+				// n1=ImageBitmapUtil.decodeimagemap.get(Integer.valueOf(R.drawable.no_1));
+				Bitmap n1 = BitmapFactory.decodeResource(getResources(),
+						R.drawable.no_1);
+				Bitmap new1 = Bitmap.createBitmap(n1, 0, 0, n1.getWidth(),
+						n1.getHeight(), matrix, true);
+				cv.drawBitmap(new1, sX, sY, null);
+				sX += new1.getWidth();
+				new1.recycle();
+				new1 = null;
+				break;
+			case '2':
+				Bitmap n2 = BitmapFactory.decodeResource(getResources(),
+						R.drawable.no_2);
+				Bitmap new2 = Bitmap.createBitmap(n2, 0, 0, n2.getWidth(),
+						n2.getHeight(), matrix, true);
+				cv.drawBitmap(new2, sX, sY, null);
+				sX += new2.getWidth();
+				new2.recycle();
+				new2 = null;
+				break;
+			case '3':
+				Bitmap n3 = BitmapFactory.decodeResource(getResources(),
+						R.drawable.no_3);
+				Bitmap new3 = Bitmap.createBitmap(n3, 0, 0, n3.getWidth(),
+						n3.getHeight(), matrix, true);
+				cv.drawBitmap(new3, sX, sY, null);
+				sX += new3.getWidth();
+				new3.recycle();
+				new3 = null;
+				break;
+			case '4':
+				Bitmap n4 = BitmapFactory.decodeResource(getResources(),
+						R.drawable.no_4);
+				Bitmap new4 = Bitmap.createBitmap(n4, 0, 0, n4.getWidth(),
+						n4.getHeight(), matrix, true);
+				cv.drawBitmap(new4, sX, sY, null);
+				sX += new4.getWidth();
+				new4.recycle();
+				new4 = null;
+				break;
+			case '5':
+				Bitmap n5 = BitmapFactory.decodeResource(getResources(),
+						R.drawable.no_5);
+				Bitmap new5 = Bitmap.createBitmap(n5, 0, 0, n5.getWidth(),
+						n5.getHeight(), matrix, true);
+				cv.drawBitmap(new5, sX, sY, null);
+				sX += new5.getWidth();
+				new5.recycle();
+				new5 = null;
+				break;
+			case '6':
+				Bitmap n6 = BitmapFactory.decodeResource(getResources(),
+						R.drawable.no_6);
+				Bitmap new6 = Bitmap.createBitmap(n6, 0, 0, n6.getWidth(),
+						n6.getHeight(), matrix, true);
+				cv.drawBitmap(new6, sX, sY, null);
+				sX += new6.getWidth();
+				new6.recycle();
+				new6 = null;
+				break;
+			case '7':
+				Bitmap n7 = BitmapFactory.decodeResource(getResources(),
+						R.drawable.no_7);
+				Bitmap new7 = Bitmap.createBitmap(n7, 0, 0, n7.getWidth(),
+						n7.getHeight(), matrix, true);
+				cv.drawBitmap(new7, sX, sY, null);
+				sX += new7.getWidth();
+				new7.recycle();
+				new7 = null;
+				break;
+			case '8':
+				Bitmap n8 = BitmapFactory.decodeResource(getResources(),
+						R.drawable.no_8);
+				Bitmap new8 = Bitmap.createBitmap(n8, 0, 0, n8.getWidth(),
+						n8.getHeight(), matrix, true);
+				cv.drawBitmap(new8, sX, sY, null);
+				sX += new8.getWidth();
+				new8.recycle();
+				new8 = null;
+				break;
+			case '9':
+				Bitmap n9 = BitmapFactory.decodeResource(getResources(),
+						R.drawable.no_9);
+				Bitmap new9 = Bitmap.createBitmap(n9, 0, 0, n9.getWidth(),
+						n9.getHeight(), matrix, true);
+				cv.drawBitmap(new9, sX, sY, null);
+				sX += new9.getWidth();
+				new9.recycle();
+				new9 = null;
+				break;
+			case '0':
+				Bitmap n0 = BitmapFactory.decodeResource(getResources(),
+						R.drawable.no_0);
+				Bitmap new0 = Bitmap.createBitmap(n0, 0, 0, n0.getWidth(),
+						n0.getHeight(), matrix, true);
+				cv.drawBitmap(new0, sX, sY, null);
+				sX += new0.getWidth();
+				new0.recycle();
+				new0 = null;
+				break;
+			case '.':
+				Bitmap nd = BitmapFactory.decodeResource(getResources(),
+						R.drawable.no_dian);
+				Bitmap newd = Bitmap.createBitmap(nd, 0, 0, nd.getWidth(),
+						nd.getHeight(), matrix, true);
+				cv.drawBitmap(newd, sX, sY, null);
+				sX += newd.getWidth();
+				newd.recycle();
+				newd = null;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
+	private Bitmap drawBitmap(Bitmap back, int pageindex) {
+		// TODO Auto-generated method stub
+		ArrayList<Single_scoreList> currentpagescrolist = new ArrayList<Single_scoreList>();
+		for (Single_scoreList scrolist : scoreList) {
+			if (scrolist.getPageIndex() == pageindex) {
+				currentpagescrolist.add(scrolist);
+			}
+		}
+		int[] flags = new int[currentpagescrolist.size()];
+		int[] x = new int[currentpagescrolist.size()];
+		int[] y = new int[currentpagescrolist.size()];
+		final int[] h = new int[currentpagescrolist.size()];
+		final int[] w = new int[currentpagescrolist.size()];
+		double[] personScore = new double[currentpagescrolist.size()];
+
+		for (int i = 0; i < currentpagescrolist.size(); i++) {
+
+			Single_scoreList single_scoreList = currentpagescrolist.get(i);
+			flags[i] = single_scoreList.getScoreFlag();
+			personScore[i] = single_scoreList.getPersonScore();
+			String answerXy = single_scoreList.getAnswerXy();
+			String[] xy = answerXy.split(",");
+			x[i] = Integer.parseInt(xy[0]);
+			y[i] = Integer.parseInt(xy[1]);
+			w[i] = Integer.parseInt(xy[2]);
+			h[i] = Integer.parseInt(xy[3]);
+			// Log.d("drawBitmap", "answer xy:"+answerXy);
+		}
+		Bitmap right = BitmapFactory.decodeResource(getResources(),
+				R.drawable.right);
+		Bitmap r_w = BitmapFactory.decodeResource(getResources(),
+				R.drawable.r_w);
+		Bitmap wrong = BitmapFactory.decodeResource(getResources(),
+				R.drawable.wrong);
+
+		int bgWidth = back.getWidth();
+		int bgHeight = back.getHeight();
+
+		// Log.d("drawBitmap",
+		// "bitmap width:"+bgWidth+" btimap height:"+bgHeight);
+		Bitmap newbmp = Bitmap.createBitmap(bgWidth, bgHeight, Config.RGB_565);
+		Canvas cv = new Canvas(newbmp);
+		cv.drawBitmap(back, 0, 0, null);
+
+		for (int i = 0; i < flags.length; i++) {
+			if (flags[i] == 1) {
+				float scaleWidth = ((float) w[i]) / right.getWidth();
+				float scaleHeight = ((float) h[i]) / right.getHeight();
+				Matrix matrix = new Matrix();
+				matrix.postScale(scaleWidth, scaleHeight);
+				Bitmap newR = Bitmap.createBitmap(right, 0, 0,
+						right.getWidth(), right.getHeight(), matrix, true);
+				cv.drawBitmap(newR, x[i], y[i], null);
+				drawScore(cv, personScore[i], x[i], y[i], matrix, scaleWidth,
+						scaleHeight, newR.getWidth());
+				newR.recycle();
+				newR = null;
+			} else if (flags[i] == 2) {
+				float scaleWidth = ((float) w[i]) / r_w.getWidth();
+				float scaleHeight = ((float) h[i]) / r_w.getHeight();
+				Matrix matrix = new Matrix();
+				matrix.postScale(scaleWidth, scaleHeight);
+				Bitmap newr_w = Bitmap.createBitmap(r_w, 0, 0, r_w.getWidth(),
+						r_w.getHeight(), matrix, true);
+				cv.drawBitmap(newr_w, x[i], y[i], null);
+				drawScore(cv, personScore[i], x[i], y[i], matrix, scaleWidth,
+						scaleHeight, newr_w.getWidth());
+				newr_w.recycle();
+				newr_w = null;
+			} else if (flags[i] == 3) {
+				float scaleWidth = ((float) w[i]) / wrong.getWidth();
+				float scaleHeight = ((float) h[i]) / wrong.getHeight();
+				Matrix matrix = new Matrix();
+				matrix.postScale(scaleWidth, scaleHeight);
+				Bitmap newwrong = Bitmap.createBitmap(wrong, 0, 0,
+						wrong.getWidth(), wrong.getHeight(), matrix, true);
+				cv.drawBitmap(newwrong, x[i], y[i], null);
+				drawScore(cv, personScore[i], x[i], y[i], matrix, scaleWidth,
+						scaleHeight, newwrong.getWidth());
+				newwrong.recycle();
+				newwrong = null;
+			}
+			if (pageindex == 1) {
+
+				double score = totalscore;
+				if (score > 0) {
+					String scoreString = String.valueOf(score);
+					char[] charArray = scoreString.toCharArray();
+					int sX = 100;
+					int sY = 100;
+					for (int j = 0; j < charArray.length; j++) {
+						char c = charArray[j];
+						switch (c) {
+						case '1':
+							Bitmap n1 = BitmapFactory.decodeResource(
+									getResources(), R.drawable.no_1);
+							// Bitmap
+							// n1=ImageBitmapUtil.decodeimagemap.get(Integer.valueOf(R.drawable.no_1));
+							cv.drawBitmap(n1, sX, sY, null);
+							sX += n1.getWidth();
+							n1.recycle();
+							n1 = null;
+							break;
+						case '2':
+							Bitmap n2 = BitmapFactory.decodeResource(
+									getResources(), R.drawable.no_2);
+							// Bitmap
+							// n2=ImageBitmapUtil.decodeimagemap.get(Integer.valueOf(R.drawable.no_2));
+							cv.drawBitmap(n2, sX, sY, null);
+							sX += n2.getWidth();
+							n2.recycle();
+							n2 = null;
+							break;
+						case '3':
+							Bitmap n3 = BitmapFactory.decodeResource(
+									getResources(), R.drawable.no_3);
+							// Bitmap
+							// n3=ImageBitmapUtil.decodeimagemap.get(Integer.valueOf(R.drawable.no_3));
+							cv.drawBitmap(n3, sX, sY, null);
+							sX += n3.getWidth();
+							n3.recycle();
+							n3 = null;
+							break;
+						case '4':
+							Bitmap n4 = BitmapFactory.decodeResource(
+									getResources(), R.drawable.no_4);
+							cv.drawBitmap(n4, sX, sY, null);
+							sX += n4.getWidth();
+							n4.recycle();
+							n4 = null;
+							break;
+						case '5':
+							Bitmap n5 = BitmapFactory.decodeResource(
+									getResources(), R.drawable.no_5);
+							cv.drawBitmap(n5, sX, sY, null);
+							sX += n5.getWidth();
+							n5.recycle();
+							n5 = null;
+							break;
+						case '6':
+							Bitmap n6 = BitmapFactory.decodeResource(
+									getResources(), R.drawable.no_6);
+							cv.drawBitmap(n6, sX, sY, null);
+							sX += n6.getWidth();
+							n6.recycle();
+							n6 = null;
+							break;
+						case '7':
+							Bitmap n7 = BitmapFactory.decodeResource(
+									getResources(), R.drawable.no_7);
+							cv.drawBitmap(n7, sX, sY, null);
+							sX += n7.getWidth();
+							n7.recycle();
+							n7 = null;
+							break;
+						case '8':
+							Bitmap n8 = BitmapFactory.decodeResource(
+									getResources(), R.drawable.no_8);
+							// Bitmap
+							// n8=ImageBitmapUtil.decodeimagemap.get(Integer.valueOf(R.drawable.no_8));
+							cv.drawBitmap(n8, sX, sY, null);
+							sX += n8.getWidth();
+							// n8.recycle();
+							n8 = null;
+							break;
+						case '9':
+							Bitmap n9 = BitmapFactory.decodeResource(
+									getResources(), R.drawable.no_9);
+							// Bitmap
+							// n9=ImageBitmapUtil.decodeimagemap.get(Integer.valueOf(R.drawable.no_9));
+							cv.drawBitmap(n9, sX, sY, null);
+							sX += n9.getWidth();
+							n9.recycle();
+							n9 = null;
+							break;
+						case '0':
+							Bitmap n0 = BitmapFactory.decodeResource(
+									getResources(), R.drawable.no_0);
+							// Bitmap
+							// n0=ImageBitmapUtil.decodeimagemap.get(Integer.valueOf(R.drawable.no_0));
+							cv.drawBitmap(n0, sX, sY, null);
+							sX += n0.getWidth();
+							n0.recycle();
+							n0 = null;
+							break;
+						case '.':
+							Bitmap nd = BitmapFactory.decodeResource(
+									getResources(), R.drawable.no_dian);
+							// Bitmap
+							// nd=ImageBitmapUtil.decodeimagemap.get(Integer.valueOf(R.drawable.no_dian));
+							cv.drawBitmap(nd, sX, sY, null);
+							sX += nd.getWidth();
+							nd.recycle();
+							nd = null;
+							break;
+						default:
+							break;
+						}
+					}
+					Bitmap deng = BitmapFactory.decodeResource(getResources(),
+							R.drawable.no_00);
+					cv.drawBitmap(deng, 130, sY + 100, null);
+					deng.recycle();
+					deng = null;
+				}
+			}
+		}
+
+		right.recycle();
+		right = null;
+		r_w.recycle();
+		r_w = null;
+		wrong.recycle();
+		wrong = null;
+
+		cv.save(Canvas.ALL_SAVE_FLAG);// 保存
+		cv.restore();// 存储
+		return newbmp;
+	}
+
+	private class ImageloadListener extends SimpleImageLoadingListener {
+		private Single_scoreList scoreList;
+
+		public ImageloadListener(Single_scoreList scoreList) {
+			this.scoreList = scoreList;
+		}
+
+		public void onLoadingStarted(String imageUri, View view) {
+
+		};
+
+		public void onLoadingFailed(String imageUri, View view,
+				FailReason failReason) {
+		};
+
+		public void onLoadingComplete(String imageUri, View view,
+				Bitmap loadedImage) {
+			if (loadedImage != null) {
+				Bitmap newBitmap = null;
+				try {
+					newBitmap = drawBitmap(loadedImage,
+							scoreList.getPageIndex());
+					showdscrollDetail(ScroimagLayout, newBitmap,
+							scoreList.getContentXy());
+					Log.e("onLoadingComplete",
+							"contentXy:" + scoreList.getContentXy()
+									+ " AnswerXy:" + scoreList.getAnswerXy());
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		};
+	}
+
+	private synchronized void showdscrollDetail(ViewGroup parentview,
+			Bitmap bitmap, String answerxy) {
+
+		LayoutParams flayoutparmas = new LayoutParams(
+				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		scroImageview = new ZoomImageView(this);
+		scroImageview.setLayoutParams(flayoutparmas);
+		parentview.addView(scroImageview);
+		String[] xy = answerxy.split(",");
+		int left = Integer.parseInt(xy[0]);
+		int top = Integer.parseInt(xy[1]);
+		int width = Integer.parseInt(xy[2]);
+		int height = Integer.parseInt(xy[3]);
+		scroImageview.setImageBitmap(bitmap);
+		scroImageview.setImageQuesRect(left, top, width, height);
+		// scroImageview.setImageBitmap(bitmap, answerX, answerY, answerW,
+		// answerH);
+
+	}
+
+	/**
+	 * 友盟统计
+	 */
+	@Override
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onPageStart("SingleQuestionActivity");
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPageEnd("SingleQuestionActivity");
+		MobclickAgent.onPause(this);
+	}
+
+}

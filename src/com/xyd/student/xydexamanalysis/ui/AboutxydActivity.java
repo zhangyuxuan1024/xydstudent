@@ -1,0 +1,123 @@
+package com.xyd.student.xydexamanalysis.ui;
+
+import com.xyd.student.xydexamanalysis.R;
+import com.xyd.student.xydexamanalysis.application.BaseApplication;
+import com.xyd.student.xydexamanalysis.utils.UpdateManager;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class AboutxydActivity extends Activity implements OnClickListener {
+
+	private ImageView iv_back;
+	private ImageView iv_update;
+
+	private TextView nowVersionCode;
+	private TextView no_update;
+
+	private RelativeLayout rl_checkupload;
+	private RelativeLayout rl_help;
+
+	private UpdateManager updateManager;
+
+	private Context context;
+
+	private BaseApplication baseApplication;
+
+	private int nowCode;
+	private double newCode;
+	private double versionSize;
+	private String versionName;
+	private String versionMark;
+	private String versionUrl;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_aboutxyd);
+		context = this;
+		initView();
+
+		versionName = baseApplication.getVersionName();
+		newCode = baseApplication.getVersionCode();
+		versionSize = baseApplication.getVersionSize();
+		versionMark = baseApplication.getVersionMark();
+		versionUrl = baseApplication.getVersionUrl();
+		nowCode = updateManager.getVersionCode(context);
+
+		nowVersionCode.setText(versionName);
+		Log.i("info", "newCode=" + newCode + ";nowCode=" + nowCode);
+		if (newCode > nowCode) {
+			no_update.setVisibility(View.GONE);
+			iv_update.setVisibility(View.VISIBLE);
+		} else {
+			no_update.setVisibility(View.VISIBLE);
+			iv_update.setVisibility(View.GONE);
+		}
+	}
+
+	public void initView() {
+		iv_update = (ImageView) findViewById(R.id.update);
+		iv_back = (ImageView) findViewById(R.id.aboutxyd_back);
+		rl_checkupload = (RelativeLayout) findViewById(R.id.aboutxyd_checkupload);
+		rl_help = (RelativeLayout) findViewById(R.id.aboutxyd_help);
+		nowVersionCode = (TextView) findViewById(R.id.aboutxyd_version_code);
+		no_update = (TextView) findViewById(R.id.no_update);
+
+		iv_back.setOnClickListener(this);
+		rl_checkupload.setOnClickListener(this);
+		rl_help.setOnClickListener(this);
+
+		updateManager = new UpdateManager(context);
+		baseApplication = (BaseApplication) getApplication();
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.aboutxyd_back:
+			AboutxydActivity.this.finish();
+			overridePendingTransition(R.anim.in_anim2, R.anim.out_anim);
+			break;
+
+		case R.id.aboutxyd_checkupload:
+			if (newCode > nowCode) {
+				Intent intent2 = new Intent(AboutxydActivity.this,
+						DialogActivity.class);
+				intent2.putExtra("versionMark", versionMark);
+				intent2.putExtra("versionUrl", versionUrl);
+				intent2.putExtra("versionName", versionName);
+				intent2.putExtra("versionSize", versionSize);
+				startActivity(intent2);
+			} else {
+				Toast.makeText(AboutxydActivity.this, "当前是最新版本",
+						Toast.LENGTH_SHORT).show();
+			}
+			break;
+
+		case R.id.aboutxyd_help:
+			Toast.makeText(AboutxydActivity.this, "设计中~", Toast.LENGTH_SHORT)
+					.show();
+			break;
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		AboutxydActivity.this.finish();
+		overridePendingTransition(R.anim.in_anim2, R.anim.out_anim);
+	}
+}

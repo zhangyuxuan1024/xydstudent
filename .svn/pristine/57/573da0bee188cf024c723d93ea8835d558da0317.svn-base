@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="app_color">#fe641e</color>
+    <color name="slip_color">#e6e6e6</color>
+    <color name="white">#ffffff</color>
+    
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="viewfinder_laser">#ff09BB07</color>
+    <color name="viewfinder_border">#ff09BB07</color>
+    <color name="navpage">#FFE1E8EB</color>
+    
+    <!-- 白色 -->
+    <color name="mediumaquamarine">#66cdaa</color>
+    <!-- 中绿色 -->
+    <color name="green">#008000</color>
+    <!-- 绿色 -->
+    <color name="transparent">#0000</color>
+    <!-- 透明 -->
+    <color name="itmeselect">#999999</color>
+    <color name="itme">#ffffff</color>
+    <color name="no_color">#00000000</color>
+    <color name="menu_item_text_color">#E60200</color>
+    <color name="gray">#88C0C0C0</color>
+    <color name="btnclick">#DEDCDC</color>
+    <color name="btnunclick">#eeeeee</color>
+    <color name="btnselect">#3d95ea</color>
+    <color name="btnnormal">#535353</color>
+    <color name="black">#FF000000</color>
+    <color name="search_dialog">#8000</color>
+    <color name="buttomcolor">#eeeeee</color>
+    <color name="white_transparent_bg">#33ffffff</color>
+    <color name="titlecolor">#fe641e</color>
+    <color name="titleColorpressed">#f45d19</color>
+    <color name="titlebar_press">#55000000</color>
+
+    <!-- blood -->
+    <color name="blood_darker">#732219</color>
+    <color name="blood_dark">#a63124</color>
+    <color name="blood_primary">#d94130</color>
+    <color name="blood_light">#f2b6ae</color>
+    <color name="single_green">#6ac14c</color>
+
+    <integer-array name="blood">
+        <item>@color/blood_darker</item>
+        <item>@color/blood_dark</item>
+        <item>@color/blood_primary</item>
+        <item>@color/blood_light</item>
+    </integer-array>
+    <!-- dark -->
+    <color name="dark_darker">#050505</color>
+    <color name="dark_dark">#202020</color>
+    <color name="dark_primary">#454545</color>
+    <color name="dark_light">#a3a3a3</color>
+
+    <integer-array name="dark">
+        <item>@color/dark_darker</item>
+        <item>@color/dark_dark</item>
+        <item>@color/dark_primary</item>
+        <item>@color/dark_light</item>
+    </integer-array>
+
+    <color name="login_textclour">#858585</color>
+    <color name="login_devideline">#e6e6e6</color>
+    <color name="login_texthint">#cccccc</color>
+    <color name="personal_text">#858585</color>
+    <color name="explainquestion_background">#f3f3f3</color>
+    <color name="text_clour_yellow">#fe641e</color>
+    <color name="full_scro_colur">#7d7d7d</color>
+    <color name="difficult_scro_colur">#bababa</color>
+    <color name="titlebar_color">#fe641e</color>
+    <color name="table_title">#45baf8</color>
+    <color name="barcolor1">#6ac14c</color>
+    <color name="barcolor2">#45baf8</color>
+    <color name="barcolor3">#ffa534</color>
+    <color name="t_wrong">#eb0600</color>
+    <color name="t_right">#5fc934</color>
+    <color name="t_rw">#eecc0e</color>
+    <color name="single_text">#5a5a5a</color>
+    <color name="radabackground">#f4f4f4</color>
+    <color name="redtextclour">#ff4609</color>
+    <color name="radatitleclour">#fe5000</color>
+    <color name="mastdegreeclour">#999999</color>
+    <color name="radalineclour">#bbbbbb</color>
+    <color name="personnalclour">#ff2500</color>
+    <color name="classclour">#666666</color>
+
+</resources>

@@ -1,0 +1,90 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f4f5f7"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+
+    <com.xyd.student.xydexamanalysis.view.TitleBar
+        android:id="@+id/input_code_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height" >
+    </com.xyd.student.xydexamanalysis.view.TitleBar>
+
+    <TextView
+        android:id="@+id/input_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="78dp"
+        android:textColor="#555555"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/register_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" | "
+            android:textColor="@color/app_color"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/input_edt"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="15dp"
+            android:layout_weight="6"
+            android:background="@color/white"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:textColor="#878787"
+            android:textColorHint="#ccc"
+            android:textCursorDrawable="@drawable/curosr"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/input_look"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/ic_eye" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/app_color"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/input_btn"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/button_shape"
+        android:textColor="@color/white"
+        android:textSize="17sp" 
+        android:gravity="center"/>
+
+</LinearLayout>

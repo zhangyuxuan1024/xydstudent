@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/weike_dialog_bg"
+    android:orientation="vertical" 
+    android:id="@+id/activity_root">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/weike_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/weike_edittext_bg"
+            android:ellipsize="end"
+            android:gravity="left|center_vertical"
+            android:minHeight="32dp"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+          	android:textColor="#555555"
+          	android:textColorHint="#bbbbbb"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="13dp"
+            android:gravity="right"
+            android:paddingRight="11dp"
+            android:text="最多可输入12个字符" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="#dddddd" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/weike_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#999999"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#dddddd" 
+            android:layout_marginTop="6dp"/>
+
+        <TextView
+            android:id="@+id/weike_update"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="修改"
+            android:textColor="#fe641e" />
+    </LinearLayout>
+
+</LinearLayout>

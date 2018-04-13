@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_exam_swiprefreshlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/main_exam_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/owner_background"
+        android:cacheColorHint="#eee" >
+
+        <ExpandableListView
+            android:id="@+id/my_exam_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:groupIndicator="@null"
+            android:scrollbars="none" />
+
+        <include
+            layout="@layout/loading_empty_prompt_linear"
+            android:visibility="gone" />
+
+        <include layout="@layout/loading_prompt_linear" />
+
+        <ImageView
+            android:id="@+id/img_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/icon_meishuji"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

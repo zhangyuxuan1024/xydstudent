@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/home_bottom_height" >
+
+    <LinearLayout
+        android:id="@+id/main_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/home_bottom_height"
+        android:background="#ffffff"
+        android:baselineAligned="false"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/main_menu_layout"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dip"
+            android:layout_weight="1"
+            android:orientation="vertical" 
+            android:visibility="gone">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="#eeeeee" />
+
+            <ImageView
+                android:id="@+id/main_menu_layout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:paddingTop="6dip"
+                android:src="@drawable/notice_selector" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dip"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="#eeeeee" />
+
+            <ImageView
+                android:id="@+id/main_menu_layout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:paddingTop="6dip"
+                android:src="@drawable/exam_selector" />
+        </LinearLayout>
+
+          <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dip"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="#eeeeee" />
+
+            <ImageView
+                android:id="@+id/main_menu_layout3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:paddingTop="6dip"
+                android:src="@drawable/weike_selector" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="4dip"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="#eeeeee" />
+
+            <ImageView
+                android:id="@+id/main_menu_layout4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:paddingTop="6dip"
+                android:src="@drawable/owner_selector" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- 实现提醒信息用的 -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/home_bottom_height"
+        android:background="#00000000"
+        android:orientation="horizontal" >
+
+        <!-- 显示提醒信息的button android:layout_weight=1  是3个butto，平分手机界面的宽度 -->
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="#00000000" />
+        <!-- 占位置的button，以便适应不同分辨率手机 -->
+
+        <View
+            android:id="@+id/bt"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="#00000000" />
+        <!-- 占位置的button，以便适应不同分辨率手机 -->
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="4"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+</FrameLayout>

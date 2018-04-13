@@ -1,0 +1,88 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="${relativePackage}.${activityClass}" >
+        
+    <com.xyd.student.xydexamanalysis.view.TitleBar
+        android:id="@+id/input_code_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height" >
+    </com.xyd.student.xydexamanalysis.view.TitleBar>
+       <TextView 
+  	    android:id="@+id/input_name"
+  	    android:layout_width="wrap_content"
+  	    android:layout_height="wrap_content"
+  	    android:layout_below="@+id/input_code_title"
+  	    android:layout_marginTop="78dp"
+  	    android:layout_marginLeft="30dp"
+  	    android:text="你好"
+  	    android:textColor="#555555"
+  	    android:textSize="16sp"
+  	        	/>
+      <LinearLayout
+         android:id="@+id/input_layout"
+  	     android:layout_width="match_parent"
+  	     android:layout_height="wrap_content"
+  	     android:layout_below="@+id/input_code_title"
+  	     android:layout_marginTop="75dp"
+  	     android:layout_marginRight="50dp"
+  	     android:layout_marginLeft="6dp"
+  	     android:layout_toRightOf="@+id/input_name"
+  	     android:orientation="horizontal" >
+  	     
+  	          	<TextView 
+  	        		android:layout_width="wrap_content"
+  	       			android:layout_height="wrap_content"
+  	        		android:text=" | "
+  	        		android:textSize="16sp"
+  	        		android:textColor="@color/app_color"
+  	              	/>
+				<EditText 
+			    	android:id="@+id/input_edt"
+			    	android:layout_width="0dp"
+			    	android:layout_height="wrap_content"
+			    	android:layout_marginRight="60dp"
+			    	android:background="@color/white"
+			    	android:textColor="@color/black"
+			    	android:inputType="textPassword"
+			    	android:textColorHint="@color/login_texthint"
+			    	android:textSize="16sp"
+			    	android:textCursorDrawable="@drawable/curosr"
+			    	android:maxLength="20"
+			    	android:layout_weight="6"
+			    	/>  
+			    <Button 
+			        android:id="@+id/input_look"
+			        android:layout_width="0dp"
+			        android:layout_height="10dp"
+			        android:layout_marginLeft="10dp"
+			        android:layout_weight="1"
+			        android:layout_gravity="center_vertical"
+			        android:background="@drawable/ic_eye"
+			        />
+       </LinearLayout>
+       <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/app_color" 
+            android:layout_below="@+id/input_layout"
+            android:layout_toRightOf="@+id/input_name"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginTop="4dp"
+            />
+       		<Button 
+  	    	android:id="@+id/input_btn"
+  	    	android:layout_width="72dp"
+  	    	android:layout_height="34dp"
+  	    	android:layout_below="@+id/input_layout"
+  	    	android:background="@drawable/button_shape"
+  	        android:textColor="@color/white"
+  	        android:textSize="16sp"
+  	        android:layout_centerHorizontal="true"
+  	        android:layout_marginTop="80dp"
+  	    />
+
+</RelativeLayout>

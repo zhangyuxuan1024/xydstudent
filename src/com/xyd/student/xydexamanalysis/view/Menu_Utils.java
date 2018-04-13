@@ -1,0 +1,161 @@
+package com.xyd.student.xydexamanalysis.view;
+
+/**
+ * Created by Lichg.
+ */
+import android.app.Activity;
+import android.os.Handler;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import com.readystatesoftware.viewbadger.BadgeView;
+import com.xyd.student.xydexamanalysis.R;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Menu_Utils implements OnClickListener {
+	private List<ImageView> list;
+	private BadgeView badge;
+	private onPageChangeListener changeListener;
+	private Handler mHandler;
+
+	public Menu_Utils(Activity context) {
+		mHandler = new Handler();
+		init(context);
+	}
+
+	public void setOnPageChangeListener(onPageChangeListener changeListener) {
+		this.changeListener = changeListener;
+	}
+
+	/**
+	 * 初始化方法
+	 */
+	private void init(Activity ctx) {
+		list = new ArrayList<ImageView>();
+		// list.add((ImageView) ctx.findViewById(R.id.main_menu_layout1));
+		list.add((ImageView) ctx.findViewById(R.id.main_menu_layout2));
+		list.add((ImageView) ctx.findViewById(R.id.main_menu_layout3));
+		list.add((ImageView) ctx.findViewById(R.id.main_menu_layout4));
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				setlisten();
+			}
+		}, 600);
+
+		setPosition(0);
+
+		badge = new BadgeView(ctx, ctx.findViewById(R.id.bt));
+		badge.setBadgePosition(BadgeView.POSITION_TOP_LEFT);
+		badge.hide();
+
+	}
+
+	public void setlisten() {
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setOnClickListener(this);
+		}
+	}
+
+	/**
+	 * 设置当选项
+	 * 
+	 * @param position
+	 *            位置
+	 */
+	public void setPosition(int position) {
+		for (int i = 0; i < list.size(); i++) {
+			if (i == position) {
+				switch (i) {
+				// case 0:
+				// list.get(i).setImageResource(R.drawable.hover_1);
+				// break;
+				case 0:
+					list.get(i).setImageResource(R.drawable.hover_2);
+					break;
+				case 1:
+					list.get(i).setImageResource(R.drawable.tab_weike_pressed);
+					break;
+				case 2:
+					list.get(i).setImageResource(R.drawable.hover_3);
+					break;
+				default:
+					break;
+				}
+			} else {
+				switch (i) {
+				// case 0:
+				// list.get(i).setImageResource(R.drawable.normal_1);
+				// break;
+				case 0:
+					list.get(i).setImageResource(R.drawable.normal_2);
+					break;
+				case 1:
+					list.get(i).setImageResource(R.drawable.tab_weike);
+					break;
+				case 2:
+					list.get(i).setImageResource(R.drawable.normal_3);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
+
+	/****
+	 * 
+	 * 设置button显示数量小标
+	 * 
+	 ****/
+	public void setDisplayNum(int num) {
+		if (null != badge) {
+			if (num > 0) {
+				badge.setText(num + "");
+				badge.show();
+			} else {
+				badge.hide();
+			}
+		}
+	}
+
+	/**
+	 * 页码变化回调接口
+	 */
+	public interface onPageChangeListener {
+		public void onPageChange(int position);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		// case R.id.main_menu_layout1:
+		// setPosition(0);
+		// if (changeListener != null) {
+		// changeListener.onPageChange(0);
+		// }
+		// break;
+		case R.id.main_menu_layout2:
+			setPosition(0);
+			if (changeListener != null) {
+				changeListener.onPageChange(0);
+			}
+			break;
+		case R.id.main_menu_layout3:
+			setPosition(1);
+			if (changeListener != null) {
+				changeListener.onPageChange(1);
+			}
+			break;
+		case R.id.main_menu_layout4:
+			setPosition(2);
+			if (changeListener != null) {
+				changeListener.onPageChange(2);
+			}
+			break;
+		default:
+			break;
+		}
+	}
+}

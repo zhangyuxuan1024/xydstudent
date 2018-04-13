@@ -1,0 +1,132 @@
+package com.xyd.student.xydexamanalysis.entity;
+
+import java.io.Serializable;
+
+public class Single_pageList implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1615815500102210779L;
+	private int seId;
+	private int pageIndex;
+	private String pageUrl;
+	private String pageWh;
+	private int width;
+	private int height;
+	private String prefixPageUrl;
+
+	public Single_pageList() {
+		super();
+	}
+
+	public Single_pageList(int seId, int pageIndex, String pageUrl,
+			String pageWh, int width, int height, String prefixPageUrl) {
+		super();
+		this.seId = seId;
+		this.pageIndex = pageIndex;
+		this.pageUrl = pageUrl;
+		this.pageWh = pageWh;
+		this.width = width;
+		this.height = height;
+		this.prefixPageUrl = prefixPageUrl;
+	}
+
+	public String getPrefixPageUrl() {
+		return prefixPageUrl;
+	}
+
+	public void setPrefixPageUrl(String prefixPageUrl) {
+		this.prefixPageUrl = prefixPageUrl;
+	}
+
+	/**
+	 * @return the seId
+	 */
+	public int getSeId() {
+		return seId;
+	}
+
+	/**
+	 * @param seId
+	 *            the seId to set
+	 */
+	public void setSeId(int seId) {
+		this.seId = seId;
+	}
+
+	/**
+	 * @return the pageIndex
+	 */
+	public int getPageIndex() {
+		return pageIndex;
+	}
+
+	/**
+	 * @param pageIndex
+	 *            the pageIndex to set
+	 */
+	public void setPageIndex(int pageIndex) {
+		this.pageIndex = pageIndex;
+	}
+
+	/**
+	 * @return the pageUrl
+	 */
+	public String getPageUrl() {
+		return pageUrl;
+	}
+
+	/**
+	 * @param pageUrl
+	 *            the pageUrl to set
+	 */
+	public void setPageUrl(String pageUrl) {
+		this.pageUrl = pageUrl;
+	}
+
+	/**
+	 * @return the pageWh
+	 */
+	public String getPageWh() {
+		return pageWh;
+	}
+
+	/**
+	 * @param pageWh
+	 *            the pageWh to set
+	 */
+	public void setPageWh(String pageWh) {
+		this.pageWh = pageWh;
+	}
+
+	/**
+	 * @return the width
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * @param width
+	 *            the width to set
+	 */
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	/**
+	 * @return the height
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * @param height
+	 *            the height to set
+	 */
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+}

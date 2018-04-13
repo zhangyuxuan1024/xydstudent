@@ -1,0 +1,219 @@
+package com.xyd.student.xydexamanalysis.Fragment;
+
+import java.io.InputStream;
+import java.net.URL;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.params.AuthPolicy;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.umeng.analytics.MobclickAgent;
+import com.xyd.student.xydexamanalysis.R;
+import com.xyd.student.xydexamanalysis.application.BaseApplication;
+import com.xyd.student.xydexamanalysis.constant.Constants;
+import com.xyd.student.xydexamanalysis.ui.AboutxydActivity;
+import com.xyd.student.xydexamanalysis.ui.DialogActivity;
+import com.xyd.student.xydexamanalysis.ui.LoginActivity;
+import com.xyd.student.xydexamanalysis.ui.MainActivity;
+import com.xyd.student.xydexamanalysis.ui.ModifyPasswordActivity;
+import com.xyd.student.xydexamanalysis.ui.MySaveActivity;
+import com.xyd.student.xydexamanalysis.ui.PayDemoActivity;
+import com.xyd.student.xydexamanalysis.ui.Update2Activity;
+import com.xyd.student.xydexamanalysis.ui.UpdateActivity;
+import com.xyd.student.xydexamanalysis.utils.JsonUtils;
+import com.xyd.student.xydexamanalysis.utils.LoginUtils;
+import com.xyd.student.xydexamanalysis.utils.ToastUtils;
+import com.xyd.student.xydexamanalysis.utils.UIUtils;
+import com.xyd.student.xydexamanalysis.utils.UpdateManager;
+
+@SuppressLint("ValidFragment")
+public class OwnerFragment extends Fragment implements OnClickListener {
+	private Button user_exit;
+	private ImageView user_edit_iv, update_iv;
+	private TextView noUpdate, user_name;
+	private RelativeLayout about_ll;
+	private RelativeLayout about_save;
+	private SharedPreferences msharedPreferences;
+	private Context context;
+	private boolean hasNew = false;
+	private LoginUtils loginUtils;
+	private int nowCode = 0;
+	private String versionName;
+	private String versionMark;
+	private String versionUrl;
+	private double versionCode;
+	private double versionSize;
+
+	private BaseApplication baseApplication;
+
+	public OwnerFragment() {
+		super();
+	}
+
+	public OwnerFragment(Context context) {
+		super();
+		this.context = context;
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		View ownerView = View.inflate(UIUtils.getContext(),
+				R.layout.owner_frame_layout2, null);
+		context = getActivity();
+		update_iv = (ImageView) ownerView.findViewById(R.id.update);
+		noUpdate = (TextView) ownerView.findViewById(R.id.no_update);
+		loginUtils = new LoginUtils();
+		user_exit = (Button) ownerView.findViewById(R.id.user_exit);
+		about_ll = (RelativeLayout) ownerView.findViewById(R.id.about_ll);
+		about_save = (RelativeLayout) ownerView.findViewById(R.id.about_mysave);
+		user_edit_iv = (ImageView) ownerView.findViewById(R.id.user_edit_iv);
+		Bitmap bitmap = readBitMap(context, R.drawable.morenxiaohui);
+		user_edit_iv.setImageBitmap(bitmap);
+		user_name = (TextView) ownerView.findViewById(R.id.user_name);
+
+		SharedPreferences share = getActivity().getSharedPreferences(
+				Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+		boolean isphone = share.getBoolean("isphone", false);
+		String str = "";
+		if (isphone) {
+			str = share.getString("login_phone", "");
+			user_name.setText(str);
+		} else {
+			user_name.setText(loginUtils.getStudentname());
+		}
+
+		user_exit.setOnClickListener(this);
+		// user_edit_iv.setOnClickListener(this);//修改用户密码
+		update_iv.setOnClickListener(this);
+		about_ll.setOnClickListener(this);
+		about_save.setOnClickListener(this);
+		msharedPreferences = getActivity().getSharedPreferences(
+				Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+		baseApplication = (BaseApplication) getActivity().getApplication();
+		versionCode = baseApplication.getVersionCode();
+		versionName = baseApplication.getVersionName();
+		versionMark = baseApplication.getVersionMark();
+		versionUrl = baseApplication.getVersionUrl();
+		versionSize = baseApplication.getVersionSize();
+
+		try {
+			// 获取软件版本号，对应AndroidManifest.xml下android:versionCode
+			PackageManager manager = context.getPackageManager();
+			PackageInfo packageInfo = manager.getPackageInfo(
+					context.getPackageName(), 0);
+			String pakname = packageInfo.packageName;
+			Log.v("getVersionCode", "package name = " + pakname);
+			nowCode = packageInfo.versionCode;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		System.out.println("=================" + nowCode);
+		if (versionCode > nowCode) {
+			hasNew = true;
+			update_iv.setVisibility(View.VISIBLE);
+			noUpdate.setVisibility(View.GONE);
+		} else {
+			hasNew = false;
+			update_iv.setVisibility(View.GONE);
+			noUpdate.setVisibility(View.VISIBLE);
+		}
+
+		return ownerView;
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.user_exit:
+			Intent intent3 = new Intent(this.context, LoginActivity.class);
+			msharedPreferences.edit().putBoolean("had_login", false).commit();
+			startActivity(intent3);
+
+			MobclickAgent.onKillProcess(context);
+			getActivity().finish();
+			break;
+		case R.id.user_edit_iv:
+			Intent intent = new Intent(getActivity(),
+					ModifyPasswordActivity.class);
+			startActivity(intent);
+			break;
+		case R.id.about_ll:
+//			Intent intent2 = new Intent(getActivity(), UpdateActivity.class);
+			Intent intent2 = new Intent(getActivity(),AboutxydActivity.class);
+			startActivity(intent2);
+			getActivity().overridePendingTransition(R.anim.in_anim,R.anim.out_anim2);
+			break;
+		case R.id.update:
+			Intent i = new Intent(getActivity(), UpdateActivity.class);
+			startActivity(i);
+			break;
+		case R.id.about_mysave:
+			Intent intent5 = new Intent(getActivity(), MySaveActivity.class);
+			startActivity(intent5);
+			getActivity().overridePendingTransition(R.anim.in_anim,
+					R.anim.out_anim2);
+			break;
+		default:
+			break;
+		}
+	}
+
+	public static Bitmap readBitMap(Context context, int resId) {
+		BitmapFactory.Options opt = new BitmapFactory.Options();
+		opt.inPreferredConfig = Bitmap.Config.RGB_565;
+		opt.inPurgeable = true;
+		opt.inInputShareable = true;
+		// 获取资源图片
+
+		InputStream is = context.getResources().openRawResource(resId);
+		return BitmapFactory.decodeStream(is, null, opt);
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		MobclickAgent.onPageEnd("OwnerFragment");
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MobclickAgent.onPageStart("OwnerFragment");
+	}
+}

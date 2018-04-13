@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">心意答学生</string>
+    <string name="s_notice">通知</string>
+    <string name="s_exam">考试</string>
+    <string name="s_weike">微课</string>
+    <string name="s_owner">个人中心</string>
+    <string name="s_loading_show_start">努力加载中……</string>
+    <string name="s_loading_show_empty">当前暂无数据</string>
+    <string name="s_loading">正在加载中</string>
+    <string name="s_loading_no_data">未查询到相关数据</string>
+    <string name="s_loading_no_result">未查询到相关信息</string>
+    <string name="s_s"> > </string>
+    <string name="s_singlereport">单科成绩报告</string>
+    <string name="s_searchschool">查询学校</string>
+    <string name="login_switch">切换</string>
+    <string name="login_switch_hint">心意答云分析平台</string>
+    <string name="login_username_hit"> 请输入考号</string>
+    <string name="login_password_hit"> 请输入姓名</string>
+    <string name="register">快速注册</string>
+    <string name="forget_pwd">忘记密码？</string>
+    <string name="phone_number">请输入手机号</string>
+    <string name="phone_pwd">请输入密码</string>
+    <string name="remind_pwd">记住登录信息</string>
+    <string name="login">登    录</string>
+    <string name="foreword_pwd">忘记密码？</string>
+    <string name="networknotavilable">无网络，请检查网络连接~</string>
+    <string name="confirm">确  定</string>
+    <string name="explain_question">试题讲解 </string>
+    <string name="forget_password">忘记密码？</string>
+    <string name="modify_confirm">确  认</string>
+    <string name="old_password">旧密码</string>
+    <string name="new_password">新密码</string>
+    <string name="confirm_password">确认密码</string>
+    <string name="user_update">版本更新</string>
+    <string name="user_no_update">当前为最新版本</string>
+    <string name="user_about">关于心意答</string>
+    <string name="user_mysave">我的收藏</string>
+    <string name="personal_exit">退  出</string>
+    <string name="present_version">当前版本：</string>
+    <string name="new_version">新版本：</string>
+    <string name="upload">下载</string>
+    <string name="modify_pw">修改密码</string>
+    <string name="grade_analyze">总成绩报告</string>
+    <string name="total_situation">总体情况</string>
+    <string name="dine_analyze">偏科分析</string>
+    <string name="ban_analyze">班级均分分析</string>
+    <string name="nian_analyze">年级均分分析</string>
+    <string name="knowledge_radar">知识点雷达图</string>
+    <string name="youxiu">优秀答案</string>
+    <string name="shifen">失分题 </string>
+    <string name="soft_update_title">软件更新</string>
+    <string name="soft_update_info">检测到新版本，立即更新吗</string>
+    <string name="soft_update_updatebtn">更新</string>
+    <string name="soft_update_later">稍后更新</string>
+    <string name="soft_updating">正在更新</string>
+    <string name="soft_update_cancel">取消</string>
+    <string name="user_money">财务中心</string>
+    <string name="radapersonler">个人 : 20.00%</string>
+    <string name="radabanji">班级 : 75.00%</string>
+    <string name="radanianji">年级 : 66.00%</string>
+    <string name="radakaoshi">考试 : 55.00%</string>
+    <string name="app_tip">提示</string>
+    <!-- WXPayEntryActivity -->
+    <string name="pay_result_tip">这个界面用于显示第三方app通过微信支付的结果</string>
+    <string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>
+    <string name="title_activity_pay_dialog2">PayDialog2Activity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="weike_san">扫一扫</string>
+    <string name="weike_click_san">点击扫描微课二维码可观看视频</string>
+    <string name="weike_san_record">扫题记录</string>
+    <string name="weike_san_record_wk">为您记录扫描过的微课</string>
+    <string name="prompt">将二维码放入框内，即可自动扫描</string>
+    <string name="weike_scan_result">扫描结果</string>
+    <string name="weike_scan_m">微课扫描</string>
+    <string name="weike_scan_t">扫题记录</string>
+    <string name="title_activity_register_and_for_pwd">RegisterAndForPwdActivity</string>
+    <string name="title_activity_input_code">InputCodeActivity</string>
+
+	<string name="login_exam_num">考号登录</string>
+	<string name="login_phone_num">手机号登录</string>
+
+	<string name="xyd_edu">心意答教育</string>
+</resources>

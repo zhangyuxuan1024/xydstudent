@@ -1,0 +1,524 @@
+package com.xyd.student.xydexamanalysis.Fragment;
+
+/**
+ * Created by Lichg.
+ */
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ExpandableListView;
+
+import com.umeng.analytics.MobclickAgent;
+import com.xyd.student.xydexamanalysis.R;
+import com.xyd.student.xydexamanalysis.adapter.ExamExpandAdapter;
+import com.xyd.student.xydexamanalysis.constant.Constants;
+import com.xyd.student.xydexamanalysis.entity.Exam_Con;
+import com.xyd.student.xydexamanalysis.entity.SingleExam;
+import com.xyd.student.xydexamanalysis.ui.GradeReportActivity;
+import com.xyd.student.xydexamanalysis.ui.PayDialog2Activity;
+import com.xyd.student.xydexamanalysis.ui.PayDialogActivity;
+import com.xyd.student.xydexamanalysis.ui.SingReportActivity;
+import com.xyd.student.xydexamanalysis.utils.GsonUtil;
+import com.xyd.student.xydexamanalysis.utils.JsonUtils;
+import com.xyd.student.xydexamanalysis.utils.LoginUtils;
+import com.xyd.student.xydexamanalysis.utils.MyHttpUtil;
+import com.xyd.student.xydexamanalysis.utils.NetWorkUtils;
+import com.xyd.student.xydexamanalysis.utils.ToastUtils;
+import com.xyd.student.xydexamanalysis.utils.UIUtils;
+import com.xyd.student.xydexamanalysis.view.LoadingHelper;
+import com.xyd.student.xydexamanalysis.view.LoadingListener;
+import com.xyd.student.xydexamanalysis.view.MyListView;
+
+public class ExamFragment extends Fragment implements LoadingListener,
+		ExpandableListView.OnChildClickListener {
+	private LoadingHelper loadingHelper;
+	// private PullToRefreshListView mPullRefreshListView;
+	private boolean isFirst = true;
+	private boolean isEnd = false;
+	private boolean loading = false;
+	private int currentPage = 1;
+	// private MyExamAdapter adapter;
+	private ExpandableListView listView;
+	private ExamExpandAdapter adapter;
+	private Exam_Con exam_con;
+	private List<SingleExam> examlist;
+	private Handler mHandler;
+	private Context context;
+	private LoginUtils login;
+	private JSONObject param;
+	private boolean firstin;
+	private String ExamserverUrl;
+
+	private LoginUtils loginUtils;
+
+	public ExamFragment() {
+		// TODO Auto-generated constructor stub
+		mHandler = new Handler();
+		login = new LoginUtils();
+		this.firstin = true;
+	}
+
+	public ExamFragment(Context context) {
+		// TODO Auto-generated constructor stub
+		mHandler = new Handler();
+		this.context = context;
+		login = new LoginUtils();
+		this.firstin = true;
+	}
+
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		SharedPreferences msharedPreferences = activity.getSharedPreferences(
+				Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+		ExamserverUrl = msharedPreferences.getString("ReportServUrl", "");
+		if (ExamserverUrl.equals("")) {
+			ToastUtils.show(context, "获取服务器地址错误，请重新登录");
+			activity.finish();
+			return;
+		} else {
+			ExamserverUrl = ExamserverUrl + "sac/queryexams";
+		}
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		View view = View.inflate(UIUtils.getContext(),
+				R.layout.main_exam_frame, null);
+
+		context = getActivity();
+		loginUtils = new LoginUtils();
+
+		listView = (ExpandableListView) view.findViewById(R.id.my_exam_frame);
+		listView.setOnChildClickListener(this);
+
+		// 重写OnGroupClickListener，实现当展开时，ExpandableListView不自动滚动
+		listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+			@Override
+			public boolean onGroupClick(ExpandableListView parent, View v,
+					int groupPosition, long id) {
+				if (parent.isGroupExpanded(groupPosition)) {
+					parent.collapseGroup(groupPosition);
+				} else {
+					// 第二个参数false表示展开时是否触发默认滚动动画
+					parent.expandGroup(groupPosition, false);
+				}
+				return true;
+			}
+		});
+
+		loadingHelper = new LoadingHelper(
+				view.findViewById(R.id.loading_prompt_linear),
+				view.findViewById(R.id.loading_empty_prompt_linear));
+		loadingHelper.ShowLoading();
+		loadingHelper.SetListener(this);
+
+		// mPullRefreshListView = (PullToRefreshListView) view
+		// .findViewById(R.id.my_exam_frame);
+		// // 下拉加载的事件不支持
+		// mPullRefreshListView.setPullLoadEnabled(false);
+		// // 上拉加载下拉刷新支持
+		// mPullRefreshListView.setScrollLoadEnabled(true);
+		// mPullRefreshListView.setOnScrollListener(new OnScrollListener() {
+		// @Override
+		// public void onScrollStateChanged(AbsListView view, int scrollState) {
+		// if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
+		//
+		// } else {
+		//
+		// }
+		// // }
+		//
+		// @Override
+		// public void onScroll(AbsListView view, int firstVisibleItem,
+		// int visibleItemCount, int totalItemCount) {
+		//
+		// }
+		// });
+
+		/*
+		 * mPullRefreshListView .setOnRefreshListener(new
+		 * PullToRefreshBase.OnRefreshListener<MyListView>() {
+		 * 
+		 * @Override public void onPullDownToRefresh(
+		 * PullToRefreshBase<MyListView> refreshView) { //
+		 * 下拉刷新,请求网络,url(一样),清除之前数据,再次加载一遍 if (!loading) {
+		 * mHandler.postDelayed(new Runnable() {
+		 * 
+		 * @Override public void run() { if (!NetWorkUtils
+		 * .isNetworkAvailable(context)) { ToastUtils.show(UIUtils.getContext(),
+		 * "请检查网络"); } else { ToastUtils.show(UIUtils.getContext(), "没有新数据"); }
+		 * // mPullRefreshListView // // .onPullUpRefreshComplete(); // //
+		 * mPullRefreshListView .onPullDownRefreshComplete(); //
+		 * mPullRefreshListView.onPullUpRefreshComplete(); } }, 1500); return; }
+		 * readData(true); }
+		 * 
+		 * @Override public void onPullUpToRefresh(
+		 * PullToRefreshBase<MyListView> refreshView) { //
+		 * 上拉加载,请求网络,url(moreUrl),原有数据的基础上,再添加一部分 if (isEnd) {
+		 * mHandler.postDelayed(new Runnable() {
+		 * 
+		 * @Override public void run() { ToastUtils.show(UIUtils.getContext(),
+		 * "没有更多数据了"); mPullRefreshListView .onPullUpRefreshComplete(); } },
+		 * 1500); return; } isFirst = false; currentPage++; readData(false); }
+		 * }); mPullRefreshListView.getRefreshableView().setOnItemClickListener(
+		 * new OnItemClickListener() {
+		 * 
+		 * @Override public void onItemClick(AdapterView<?> parent, View view,
+		 * int position, long id) {
+		 * 
+		 * } });
+		 */
+		if (!NetWorkUtils.isNetworkAvailable(context)) {
+			loadingHelper.ShowError("请检查您的网络连接！");
+		}else {
+			readData(true);	
+		}
+		return view;
+	}
+
+	private void readData(final boolean refrehing) {
+		isFirst = false;
+		if (refrehing) {
+			currentPage = 1;
+			isEnd = false;
+		}
+		param = new JSONObject();
+		try {
+			param.put("type", "QueryStudentExamsReqInfo");
+			param.put("userId", login.getLoginUserId());
+			param.put("studentId", login.getStudentid());
+			param.put("studentName", login.getStudentname());
+			param.put("schoolId", login.getSchoolId());
+			param.put("meId", null);
+			param.put("pageIndex", currentPage + "");
+			param.put("limitCount", Constants.ROWS_EXAM_LIMIT + "");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Log.i("info", "考试参数=" + param);
+		// Log.i("info", "路径=" + ExamserverUrl);
+		MyHttpUtil httpUtil = MyHttpUtil.getInstance(context);
+		loading = true;
+		httpUtil.request(ExamserverUrl, param, new MyHttpUtil.HttpCallback() {
+			@Override
+			public void success(String result) {
+				// Log.i("Lichg", "examing sucessfully!!!!!!!");
+				// 去除顶部(刷新)或者底部(加载)对应的头和尾
+				// mPullRefreshListView.onPullDownRefreshComplete();
+				// mPullRefreshListView.onPullUpRefreshComplete();
+				// System.out.println(result);
+				getInfoSuccess(result, refrehing);
+				loading = false;
+			}
+
+			@Override
+			public void error(int state, String errorMsg) {
+				// Log.i("Lichg", "examing faild!!!!!!!");
+				loadingHelper.ShowError(errorMsg);
+				// //getInfoSuccess(errorMsg, refrehing);
+				// Log.i("lichg", "errorMsg, refrehing=" + errorMsg);
+				loading = false;
+			}
+		});
+
+	}
+
+	private void getInfoSuccess(String backString, boolean refreshing) {
+		if (GsonUtil.checkJson(backString)) {
+			loadingHelper.HideLoading(View.INVISIBLE);
+			if (refreshing || isFirst) {
+				exam_con = JsonUtils.jsontoExamList(backString);
+				if (exam_con != null) {
+					examlist = exam_con.getExamlist();
+				}
+			} else {
+				Exam_Con exam_con_t = JsonUtils.jsontoExamList(backString);
+				if (exam_con_t != null && exam_con_t.getExamlist() != null) {
+					examlist.addAll(exam_con_t.getExamlist());
+				}
+				if (exam_con_t == null
+						|| exam_con_t.getExamlist().size() < Constants.ROWS_EXAM_LIMIT) {
+					isEnd = true;
+				}
+			}
+			if (examlist == null || examlist.size() == 0) {
+				loadingHelper.ShowEmptyData();
+			}
+			flushListview(examlist);
+		} else {
+			loadingHelper.ShowError(this.getString(R.string.s_loading_no_data));
+		}
+	}
+
+	private void flushListview(final List<SingleExam> list) {
+		// mPullRefreshListView.getFooterLoadingLayout().setVisibility(View.GONE);
+		// mPullRefreshListView.setTotalCount(exam_con.getTotal());
+		if (adapter == null) {
+			// adapter = new MyExamAdapter(UIUtils.getContext(), list);
+			// mPullRefreshListView.getRefreshableView().setAdapter(adapter);
+			adapter = new ExamExpandAdapter(context, list);
+			listView.setAdapter(adapter);
+		} else {
+			// adapter.setList(list);
+		}
+	}
+
+	@Override
+	public void OnRetryClick() {
+		// TODO Auto-generated method stub
+		loadingHelper.ShowLoading();
+		readData(true);
+	}
+
+	public void update() {
+		if (examlist != null && examlist.size() != 0 && firstin == true) {
+			flushListview(examlist);
+			// mPullRefreshListView.onPullDownRefreshComplete();
+			// mPullRefreshListView.onPullUpRefreshComplete();
+			// Log.i("Lichg", "+++++++++++++++++++++++++examlist update");
+			firstin = false;
+		}
+		// Log.i("Lichg", "------------------------examlist update");
+	}
+
+	@Override
+	public boolean onChildClick(ExpandableListView parent, View v,
+			int groupPosition, int childPosition, long id) {
+		List<SingleExam> data = examlist;
+		int position = groupPosition;
+		int position_item = childPosition;
+
+		String course_name = data.get(position).getReportlist()
+				.get(position_item).getSe_course_name();
+
+		int payStatus = data.get(position).getReportlist().get(position_item)
+				.getPayInfo().getPayStatus();
+		if (course_name.endsWith("总分")) {
+			// 判断支付
+
+			if (payStatus == 1) {
+				Intent intent = new Intent(context, GradeReportActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+				Bundle bundle = new Bundle();
+				bundle.putString("time", data.get(position).getExam_time());
+				bundle.putString("name", data.get(position).getExam_name());
+				bundle.putInt("meId", data.get(position).getMeId());
+				bundle.putString("studentId", loginUtils.getStudentid());
+				bundle.putInt("schoolId", loginUtils.getSchoolId());
+				System.out.println(bundle);
+				intent.putExtras(bundle);
+				context.startActivity(intent);
+			} else {
+				int payType = data.get(position).getReportlist()
+						.get(position_item).getPayInfo().getChargeInfo()
+						.getPayType();
+				if (payType == 1) {
+					Intent p_intent = new Intent(context,
+							PayDialogActivity.class);
+					Bundle p_bundle = new Bundle();
+					p_bundle.putInt("meId", data.get(position).getReportlist()
+							.get(position_item).getMeId());
+					p_bundle.putInt("seId", data.get(position).getReportlist()
+							.get(position_item).getSeId());
+					p_bundle.putString("chargeName", data.get(position)
+							.getReportlist().get(position_item).getPayInfo()
+							.getChargeInfo().getChargeName());
+					p_bundle.putDouble("amount", data.get(position)
+							.getReportlist().get(position_item).getPayInfo()
+							.getChargeInfo().getAmount());
+					p_bundle.putString("meName", data.get(position)
+							.getExam_name());
+					p_bundle.putString("courseName", data.get(position)
+							.getReportlist().get(position_item)
+							.getCourse_name());
+					p_intent.putExtras(p_bundle);
+
+					p_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+					context.startActivity(p_intent);
+				} else if (payType == 2) {
+					Intent p_intent = new Intent(context,
+							PayDialog2Activity.class);
+					Bundle p_bundle = new Bundle();
+					p_bundle.putInt("meId", data.get(position).getReportlist()
+							.get(position_item).getMeId());
+					p_bundle.putInt("seId", data.get(position).getReportlist()
+							.get(position_item).getSeId());
+					p_bundle.putString("chargeName", data.get(position)
+							.getReportlist().get(position_item).getPayInfo()
+							.getChargeInfo().getChargeName());
+					p_bundle.putDouble("amount", data.get(position)
+							.getReportlist().get(position_item).getPayInfo()
+							.getChargeInfo().getAmount());
+					p_bundle.putString("meName", data.get(position)
+							.getExam_name());
+					p_bundle.putString("courseName", data.get(position)
+							.getReportlist().get(position_item)
+							.getCourse_name());
+					p_bundle.putString("freeTime", data.get(position)
+							.getReportlist().get(position_item).getPayInfo()
+							.getChargeInfo().getFreeTime());
+
+					p_bundle.putString("time", data.get(position)
+							.getExam_time());
+					p_bundle.putString("name", data.get(position)
+							.getExam_name());
+
+					p_intent.putExtras(p_bundle);
+
+					p_intent.putExtra("studentId", loginUtils.getStudentid());
+					p_intent.putExtra("schoolId", loginUtils.getSchoolId());
+					p_intent.putExtra("fragmentType", "Exam");
+					p_intent.putExtra("noticetype", "总成绩报告");
+
+					p_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+					context.startActivity(p_intent);
+				}
+
+			}
+
+		} else {
+			// 判断支付
+
+			if (payStatus == 1) {
+
+				Intent intent = new Intent(context, SingReportActivity.class);
+
+				Bundle v_intent = new Bundle();
+				v_intent.putString("studentName", loginUtils.getStudentname());
+				v_intent.putString("studentId", loginUtils.getStudentid());
+				v_intent.putString("classId", data.get(position)
+						.getReportlist().get(position_item).getClassId());
+				v_intent.putInt("schoolId", loginUtils.getSchoolId());
+				v_intent.putInt("seId",
+						data.get(position).getReportlist().get(position_item)
+								.getSeId());
+				v_intent.putInt("meId",
+						data.get(position).getReportlist().get(position_item)
+								.getMeId());
+				v_intent.putInt("currentindex", -1);
+				v_intent.putString("examname", data.get(position)
+						.getExam_name());
+				v_intent.putString("subject", data.get(position)
+						.getReportlist().get(position_item).getSe_course_name());
+				v_intent.putString("time", data.get(position).getExam_time());
+				v_intent.putString("classId", data.get(position)
+						.getReportlist().get(position_item).getClassId());
+				intent.putExtras(v_intent);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				context.startActivity(intent);
+			} else {
+				int payType = data.get(position).getReportlist()
+						.get(position_item).getPayInfo().getChargeInfo()
+						.getPayType();
+
+				if (payType == 1) {
+					Intent p_intent = new Intent(context,
+							PayDialogActivity.class);
+					Bundle p_bundle = new Bundle();
+					p_bundle.putInt("meId", data.get(position).getReportlist()
+							.get(position_item).getMeId());
+					p_bundle.putInt("seId", data.get(position).getReportlist()
+							.get(position_item).getSeId());
+					p_bundle.putString("chargeName", data.get(position)
+							.getReportlist().get(position_item).getPayInfo()
+							.getChargeInfo().getChargeName());
+					p_bundle.putDouble("amount", data.get(position)
+							.getReportlist().get(position_item).getPayInfo()
+							.getChargeInfo().getAmount());
+					p_bundle.putString("meName", data.get(position)
+							.getExam_name());
+					p_bundle.putString("courseName", data.get(position)
+							.getReportlist().get(position_item)
+							.getCourse_name());
+					p_intent.putExtras(p_bundle);
+					p_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+					context.startActivity(p_intent);
+				} else if (payType == 2) {
+					Intent p_intent = new Intent(context,
+							PayDialog2Activity.class);
+					Bundle p_bundle = new Bundle();
+					p_bundle.putInt("meId", data.get(position).getReportlist()
+							.get(position_item).getMeId());
+					p_bundle.putInt("seId", data.get(position).getReportlist()
+							.get(position_item).getSeId());
+					p_bundle.putString("chargeName", data.get(position)
+							.getReportlist().get(position_item).getPayInfo()
+							.getChargeInfo().getChargeName());
+					p_bundle.putDouble("amount", data.get(position)
+							.getReportlist().get(position_item).getPayInfo()
+							.getChargeInfo().getAmount());
+					p_bundle.putString("meName", data.get(position)
+							.getExam_name());
+					p_bundle.putString("courseName", data.get(position)
+							.getReportlist().get(position_item)
+							.getCourse_name());
+					p_bundle.putString("freeTime", data.get(position)
+							.getReportlist().get(position_item).getPayInfo()
+							.getChargeInfo().getFreeTime());
+
+					p_bundle.putString("classId", data.get(position)
+							.getReportlist().get(position_item).getClassId());
+					p_bundle.putString("examname", data.get(position)
+							.getExam_name());
+					p_bundle.putString("subject", data.get(position)
+							.getReportlist().get(position_item)
+							.getSe_course_name());
+					p_bundle.putString("time", data.get(position)
+							.getExam_time());
+
+					p_intent.putExtras(p_bundle);
+
+					p_intent.putExtra("studentId", loginUtils.getStudentid());
+					p_intent.putExtra("schoolId", loginUtils.getSchoolId());
+					p_intent.putExtra("studentName",
+							loginUtils.getStudentname());
+					p_intent.putExtra("fragmentType", "Exam");
+					p_intent.putExtra("noticetype", "单科成绩报告");
+
+					p_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+					context.startActivity(p_intent);
+				}
+
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MobclickAgent.onPageStart("ExamFragment");
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		MobclickAgent.onPageEnd("ExamFragment");
+	}
+
+}

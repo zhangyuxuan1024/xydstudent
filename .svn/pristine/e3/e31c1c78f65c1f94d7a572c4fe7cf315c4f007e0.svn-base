@@ -1,0 +1,313 @@
+package com.xyd.student.xydexamanalysis.Fragment;
+
+/**
+ * Created by Lichg.
+ */
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+
+import com.umeng.analytics.MobclickAgent;
+import com.xyd.student.xydexamanalysis.R;
+import com.xyd.student.xydexamanalysis.adapter.MyExamAdapter;
+import com.xyd.student.xydexamanalysis.constant.Constants;
+import com.xyd.student.xydexamanalysis.entity.Exam_Con;
+import com.xyd.student.xydexamanalysis.entity.SingleExam;
+import com.xyd.student.xydexamanalysis.pullrefreshview.PullToRefreshBase;
+import com.xyd.student.xydexamanalysis.pullrefreshview.PullToRefreshListView;
+import com.xyd.student.xydexamanalysis.utils.GsonUtil;
+import com.xyd.student.xydexamanalysis.utils.JsonUtils;
+import com.xyd.student.xydexamanalysis.utils.LoginUtils;
+import com.xyd.student.xydexamanalysis.utils.MyHttpUtil;
+import com.xyd.student.xydexamanalysis.utils.NetWorkUtils;
+import com.xyd.student.xydexamanalysis.utils.ToastUtils;
+import com.xyd.student.xydexamanalysis.utils.UIUtils;
+import com.xyd.student.xydexamanalysis.view.LoadingHelper;
+import com.xyd.student.xydexamanalysis.view.LoadingListener;
+import com.xyd.student.xydexamanalysis.view.MyListView;
+
+public class ExamFragment extends Fragment implements LoadingListener {
+
+	private LoadingHelper loadingHelper;
+	private PullToRefreshListView mPullRefreshListView;
+	private boolean isFirst = true;
+	private boolean isEnd = false;
+	private boolean loading = false;
+	private int currentPage = 1;
+	private MyExamAdapter adapter;
+	private Exam_Con exam_con;
+	private List<SingleExam> examlist;
+	private Handler mHandler;
+	private Context context;
+	private LoginUtils login;
+	private JSONObject param;
+	private boolean firstin;
+	private String ExamserverUrl;
+
+	public ExamFragment() {
+		// TODO Auto-generated constructor stub
+		mHandler = new Handler();
+		login = new LoginUtils();
+		this.firstin = true;
+	}
+
+	public ExamFragment(Context context) {
+		// TODO Auto-generated constructor stub
+		mHandler = new Handler();
+		this.context = context;
+		login = new LoginUtils();
+		this.firstin = true;
+	}
+
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		SharedPreferences msharedPreferences = activity.getSharedPreferences(
+				Constants.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+		ExamserverUrl = msharedPreferences.getString("ReportServUrl", "");
+		if (ExamserverUrl.equals("")) {
+			ToastUtils.show(context, "获取服务器地址错误，请重新登录");
+			activity.finish();
+			return;
+		} else {
+			ExamserverUrl = ExamserverUrl + "sac/queryexams";
+		}
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		View view = View.inflate(UIUtils.getContext(),
+				R.layout.main_exam_frame, null);
+
+		context = getActivity();
+
+		loadingHelper = new LoadingHelper(
+				view.findViewById(R.id.loading_prompt_linear),
+				view.findViewById(R.id.loading_empty_prompt_linear));
+		loadingHelper.ShowLoading();
+		loadingHelper.SetListener(this);
+
+		mPullRefreshListView = (PullToRefreshListView) view
+				.findViewById(R.id.my_exam_frame);
+		// 下拉加载的事件不支持
+		mPullRefreshListView.setPullLoadEnabled(false);
+		// 上拉加载下拉刷新支持
+		mPullRefreshListView.setScrollLoadEnabled(true);
+		// mPullRefreshListView.setOnScrollListener(new OnScrollListener() {
+		// @Override
+		// public void onScrollStateChanged(AbsListView view, int scrollState) {
+		// if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
+		//
+		// } else {
+		//
+		// }
+		// // }
+		//
+		// @Override
+		// public void onScroll(AbsListView view, int firstVisibleItem,
+		// int visibleItemCount, int totalItemCount) {
+		//
+		// }
+		// });
+
+		mPullRefreshListView
+				.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<MyListView>() {
+					@Override
+					public void onPullDownToRefresh(
+							PullToRefreshBase<MyListView> refreshView) {
+						// 下拉刷新,请求网络,url(一样),清除之前数据,再次加载一遍
+						if (!loading) {
+							mHandler.postDelayed(new Runnable() {
+								@Override
+								public void run() {
+									if (!NetWorkUtils
+											.isNetworkAvailable(context)) {
+										ToastUtils.show(UIUtils.getContext(),
+												"请检查网络");
+									} else {
+										ToastUtils.show(UIUtils.getContext(),
+												"没有新数据");
+									}
+									// mPullRefreshListView
+									// // .onPullUpRefreshComplete();
+									// //
+									mPullRefreshListView
+											.onPullDownRefreshComplete();
+									// mPullRefreshListView.onPullUpRefreshComplete();
+								}
+							}, 1500);
+							return;
+						}
+						readData(true);
+					}
+
+					@Override
+					public void onPullUpToRefresh(
+							PullToRefreshBase<MyListView> refreshView) {
+						// 上拉加载,请求网络,url(moreUrl),原有数据的基础上,再添加一部分
+						if (isEnd) {
+							mHandler.postDelayed(new Runnable() {
+								@Override
+								public void run() {
+									ToastUtils.show(UIUtils.getContext(),
+											"没有更多数据了");
+									mPullRefreshListView
+											.onPullUpRefreshComplete();
+								}
+							}, 1500);
+							return;
+						}
+						isFirst = false;
+						currentPage++;
+						readData(false);
+					}
+				});
+		mPullRefreshListView.getRefreshableView().setOnItemClickListener(
+				new OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+
+					}
+				});
+		readData(true);
+
+		return view;
+	}
+
+	private void readData(final boolean refrehing) {
+
+		isFirst = false;
+		if (refrehing) {
+			currentPage = 1;
+			isEnd = false;
+		}
+		param = new JSONObject();
+		try {
+			param.put("type", "QueryStudentExamsReqInfo");
+			param.put("userId", login.getLoginUserId());
+			param.put("studentId", login.getStudentid());
+			param.put("studentName", login.getStudentname());
+			param.put("schoolId", login.getSchoolId());
+			param.put("meId", null);
+			param.put("pageIndex", currentPage + "");
+			param.put("limitCount", Constants.ROWS_EXAM_LIMIT + "");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Log.i("lichg", "param=" + param + "");
+		MyHttpUtil httpUtil = MyHttpUtil.getInstance(context);
+		loading = true;
+		httpUtil.request(ExamserverUrl, param, new MyHttpUtil.HttpCallback() {
+			@Override
+			public void success(String result) {
+				Log.i("Lichg", "examing sucessfully!!!!!!!");
+				// 去除顶部(刷新)或者底部(加载)对应的头和尾
+				mPullRefreshListView.onPullDownRefreshComplete();
+				mPullRefreshListView.onPullUpRefreshComplete();
+				System.out.println(result);
+				getInfoSuccess(result, refrehing);
+				loading = false;
+			}
+
+			@Override
+			public void error(int state, String errorMsg) {
+				Log.i("Lichg", "examing faild!!!!!!!");
+				loadingHelper.ShowError(errorMsg);
+				// //getInfoSuccess(errorMsg, refrehing);
+				Log.i("lichg", "errorMsg, refrehing=" + errorMsg);
+				loading = false;
+			}
+		});
+
+	}
+
+	private void getInfoSuccess(String backString, boolean refreshing) {
+		if (GsonUtil.checkJson(backString)) {
+			loadingHelper.HideLoading(View.INVISIBLE);
+			if (refreshing || isFirst) {
+				exam_con = JsonUtils.jsontoExamList(backString);
+				if (exam_con != null) {
+					examlist = exam_con.getExamlist();
+				}
+			} else {
+				Exam_Con exam_con_t = JsonUtils.jsontoExamList(backString);
+				if (exam_con_t != null && exam_con_t.getExamlist() != null) {
+					examlist.addAll(exam_con_t.getExamlist());
+				}
+				if (exam_con_t == null
+						|| exam_con_t.getExamlist().size() < Constants.ROWS_EXAM_LIMIT) {
+					isEnd = true;
+				}
+			}
+			if (examlist == null || examlist.size() == 0) {
+				loadingHelper.ShowEmptyData();
+			}
+			flushListview(examlist);
+		} else {
+			loadingHelper.ShowError(this.getString(R.string.s_loading_no_data));
+		}
+	}
+
+	private void flushListview(final List<SingleExam> list) {
+		mPullRefreshListView.getFooterLoadingLayout().setVisibility(View.GONE);
+		mPullRefreshListView.setTotalCount(exam_con.getTotal());
+		if (adapter == null) {
+			adapter = new MyExamAdapter(UIUtils.getContext(), list);
+			mPullRefreshListView.getRefreshableView().setAdapter(adapter);
+		} else {
+			adapter.setList(list);
+		}
+	}
+
+	@Override
+	public void OnRetryClick() {
+		// TODO Auto-generated method stub
+		loadingHelper.ShowLoading();
+		readData(true);
+	}
+
+	public void update() {
+		if (examlist != null && examlist.size() != 0 && firstin == true) {
+			flushListview(examlist);
+			mPullRefreshListView.onPullDownRefreshComplete();
+			mPullRefreshListView.onPullUpRefreshComplete();
+			Log.i("Lichg", "+++++++++++++++++++++++++examlist update");
+			firstin = false;
+		}
+		Log.i("Lichg", "------------------------examlist update");
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		MobclickAgent.onPageStart("ExamFragment");
+	}
+
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		MobclickAgent.onPageEnd("ExamFragment");
+	}
+
+}

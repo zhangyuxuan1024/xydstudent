@@ -1,0 +1,2583 @@
+com.example.mycharts.BuildConfig
+com.example.mycharts.R
+com.example.mycharts.R$attr
+com.example.mycharts.R$dimen
+com.example.mycharts.R$style
+com.github.mikephil.charting.animation.ChartAnimator:
+    57:79:public void animateXY(int,int,com.github.mikephil.charting.animation.EasingFunction,com.github.mikephil.charting.animation.EasingFunction)
+    91:99:public void animateX(int,com.github.mikephil.charting.animation.EasingFunction)
+    111:119:public void animateY(int,com.github.mikephil.charting.animation.EasingFunction)
+    139:161:public void animateXY(int,int,com.github.mikephil.charting.animation.Easing$EasingOption,com.github.mikephil.charting.animation.Easing$EasingOption)
+    173:181:public void animateX(int,com.github.mikephil.charting.animation.Easing$EasingOption)
+    193:201:public void animateY(int,com.github.mikephil.charting.animation.Easing$EasingOption)
+    291:292:public void setPhaseY(float)
+    309:310:public void setPhaseX(float)
+com.github.mikephil.charting.animation.Easing:
+    9:9:public Easing()
+com.github.mikephil.charting.animation.Easing$EasingFunctions:
+    108:108:private Easing$EasingFunctions()
+com.github.mikephil.charting.buffer.AbstractBuffer:
+    45:48:public void limitFrom(int)
+    52:55:public void limitTo(int)
+    public abstract void feed(java.util.List)
+com.github.mikephil.charting.charts.BarChart:
+    111:132:public android.graphics.RectF getBarBounds(com.github.mikephil.charting.data.BarEntry)
+com.github.mikephil.charting.charts.BarLineChartBase:
+    276:278:public void resetTracking()
+    637:645:public void zoomIn()
+    651:659:public void zoomOut()
+    686:694:public void fitScreen()
+    704:706:public void setScaleMinima(float,float)
+    744:747:public void setVisibleXRange(float,float)
+    757:759:public void setVisibleYRangeMaximum(float,com.github.mikephil.charting.components.YAxis$AxisDependency)
+    768:784:public void moveViewToX(float)
+    794:804:public void moveViewToY(float,com.github.mikephil.charting.components.YAxis$AxisDependency)
+    817:827:public void moveViewTo(float,float,com.github.mikephil.charting.components.YAxis$AxisDependency)
+    839:851:public void centerViewTo(int,float,com.github.mikephil.charting.components.YAxis$AxisDependency)
+    871:882:public void setViewPortOffsets(float,float,float,float)
+    889:891:public void resetViewPortOffsets()
+    905:908:public float getDeltaY(com.github.mikephil.charting.components.YAxis$AxisDependency)
+    938:947:public android.graphics.PointF getPosition(com.github.mikephil.charting.data.Entry,com.github.mikephil.charting.components.YAxis$AxisDependency)
+    1121:1130:public com.github.mikephil.charting.utils.PointD getValuesByTouchPoint(float,float,com.github.mikephil.charting.components.YAxis$AxisDependency)
+    1143:1149:public com.github.mikephil.charting.utils.PointD getPixelsForValues(float,float,com.github.mikephil.charting.components.YAxis$AxisDependency)
+    1161:1161:public float getYValueByTouchPoint(float,float,com.github.mikephil.charting.components.YAxis$AxisDependency)
+    1172:1176:public com.github.mikephil.charting.data.Entry getEntryByTouchPoint(float,float)
+    1457:1464:public void setPaint(android.graphics.Paint,int)
+    1468:1477:public android.graphics.Paint getPaint(int)
+com.github.mikephil.charting.charts.BarLineChartBase$1
+com.github.mikephil.charting.charts.BarLineChartBase$DefaultFillFormatter
+com.github.mikephil.charting.charts.Chart:
+    public static final java.lang.String LOG_TAG
+    public static final int PAINT_GRID_BACKGROUND
+    public static final int PAINT_INFO
+    public static final int PAINT_DESCRIPTION
+    public static final int PAINT_HOLE
+    public static final int PAINT_CENTER_TEXT
+    public static final int PAINT_LEGEND_LABEL
+    300:303:public void clear()
+    310:312:public void clearValues()
+    322:329:public boolean isEmpty()
+    protected abstract void calcMinMax()
+    477:484:public void highlightValues(com.github.mikephil.charting.highlight.Highlight[])
+    495:504:public void highlightValue(int,int)
+    716:717:public void animateXY(int,int,com.github.mikephil.charting.animation.EasingFunction,com.github.mikephil.charting.animation.EasingFunction)
+    729:730:public void animateX(int,com.github.mikephil.charting.animation.EasingFunction)
+    742:743:public void animateY(int,com.github.mikephil.charting.animation.EasingFunction)
+    764:765:public void animateXY(int,int,com.github.mikephil.charting.animation.Easing$EasingOption,com.github.mikephil.charting.animation.Easing$EasingOption)
+    777:778:public void animateX(int,com.github.mikephil.charting.animation.Easing$EasingOption)
+    790:791:public void animateY(int,com.github.mikephil.charting.animation.Easing$EasingOption)
+    960:962:public float getAverage(java.lang.String)
+    1014:1015:public void setDescriptionPosition(float,float)
+    1060:1064:public void setExtraOffsets(float,float,float,float)
+    1270:1278:public void setPaint(android.graphics.Paint,int)
+    1287:1294:public android.graphics.Paint getPaint(int)
+    1304:1304:public boolean isDrawMarkerViewEnabled()
+    1325:1328:public java.lang.String getXValue(int)
+    1341:1354:public java.util.List getEntriesAtIndex(int)
+    1373:1373:public float getPercentOfTotal(float)
+    1448:1468:public boolean saveToPath(java.lang.String,java.lang.String)
+    1544:1545:public void addJob(java.lang.Runnable)
+    1548:1549:public void removeJob(java.lang.Runnable)
+    1552:1553:public void clearAllJobs()
+com.github.mikephil.charting.charts.PieRadarChartBase:
+    public abstract int getIndexForAngle(float)
+    424:438:public java.util.List getSelectionDetailsAtIndex(int)
+com.github.mikephil.charting.components.AxisBase:
+    78:79:public void setDrawAxisLine(boolean)
+    97:98:public void setGridColor(int)
+    116:117:public void setAxisLineWidth(float)
+    135:136:public void setGridLineWidth(float)
+    154:155:public void setAxisLineColor(int)
+    173:174:public void setDrawLabels(boolean)
+    191:197:public void addLimitLine(com.github.mikephil.charting.components.LimitLine)
+    205:206:public void removeLimitLine(com.github.mikephil.charting.components.LimitLine)
+    212:213:public void removeAllLimitLines()
+    231:232:public void setDrawLimitLinesBehindData(boolean)
+    public abstract java.lang.String getLongestLabel()
+    256:259:public void enableGridDashedLine(float,float,float)
+    265:266:public void disableGridDashedLine()
+    274:274:public boolean isGridDashedLineEnabled()
+com.github.mikephil.charting.components.ComponentBase:
+    54:55:public void setXOffset(float)
+    75:76:public void setYOffset(float)
+    128:129:public void setTextColor(int)
+com.github.mikephil.charting.components.Legend:
+    120:133:public Legend(int[],java.lang.String[])
+    142:155:public Legend(java.util.List,java.util.List)
+    247:247:public java.lang.String getLabel(int)
+    273:275:public void setExtra(java.util.List,java.util.List)
+    284:286:public void setExtra(int[],java.lang.String[])
+    299:307:public void setCustom(int[],java.lang.String[])
+    320:328:public void setCustom(java.util.List,java.util.List)
+    336:337:public void resetCustom()
+    380:381:public void setDirection(com.github.mikephil.charting.components.Legend$LegendDirection)
+    398:399:public void setForm(com.github.mikephil.charting.components.Legend$LegendForm)
+    408:409:public void setFormSize(float)
+    475:476:public void setFormToTextSpace(float)
+    493:494:public void setStackSpace(float)
+    576:577:public void setWordWrapEnabled(boolean)
+    586:586:public boolean isWordWrapEnabled()
+    614:615:public void setMaxSizePercent(float)
+com.github.mikephil.charting.components.LimitLine:
+    57:59:public LimitLine(float)
+    68:71:public LimitLine(float,java.lang.String)
+    90:95:public void setLineWidth(float)
+    113:114:public void setLineColor(int)
+    133:136:public void enableDashedLine(float,float,float)
+    142:143:public void disableDashedLine()
+    152:152:public boolean isDashedLineEnabled()
+    170:171:public void setTextColor(int)
+    189:190:public void setTextStyle(android.graphics.Paint$Style)
+    208:209:public void setLabelPosition(com.github.mikephil.charting.components.LimitLine$LimitLabelPosition)
+    227:228:public void setLabel(java.lang.String)
+    245:246:public void setTextSize(float)
+com.github.mikephil.charting.components.MarkerView:
+    28:30:public MarkerView(android.content.Context,int)
+    58:65:public void draw(android.graphics.Canvas,float,float)
+com.github.mikephil.charting.components.XAxis:
+    113:118:public void setLabelsToSkip(int)
+    126:127:public void resetLabelsToSkip()
+    156:157:public void setAvoidFirstLastClipping(boolean)
+    189:198:public java.lang.String getLongestLabel()
+com.github.mikephil.charting.components.YAxis:
+    120:121:public void setPosition(com.github.mikephil.charting.components.YAxis$YAxisLabelPosition)
+    139:140:public void setDrawTopYLabelEntry(boolean)
+    188:189:public void setShowOnlyMinMax(boolean)
+    207:208:public void setInverted(boolean)
+    257:258:public void resetAxisMinValue()
+    279:280:public void resetAxisMaxValue()
+    288:289:public void setSpaceTop(float)
+    306:307:public void setSpaceBottom(float)
+    328:331:public float getRequiredHeightSpace(android.graphics.Paint)
+com.github.mikephil.charting.data.BarData:
+    27:28:public BarData(java.util.List)
+    31:32:public BarData(java.lang.String[])
+    39:40:public BarData(java.lang.String[],java.util.List)
+    43:44:public BarData(java.util.List,com.github.mikephil.charting.data.BarDataSet)
+    47:48:public BarData(java.lang.String[],com.github.mikephil.charting.data.BarDataSet)
+    51:53:private static java.util.List toList(com.github.mikephil.charting.data.BarDataSet)
+    79:80:public void setGroupSpace(float)
+com.github.mikephil.charting.data.BarDataSet:
+    50:65:public com.github.mikephil.charting.data.DataSet copy()
+    178:178:public int getEntryCountStacks()
+    187:187:public float getBarSpacePercent()
+    205:206:public void setBarSpacePercent(float)
+    216:217:public void setBarShadowColor(int)
+    236:237:public void setHighLightAlpha(int)
+    255:256:public void setStackLabels(java.lang.String[])
+com.github.mikephil.charting.data.BarEntry:
+    27:31:public BarEntry(int[],int)
+    53:57:public BarEntry(int[],int,java.lang.String)
+    68:69:public BarEntry(float,int,java.lang.Object)
+    76:78:public com.github.mikephil.charting.data.BarEntry copy()
+    97:100:public void setVals(int[])
+    118:118:public boolean isStacked()
+    123:134:public float getBelowSum(int)
+    157:175:private void calcPosNegSum()
+    185:193:private static float calcSum(int[])
+    1:1:public bridge synthetic com.github.mikephil.charting.data.Entry copy()
+com.github.mikephil.charting.data.BarLineScatterCandleData:
+    19:20:public BarLineScatterCandleData(java.util.List)
+    23:24:public BarLineScatterCandleData(java.lang.String[])
+    31:32:public BarLineScatterCandleData(java.lang.String[],java.util.List)
+com.github.mikephil.charting.data.BarLineScatterCandleDataSet:
+    30:31:public void setHighLightColor(int)
+com.github.mikephil.charting.data.CandleData
+com.github.mikephil.charting.data.CandleDataSet
+com.github.mikephil.charting.data.CandleEntry
+com.github.mikephil.charting.data.ChartData:
+    72:76:public ChartData(java.util.List)
+    84:88:public ChartData(java.lang.String[])
+    113:118:public ChartData(java.lang.String[],java.util.List)
+    127:127:private java.util.List arrayToList(java.lang.String[])
+    188:189:public void notifyDataChanged()
+    407:409:public void addXValue(java.lang.String)
+    417:418:public void removeXValue(int)
+    443:453:protected int getDataSetIndexByLabel(java.util.List,java.lang.String,boolean)
+    473:479:protected java.lang.String[] getDataSetLabels()
+    507:512:public com.github.mikephil.charting.data.DataSet getDataSetByLabel(java.lang.String,boolean)
+    536:579:public void addDataSet(com.github.mikephil.charting.data.DataSet)
+    608:622:public boolean removeDataSet(com.github.mikephil.charting.data.DataSet)
+    634:638:public boolean removeDataSet(int)
+    650:698:public void addEntry(com.github.mikephil.charting.data.Entry,int)
+    709:725:public boolean removeEntry(com.github.mikephil.charting.data.Entry,int)
+    739:748:public boolean removeEntry(int,int)
+    760:773:public com.github.mikephil.charting.data.DataSet getDataSetForEntry(com.github.mikephil.charting.data.Entry)
+    784:806:public int[] getColors()
+    818:823:public int getIndexOfDataSet(com.github.mikephil.charting.data.DataSet)
+    852:858:public static java.util.List generateXVals(int,int)
+    883:886:public void setValueTextColor(int)
+    953:955:public void clearValues()
+    967:972:public boolean contains(com.github.mikephil.charting.data.Entry)
+    984:989:public boolean contains(com.github.mikephil.charting.data.DataSet)
+com.github.mikephil.charting.data.DataSet:
+    104:106:public void notifyDataSetChanged()
+    257:291:public java.util.List getEntriesForXIndex(int)
+    350:355:public int getIndexInEntries(int)
+    public abstract com.github.mikephil.charting.data.DataSet copy()
+    393:394:public void setLabel(java.lang.String)
+    412:413:public void setVisible(boolean)
+    441:442:public void setAxisDependency(com.github.mikephil.charting.components.YAxis$AxisDependency)
+    475:498:public void addEntry(com.github.mikephil.charting.data.Entry)
+    511:542:public void addEntryOrdered(com.github.mikephil.charting.data.Entry)
+    554:568:public boolean removeEntry(com.github.mikephil.charting.data.Entry)
+    579:580:public boolean removeEntry(int)
+    595:596:public void setColors(java.util.List)
+    623:630:public void setColors(int[],android.content.Context)
+    638:641:public void addColor(int)
+    776:777:public void setValueTextColor(int)
+    824:829:public boolean contains(com.github.mikephil.charting.data.Entry)
+    836:840:public void clear()
+com.github.mikephil.charting.data.Entry:
+    44:47:public Entry(float,int,java.lang.Object)
+    64:65:public void setXIndex(int)
+    82:83:public void setVal(float)
+    92:92:public java.lang.Object getData()
+    101:102:public void setData(java.lang.Object)
+    110:111:public com.github.mikephil.charting.data.Entry copy()
+com.github.mikephil.charting.data.LineData
+com.github.mikephil.charting.data.LineDataSet
+com.github.mikephil.charting.data.LineRadarDataSet:
+    41:41:public int getFillColor()
+    50:51:public void setFillColor(int)
+    70:71:public void setFillAlpha(int)
+com.github.mikephil.charting.data.LineScatterCandleRadarDataSet:
+    28:29:public void setDrawHorizontalHighlightIndicator(boolean)
+    36:37:public void setDrawVerticalHighlightIndicator(boolean)
+    44:46:public void setDrawHighlightIndicators(boolean)
+    61:62:public void setHighlightLineWidth(float)
+com.github.mikephil.charting.data.RadarData:
+    19:20:public RadarData(java.util.List)
+    23:24:public RadarData(java.lang.String[])
+    31:32:public RadarData(java.lang.String[],java.util.List)
+    35:36:public RadarData(java.util.List,com.github.mikephil.charting.data.RadarDataSet)
+    39:40:public RadarData(java.lang.String[],com.github.mikephil.charting.data.RadarDataSet)
+    43:45:private static java.util.List toList(com.github.mikephil.charting.data.RadarDataSet)
+com.github.mikephil.charting.data.RadarDataSet:
+    16:26:public com.github.mikephil.charting.data.DataSet copy()
+com.github.mikephil.charting.data.filter.Approximator:
+    private boolean[] keep
+    private static synthetic int[] $SWITCH_TABLE$com$github$mikephil$charting$data$filter$Approximator$ApproximatorType
+    71:72:public void setTolerance(double)
+    80:81:public void setType(com.github.mikephil.charting.data.filter.Approximator$ApproximatorType)
+    91:93:public void setRatios(float,float)
+    102:102:public java.util.List filter(java.util.List)
+    114:125:public java.util.List filter(java.util.List,double)
+    139:158:private java.util.List reduceWithDouglasPeuker(java.util.List,double)
+    172:204:private void algorithmDouglasPeucker(java.util.List,double,int,int)
+    218:225:public double calcPointToLineDistance(com.github.mikephil.charting.data.Entry,com.github.mikephil.charting.data.Entry,com.github.mikephil.charting.data.Entry)
+    244:247:public double calcAngleBetweenLines(com.github.mikephil.charting.data.Entry,com.github.mikephil.charting.data.Entry,com.github.mikephil.charting.data.Entry,com.github.mikephil.charting.data.Entry)
+    260:264:public double calcAngleWithRatios(com.github.mikephil.charting.data.Entry,com.github.mikephil.charting.data.Entry)
+    276:280:public double calcAngle(com.github.mikephil.charting.data.Entry,com.github.mikephil.charting.data.Entry)
+    15:15:static synthetic int[] $SWITCH_TABLE$com$github$mikephil$charting$data$filter$Approximator$ApproximatorType()
+com.github.mikephil.charting.exception.DrawingDataSetNotCreatedException
+com.github.mikephil.charting.highlight.Range:
+    32:32:public boolean isLarger(float)
+    36:36:public boolean isSmaller(float)
+com.github.mikephil.charting.interfaces.ChartInterface:
+    public abstract float getXChartMin()
+    public abstract float getYChartMin()
+    public abstract float getYChartMax()
+    public abstract int getXValCount()
+    public abstract int getWidth()
+    public abstract int getHeight()
+    public abstract android.graphics.PointF getCenterOfView()
+    public abstract android.graphics.PointF getCenterOffsets()
+    public abstract android.graphics.RectF getContentRect()
+    public abstract com.github.mikephil.charting.utils.ValueFormatter getDefaultValueFormatter()
+    public abstract com.github.mikephil.charting.data.ChartData getData()
+com.github.mikephil.charting.jobs.MoveViewJob
+com.github.mikephil.charting.listener.BarLineChartTouchListener:
+    477:477:public android.graphics.Matrix getMatrix()
+com.github.mikephil.charting.listener.ChartTouchListener:
+    protected static final int NONE
+    protected static final int DRAG
+    protected static final int X_ZOOM
+    protected static final int Y_ZOOM
+    protected static final int PINCH_ZOOM
+    protected static final int POST_ZOOM
+    protected static final int ROTATE
+    46:47:public void setLastHighlighted(com.github.mikephil.charting.highlight.Highlight)
+    55:55:public int getTouchMode()
+com.github.mikephil.charting.listener.OnDrawLineChartTouchListener
+com.github.mikephil.charting.listener.OnDrawListener:
+    public abstract void onEntryAdded(com.github.mikephil.charting.data.Entry)
+    public abstract void onEntryMoved(com.github.mikephil.charting.data.Entry)
+    public abstract void onDrawFinished(com.github.mikephil.charting.data.DataSet)
+com.github.mikephil.charting.matrix.Vector3
+com.github.mikephil.charting.renderer.AxisRenderer:
+    71:71:public android.graphics.Paint getPaintGrid()
+    81:81:public android.graphics.Paint getPaintAxisLine()
+    90:90:public com.github.mikephil.charting.utils.Transformer getTransformer()
+    public abstract void renderAxisLabels(android.graphics.Canvas)
+    public abstract void renderGridLines(android.graphics.Canvas)
+    public abstract void renderAxisLine(android.graphics.Canvas)
+    public abstract void renderLimitLines(android.graphics.Canvas)
+com.github.mikephil.charting.renderer.DataRenderer:
+    62:62:public android.graphics.Paint getPaintValues()
+    72:72:public android.graphics.Paint getPaintHighlight()
+    81:81:public android.graphics.Paint getPaintRender()
+com.github.mikephil.charting.renderer.LegendRenderer:
+    63:63:public android.graphics.Paint getFormPaint()
+com.github.mikephil.charting.renderer.RadarChartRenderer:
+    43:43:public android.graphics.Paint getWebPaint()
+com.github.mikephil.charting.renderer.Renderer:
+    40:43:protected boolean fitsBounds(float,float,float)
+com.github.mikephil.charting.utils.ColorFormatter
+com.github.mikephil.charting.utils.ColorTemplate:
+    public static final int COLOR_NONE
+    public static final int COLOR_SKIP
+    17:17:public ColorTemplate()
+    61:61:public static int getHoloBlue()
+    74:80:public static java.util.List createColors(android.content.res.Resources,int[])
+com.github.mikephil.charting.utils.EntryXIndexComparator
+com.github.mikephil.charting.utils.FileUtils
+com.github.mikephil.charting.utils.FillFormatter
+com.github.mikephil.charting.utils.LargeValueFormatter
+com.github.mikephil.charting.utils.PercentFormatter
+com.github.mikephil.charting.utils.Transformer:
+    103:117:public float[] generateTransformedValuesScatter(java.util.List,float)
+    130:146:public float[] generateTransformedValuesBubble(java.util.List,float,float,int,int)
+    159:175:public float[] generateTransformedValuesLine(java.util.List,float,float,int,int)
+    231:252:public float[] generateTransformedValuesHorizontalBarChart(java.util.List,int,com.github.mikephil.charting.data.BarData,float)
+    275:278:public void pathValuesToPixel(java.util.List)
+    300:303:public void rectValueToPixel(android.graphics.RectF)
+    333:341:public void rectValueToPixelHorizontal(android.graphics.RectF,float)
+    350:354:public void rectValuesToPixel(java.util.List)
+    425:425:public android.graphics.Matrix getValueMatrix()
+    443:443:public android.graphics.Matrix getOffsetMatrix()
+com.github.mikephil.charting.utils.Utils:
+    31:31:public Utils()
+    72:78:public static void init(android.content.res.Resources)
+    89:99:public static java.lang.String formatDecimal(double,int)
+    136:147:public static float convertPixelsToDp(float)
+    234:247:public static int getLegendFormatDigits(float,int)
+    270:344:public static java.lang.String formatNumber(float,int,boolean)
+com.github.mikephil.charting.utils.ViewPortHandler:
+    67:70:public boolean hasChartDimens()
+    149:154:public android.graphics.Matrix zoomIn(float,float)
+    163:168:public android.graphics.Matrix zoomOut(float,float)
+    198:216:public android.graphics.Matrix fitScreen()
+    231:242:public synchronized void centerViewPort(float[],android.view.View)
+    336:343:public void setMinMaxScaleX(float,float)
+    347:353:public void setMinimumScaleY(float)
+com.google.zxing.BinaryBitmap:
+    94:94:public boolean isCropSupported()
+    108:109:public com.google.zxing.BinaryBitmap crop(int,int,int,int)
+    137:138:public com.google.zxing.BinaryBitmap rotateCounterClockwise45()
+com.google.zxing.ChecksumException:
+    34:35:private ChecksumException(java.lang.Throwable)
+    46:49:public static com.google.zxing.ChecksumException getChecksumInstance(java.lang.Throwable)
+com.google.zxing.DecodeHintType:
+    119:119:public java.lang.Class getValueType()
+com.google.zxing.Dimension
+com.google.zxing.EncodeHintType
+com.google.zxing.InvertedLuminanceSource
+com.google.zxing.LuminanceSource:
+    80:80:public boolean isCropSupported()
+    94:94:public com.google.zxing.LuminanceSource crop(int,int,int,int)
+    109:109:public com.google.zxing.LuminanceSource invert()
+    129:129:public com.google.zxing.LuminanceSource rotateCounterClockwise45()
+com.google.zxing.MultiFormatReader:
+    54:55:public com.google.zxing.Result decode(com.google.zxing.BinaryBitmap)
+com.google.zxing.MultiFormatWriter
+com.google.zxing.PlanarYUVLuminanceSource:
+    private static final int THUMBNAIL_SCALE_FACTOR
+    110:110:public boolean isCropSupported()
+    115:115:public com.google.zxing.LuminanceSource crop(int,int,int,int)
+    126:140:public int[] renderThumbnail()
+    147:147:public int getThumbnailWidth()
+    154:154:public int getThumbnailHeight()
+com.google.zxing.RGBLuminanceSource
+com.google.zxing.Reader:
+    public abstract com.google.zxing.Result decode(com.google.zxing.BinaryBitmap)
+com.google.zxing.Result:
+    125:125:public long getTimestamp()
+com.google.zxing.Writer
+com.google.zxing.WriterException
+com.google.zxing.aztec.AztecReader:
+    52:52:public com.google.zxing.Result decode(com.google.zxing.BinaryBitmap)
+com.google.zxing.aztec.AztecWriter
+com.google.zxing.aztec.decoder.Decoder:
+    84:84:public static java.lang.String highLevelDecode(boolean[])
+com.google.zxing.aztec.detector.Detector:
+    52:52:public com.google.zxing.aztec.AztecDetectorResult detect()
+com.google.zxing.aztec.encoder.AztecCode
+com.google.zxing.aztec.encoder.BinaryShiftToken
+com.google.zxing.aztec.encoder.Encoder
+com.google.zxing.aztec.encoder.HighLevelEncoder
+com.google.zxing.aztec.encoder.HighLevelEncoder$1
+com.google.zxing.aztec.encoder.SimpleToken
+com.google.zxing.aztec.encoder.State
+com.google.zxing.aztec.encoder.Token
+com.google.zxing.client.result.AbstractDoCoMoResultParser
+com.google.zxing.client.result.AddressBookAUResultParser
+com.google.zxing.client.result.AddressBookDoCoMoResultParser
+com.google.zxing.client.result.AddressBookParsedResult
+com.google.zxing.client.result.BizcardResultParser
+com.google.zxing.client.result.BookmarkDoCoMoResultParser
+com.google.zxing.client.result.CalendarParsedResult
+com.google.zxing.client.result.EmailAddressParsedResult
+com.google.zxing.client.result.EmailAddressResultParser
+com.google.zxing.client.result.EmailDoCoMoResultParser
+com.google.zxing.client.result.ExpandedProductParsedResult
+com.google.zxing.client.result.ExpandedProductResultParser
+com.google.zxing.client.result.GeoParsedResult
+com.google.zxing.client.result.GeoResultParser
+com.google.zxing.client.result.ISBNParsedResult
+com.google.zxing.client.result.ISBNResultParser
+com.google.zxing.client.result.ParsedResult
+com.google.zxing.client.result.ParsedResultType
+com.google.zxing.client.result.ProductParsedResult
+com.google.zxing.client.result.ProductResultParser
+com.google.zxing.client.result.ResultParser
+com.google.zxing.client.result.SMSMMSResultParser
+com.google.zxing.client.result.SMSParsedResult
+com.google.zxing.client.result.SMSTOMMSTOResultParser
+com.google.zxing.client.result.SMTPResultParser
+com.google.zxing.client.result.TelParsedResult
+com.google.zxing.client.result.TelResultParser
+com.google.zxing.client.result.TextParsedResult
+com.google.zxing.client.result.URIParsedResult
+com.google.zxing.client.result.URIResultParser
+com.google.zxing.client.result.URLTOResultParser
+com.google.zxing.client.result.VCardResultParser
+com.google.zxing.client.result.VEventResultParser
+com.google.zxing.client.result.VINParsedResult
+com.google.zxing.client.result.VINResultParser
+com.google.zxing.client.result.WifiParsedResult
+com.google.zxing.client.result.WifiResultParser
+com.google.zxing.common.BitArray:
+    52:52:public int getSizeInBytes()
+    56:61:private void ensureCapacity(int)
+    86:87:public void flip(int)
+    154:177:public void setRange(int,int)
+    231:236:public void appendBit(boolean)
+    247:254:public void appendBits(int,int)
+    257:262:public void appendBitArray(com.google.zxing.common.BitArray)
+    265:273:public void xor(com.google.zxing.common.BitArray)
+    284:294:public void toBytes(int,byte[],int,int)
+com.google.zxing.common.BitMatrix:
+    66:122:public static com.google.zxing.common.BitMatrix parse(java.lang.String,java.lang.String,java.lang.String)
+    149:151:public void unset(int,int)
+    171:183:public void xor(com.google.zxing.common.BitMatrix)
+    189:193:public void clear()
+    388:388:public int getRowSize()
+com.google.zxing.common.CharacterSetECI:
+    93:93:public int getValue()
+    115:115:public static com.google.zxing.common.CharacterSetECI getCharacterSetECIByName(java.lang.String)
+com.google.zxing.common.DecoderResult:
+    78:78:public java.lang.Integer getErrorsCorrected()
+    86:86:public java.lang.Integer getErasures()
+com.google.zxing.common.GlobalHistogramBinarizer:
+    private static final int LUMINANCE_BITS
+    private static final int LUMINANCE_SHIFT
+    private static final int LUMINANCE_BUCKETS
+com.google.zxing.common.GridSampler:
+    48:49:public static void setGridSampler(com.google.zxing.common.GridSampler)
+com.google.zxing.common.HybridBinarizer:
+    private static final int BLOCK_SIZE_POWER
+    private static final int BLOCK_SIZE
+    private static final int BLOCK_SIZE_MASK
+    private static final int MINIMUM_DIMENSION
+    private static final int MIN_DYNAMIC_RANGE
+com.google.zxing.common.PerspectiveTransform:
+    87:95:public void transformPoints(float[],float[])
+com.google.zxing.common.StringUtils:
+    public static final java.lang.String SHIFT_JIS
+    public static final java.lang.String GB2312
+    private static final java.lang.String EUC_JP
+    private static final java.lang.String UTF8
+    private static final java.lang.String ISO88591
+    42:42:private StringUtils()
+com.google.zxing.common.detector.MathUtils:
+    21:22:private MathUtils()
+com.google.zxing.common.detector.MonochromeRectangleDetector
+com.google.zxing.common.detector.WhiteRectangleDetector:
+    private static final int INIT_SIZE
+    private static final int CORR
+com.google.zxing.common.reedsolomon.GenericGFPoly:
+    70:70:int[] getCoefficients()
+    201:223:com.google.zxing.common.reedsolomon.GenericGFPoly[] divide(com.google.zxing.common.reedsolomon.GenericGFPoly)
+com.google.zxing.common.reedsolomon.ReedSolomonEncoder
+com.google.zxing.datamatrix.DataMatrixReader:
+    59:59:public com.google.zxing.Result decode(com.google.zxing.BinaryBitmap)
+com.google.zxing.datamatrix.DataMatrixWriter
+com.google.zxing.datamatrix.decoder.DecodedBitStreamParser:
+    82:83:private DecodedBitStreamParser()
+com.google.zxing.datamatrix.decoder.Decoder:
+    51:60:public com.google.zxing.common.DecoderResult decode(boolean[][])
+com.google.zxing.datamatrix.encoder.ASCIIEncoder
+com.google.zxing.datamatrix.encoder.Base256Encoder
+com.google.zxing.datamatrix.encoder.C40Encoder
+com.google.zxing.datamatrix.encoder.DataMatrixSymbolInfo144
+com.google.zxing.datamatrix.encoder.DefaultPlacement
+com.google.zxing.datamatrix.encoder.EdifactEncoder
+com.google.zxing.datamatrix.encoder.Encoder
+com.google.zxing.datamatrix.encoder.EncoderContext
+com.google.zxing.datamatrix.encoder.ErrorCorrection
+com.google.zxing.datamatrix.encoder.HighLevelEncoder
+com.google.zxing.datamatrix.encoder.SymbolInfo
+com.google.zxing.datamatrix.encoder.SymbolShapeHint
+com.google.zxing.datamatrix.encoder.TextEncoder
+com.google.zxing.datamatrix.encoder.X12Encoder
+com.google.zxing.maxicode.MaxiCodeReader:
+    private static final int MATRIX_WIDTH
+    private static final int MATRIX_HEIGHT
+    62:62:public com.google.zxing.Result decode(com.google.zxing.BinaryBitmap)
+com.google.zxing.maxicode.decoder.DecodedBitStreamParser:
+    private static final char SHIFTA
+    private static final char SHIFTB
+    private static final char SHIFTC
+    private static final char SHIFTD
+    private static final char SHIFTE
+    private static final char TWOSHIFTA
+    private static final char THREESHIFTA
+    private static final char LATCHA
+    private static final char LATCHB
+    private static final char LOCK
+    private static final char ECI
+    private static final char NS
+    private static final char PAD
+    private static final char FS
+    private static final char GS
+    private static final char RS
+    60:61:private DecodedBitStreamParser()
+com.google.zxing.maxicode.decoder.Decoder:
+    private static final int ALL
+    private static final int EVEN
+    private static final int ODD
+    49:49:public com.google.zxing.common.DecoderResult decode(com.google.zxing.common.BitMatrix)
+com.google.zxing.multi.ByQuadrantReader
+com.google.zxing.multi.GenericMultipleBarcodeReader
+com.google.zxing.multi.MultipleBarcodeReader
+com.google.zxing.multi.qrcode.QRCodeMultiReader
+com.google.zxing.multi.qrcode.QRCodeMultiReader$SAComparator
+com.google.zxing.multi.qrcode.detector.MultiDetector
+com.google.zxing.multi.qrcode.detector.MultiFinderPatternFinder
+com.google.zxing.multi.qrcode.detector.MultiFinderPatternFinder$ModuleSizeComparator
+com.google.zxing.oned.CodaBarReader:
+    private static final float MAX_ACCEPTABLE
+    private static final float PADDING
+    private static final java.lang.String ALPHABET_STRING
+    private static final int MIN_CHARACTER_LENGTH
+com.google.zxing.oned.CodaBarWriter
+com.google.zxing.oned.Code128Reader:
+    private static final float MAX_AVG_VARIANCE
+    private static final float MAX_INDIVIDUAL_VARIANCE
+    private static final int CODE_SHIFT
+    private static final int CODE_CODE_C
+    private static final int CODE_CODE_B
+    private static final int CODE_CODE_A
+    private static final int CODE_FNC_1
+    private static final int CODE_FNC_2
+    private static final int CODE_FNC_3
+    private static final int CODE_FNC_4_A
+    private static final int CODE_FNC_4_B
+    private static final int CODE_START_A
+    private static final int CODE_START_B
+    private static final int CODE_START_C
+    private static final int CODE_STOP
+com.google.zxing.oned.Code128Writer
+com.google.zxing.oned.Code39Reader:
+    static final java.lang.String ALPHABET_STRING
+com.google.zxing.oned.Code39Writer
+com.google.zxing.oned.Code93Reader:
+    private static final java.lang.String ALPHABET_STRING
+com.google.zxing.oned.EAN13Writer
+com.google.zxing.oned.EAN8Writer
+com.google.zxing.oned.ITFReader:
+    private static final float MAX_AVG_VARIANCE
+    private static final float MAX_INDIVIDUAL_VARIANCE
+    private static final int W
+    private static final int N
+com.google.zxing.oned.ITFWriter
+com.google.zxing.oned.OneDReader:
+    46:46:public com.google.zxing.Result decode(com.google.zxing.BinaryBitmap)
+com.google.zxing.oned.OneDimensionalCodeWriter
+com.google.zxing.oned.UPCAReader:
+    57:57:public com.google.zxing.Result decode(com.google.zxing.BinaryBitmap)
+com.google.zxing.oned.UPCAWriter
+com.google.zxing.oned.UPCEANReader:
+    private static final float MAX_AVG_VARIANCE
+    private static final float MAX_INDIVIDUAL_VARIANCE
+com.google.zxing.oned.UPCEANWriter
+com.google.zxing.oned.rss.AbstractRSSReader:
+    private static final float MAX_AVG_VARIANCE
+    private static final float MAX_INDIVIDUAL_VARIANCE
+    private static final float MIN_FINDER_PATTERN_RATIO
+    private static final float MAX_FINDER_PATTERN_RATIO
+com.google.zxing.oned.rss.RSSUtils:
+    22:22:private RSSUtils()
+com.google.zxing.oned.rss.expanded.BitArrayBuilder:
+    39:40:private BitArrayBuilder()
+com.google.zxing.oned.rss.expanded.ExpandedPair:
+    53:53:boolean mayBeLast()
+com.google.zxing.oned.rss.expanded.ExpandedRow:
+    47:47:boolean isReversed()
+com.google.zxing.oned.rss.expanded.RSSExpandedReader:
+    private static final int FINDER_PAT_A
+    private static final int FINDER_PAT_B
+    private static final int FINDER_PAT_C
+    private static final int FINDER_PAT_D
+    private static final int FINDER_PAT_E
+    private static final int FINDER_PAT_F
+    private static final int MAX_PAIRS
+    362:362:java.util.List getRows()
+com.google.zxing.oned.rss.expanded.decoders.AI01392xDecoder:
+    private static final int HEADER_SIZE
+    private static final int LAST_DIGIT_SIZE
+com.google.zxing.oned.rss.expanded.decoders.AI01393xDecoder:
+    private static final int HEADER_SIZE
+    private static final int LAST_DIGIT_SIZE
+    private static final int FIRST_THREE_DIGITS_SIZE
+com.google.zxing.oned.rss.expanded.decoders.AI013x0x1xDecoder:
+    private static final int HEADER_SIZE
+    private static final int WEIGHT_SIZE
+    private static final int DATE_SIZE
+com.google.zxing.oned.rss.expanded.decoders.AI013x0xDecoder:
+    private static final int HEADER_SIZE
+    private static final int WEIGHT_SIZE
+com.google.zxing.oned.rss.expanded.decoders.AI01AndOtherAIs:
+    private static final int HEADER_SIZE
+com.google.zxing.oned.rss.expanded.decoders.AI01decoder:
+    protected static final int GTIN_SIZE
+com.google.zxing.oned.rss.expanded.decoders.AnyAIDecoder:
+    private static final int HEADER_SIZE
+com.google.zxing.oned.rss.expanded.decoders.CurrentParsingState:
+    65:65:boolean isNumeric()
+com.google.zxing.oned.rss.expanded.decoders.DecodedChar:
+    static final char FNC1
+com.google.zxing.oned.rss.expanded.decoders.DecodedNumeric:
+    static final int FNC1
+    62:62:int getValue()
+    74:74:boolean isAnyFNC1()
+com.google.zxing.oned.rss.expanded.decoders.FieldParser:
+    190:191:private FieldParser()
+com.google.zxing.pdf417.PDF417Common:
+    public static final int NUMBER_OF_CODEWORDS
+    public static final int MAX_CODEWORDS_IN_BARCODE
+    public static final int MIN_ROWS_IN_BARCODE
+    public static final int MAX_ROWS_IN_BARCODE
+    public static final int MODULES_IN_CODEWORD
+    public static final int MODULES_IN_STOP_PATTERN
+    public static final int BARS_IN_MODULE
+    40:41:private PDF417Common()
+com.google.zxing.pdf417.PDF417Reader:
+    55:55:public com.google.zxing.Result decode(com.google.zxing.BinaryBitmap)
+    70:70:public com.google.zxing.Result[] decodeMultiple(com.google.zxing.BinaryBitmap)
+    76:78:public com.google.zxing.Result[] decodeMultiple(com.google.zxing.BinaryBitmap,java.util.Map)
+com.google.zxing.pdf417.PDF417ResultMetadata:
+    30:30:public int getSegmentIndex()
+    38:38:public java.lang.String getFileId()
+    46:46:public int[] getOptionalData()
+    54:54:public boolean isLastSegment()
+com.google.zxing.pdf417.PDF417Writer
+com.google.zxing.pdf417.decoder.BarcodeValue:
+    65:65:public java.lang.Integer getConfidence(int)
+com.google.zxing.pdf417.decoder.Codeword:
+    private static final int BARCODE_ROW_UNKNOWN
+com.google.zxing.pdf417.decoder.DecodedBitStreamParser:
+    private static final int TEXT_COMPACTION_MODE_LATCH
+    private static final int BYTE_COMPACTION_MODE_LATCH
+    private static final int NUMERIC_COMPACTION_MODE_LATCH
+    private static final int BYTE_COMPACTION_MODE_LATCH_6
+    private static final int ECI_USER_DEFINED
+    private static final int ECI_GENERAL_PURPOSE
+    private static final int ECI_CHARSET
+    private static final int BEGIN_MACRO_PDF417_CONTROL_BLOCK
+    private static final int BEGIN_MACRO_PDF417_OPTIONAL_FIELD
+    private static final int MACRO_PDF417_TERMINATOR
+    private static final int MODE_SHIFT_TO_BYTE_COMPACTION_MODE
+    private static final int MAX_NUMERIC_CODEWORDS
+    private static final int PL
+    private static final int LL
+    private static final int AS
+    private static final int ML
+    private static final int AL
+    private static final int PS
+    private static final int PAL
+    private static final int NUMBER_OF_SEQUENCE_CODEWORDS
+    96:97:private DecodedBitStreamParser()
+com.google.zxing.pdf417.decoder.DetectionResult:
+    private static final int ADJUST_ROW_NUMBER_SKIP
+com.google.zxing.pdf417.decoder.DetectionResultColumn:
+    private static final int MAX_NEARBY_DISTANCE
+com.google.zxing.pdf417.decoder.PDF417CodewordDecoder:
+    47:48:private PDF417CodewordDecoder()
+com.google.zxing.pdf417.decoder.PDF417ScanningDecoder:
+    private static final int CODEWORD_SKEW_SIZE
+    private static final int MAX_ERRORS
+    private static final int MAX_EC_CODEWORDS
+    44:45:private PDF417ScanningDecoder()
+    609:625:public static java.lang.String toString(com.google.zxing.pdf417.decoder.BarcodeValue[][])
+com.google.zxing.pdf417.decoder.ec.ModulusPoly:
+    56:56:int[] getCoefficients()
+    205:227:com.google.zxing.pdf417.decoder.ec.ModulusPoly[] divide(com.google.zxing.pdf417.decoder.ec.ModulusPoly)
+com.google.zxing.pdf417.detector.Detector:
+    private static final float MAX_AVG_VARIANCE
+    private static final float MAX_INDIVIDUAL_VARIANCE
+    private static final int MAX_PIXEL_DRIFT
+    private static final int MAX_PATTERN_DRIFT
+    private static final int SKIPPED_ROW_COUNT_MAX
+    private static final int ROW_STEP
+    private static final int BARCODE_MIN_HEIGHT
+    60:61:private Detector()
+com.google.zxing.pdf417.encoder.BarcodeMatrix
+com.google.zxing.pdf417.encoder.BarcodeRow
+com.google.zxing.pdf417.encoder.Compaction
+com.google.zxing.pdf417.encoder.Dimensions
+com.google.zxing.pdf417.encoder.PDF417
+com.google.zxing.pdf417.encoder.PDF417ErrorCorrection
+com.google.zxing.pdf417.encoder.PDF417HighLevelEncoder
+com.google.zxing.qrcode.QRCodeReader:
+    51:51:protected final com.google.zxing.qrcode.decoder.Decoder getDecoder()
+    64:64:public com.google.zxing.Result decode(com.google.zxing.BinaryBitmap)
+com.google.zxing.qrcode.QRCodeWriter
+com.google.zxing.qrcode.decoder.DecodedBitStreamParser:
+    private static final int GB2312_SUBSET
+    53:54:private DecodedBitStreamParser()
+com.google.zxing.qrcode.decoder.Decoder:
+    45:45:public com.google.zxing.common.DecoderResult decode(boolean[][])
+    60:69:public com.google.zxing.common.DecoderResult decode(boolean[][],java.util.Map)
+    73:73:public com.google.zxing.common.DecoderResult decode(com.google.zxing.common.BitMatrix)
+com.google.zxing.qrcode.decoder.ErrorCorrectionLevel:
+    45:45:public int getBits()
+com.google.zxing.qrcode.decoder.FormatInformation:
+    private static final int FORMAT_INFO_MASK_QR
+com.google.zxing.qrcode.decoder.Mode:
+    99:99:public int getBits()
+com.google.zxing.qrcode.decoder.QRCodeDecoderMetaData:
+    39:39:public boolean isMirrored()
+com.google.zxing.qrcode.decoder.Version$ECBlocks:
+    198:202:public int getNumBlocks()
+    206:206:public int getTotalECCodewords()
+com.google.zxing.qrcode.detector.Detector:
+    49:49:protected final com.google.zxing.common.BitMatrix getImage()
+    53:53:protected final com.google.zxing.ResultPointCallback getResultPointCallback()
+    64:64:public com.google.zxing.common.DetectorResult detect()
+com.google.zxing.qrcode.detector.FinderPatternFinder:
+    private static final int CENTER_QUORUM
+    protected static final int MIN_SKIP
+    protected static final int MAX_MODULES
+    58:59:public FinderPatternFinder(com.google.zxing.common.BitMatrix)
+    69:69:protected final com.google.zxing.common.BitMatrix getImage()
+    73:73:protected final java.util.List getPossibleCenters()
+com.google.zxing.qrcode.encoder.BlockPair
+com.google.zxing.qrcode.encoder.ByteMatrix
+com.google.zxing.qrcode.encoder.Encoder
+com.google.zxing.qrcode.encoder.MaskUtil
+com.google.zxing.qrcode.encoder.MatrixUtil
+com.google.zxing.qrcode.encoder.QRCode
+com.lidroid.xutils.BitmapUtils
+com.lidroid.xutils.BitmapUtils$BitmapLoadTask
+com.lidroid.xutils.DbUtils
+com.lidroid.xutils.DbUtils$DaoConfig
+com.lidroid.xutils.DbUtils$DbUpgradeListener
+com.lidroid.xutils.DbUtils$FindTempCache
+com.lidroid.xutils.HttpUtils:
+    private static final int DEFAULT_CONN_TIMEOUT
+    private static final int DEFAULT_RETRY_TIMES
+    private static final java.lang.String HEADER_ACCEPT_ENCODING
+    private static final java.lang.String ENCODING_GZIP
+    private static final int DEFAULT_POOL_SIZE
+    66:67:public HttpUtils(int)
+    70:71:public HttpUtils(java.lang.String)
+    146:146:public org.apache.http.client.HttpClient getHttpClient()
+    152:155:public com.lidroid.xutils.HttpUtils configResponseTextCharset(java.lang.String)
+    159:160:public com.lidroid.xutils.HttpUtils configHttpRedirectHandler(com.lidroid.xutils.http.callback.HttpRedirectHandler)
+    164:165:public com.lidroid.xutils.HttpUtils configHttpCacheSize(int)
+    169:171:public com.lidroid.xutils.HttpUtils configDefaultHttpCacheExpiry(long)
+    180:181:public com.lidroid.xutils.HttpUtils configCookieStore(org.apache.http.client.CookieStore)
+    185:186:public com.lidroid.xutils.HttpUtils configUserAgent(java.lang.String)
+    190:193:public com.lidroid.xutils.HttpUtils configTimeout(int)
+    197:199:public com.lidroid.xutils.HttpUtils configSoTimeout(int)
+    203:204:public com.lidroid.xutils.HttpUtils configRegisterScheme(org.apache.http.conn.scheme.Scheme)
+    208:210:public com.lidroid.xutils.HttpUtils configSSLSocketFactory(org.apache.http.conn.ssl.SSLSocketFactory)
+    214:215:public com.lidroid.xutils.HttpUtils configRequestRetryCount(int)
+    219:220:public com.lidroid.xutils.HttpUtils configRequestThreadPoolSize(int)
+    239:239:public com.lidroid.xutils.http.ResponseStream sendSync(com.lidroid.xutils.http.client.HttpRequest$HttpMethod,java.lang.String)
+    243:246:public com.lidroid.xutils.http.ResponseStream sendSync(com.lidroid.xutils.http.client.HttpRequest$HttpMethod,java.lang.String,com.lidroid.xutils.http.RequestParams)
+    253:253:public com.lidroid.xutils.http.HttpHandler download(java.lang.String,java.lang.String,com.lidroid.xutils.http.callback.RequestCallBack)
+    258:258:public com.lidroid.xutils.http.HttpHandler download(java.lang.String,java.lang.String,boolean,com.lidroid.xutils.http.callback.RequestCallBack)
+    263:263:public com.lidroid.xutils.http.HttpHandler download(java.lang.String,java.lang.String,boolean,boolean,com.lidroid.xutils.http.callback.RequestCallBack)
+    268:268:public com.lidroid.xutils.http.HttpHandler download(java.lang.String,java.lang.String,com.lidroid.xutils.http.RequestParams,com.lidroid.xutils.http.callback.RequestCallBack)
+    273:273:public com.lidroid.xutils.http.HttpHandler download(java.lang.String,java.lang.String,com.lidroid.xutils.http.RequestParams,boolean,com.lidroid.xutils.http.callback.RequestCallBack)
+    278:278:public com.lidroid.xutils.http.HttpHandler download(java.lang.String,java.lang.String,com.lidroid.xutils.http.RequestParams,boolean,boolean,com.lidroid.xutils.http.callback.RequestCallBack)
+    283:283:public com.lidroid.xutils.http.HttpHandler download(com.lidroid.xutils.http.client.HttpRequest$HttpMethod,java.lang.String,java.lang.String,com.lidroid.xutils.http.RequestParams,com.lidroid.xutils.http.callback.RequestCallBack)
+    288:288:public com.lidroid.xutils.http.HttpHandler download(com.lidroid.xutils.http.client.HttpRequest$HttpMethod,java.lang.String,java.lang.String,com.lidroid.xutils.http.RequestParams,boolean,com.lidroid.xutils.http.callback.RequestCallBack)
+    294:309:public com.lidroid.xutils.http.HttpHandler download(com.lidroid.xutils.http.client.HttpRequest$HttpMethod,java.lang.String,java.lang.String,com.lidroid.xutils.http.RequestParams,boolean,boolean,com.lidroid.xutils.http.callback.RequestCallBack)
+    330:336:private com.lidroid.xutils.http.ResponseStream sendSyncRequest(com.lidroid.xutils.http.client.HttpRequest,com.lidroid.xutils.http.RequestParams)
+com.lidroid.xutils.ViewUtils
+com.lidroid.xutils.bitmap.BitmapCacheListener
+com.lidroid.xutils.bitmap.BitmapCommonUtils
+com.lidroid.xutils.bitmap.BitmapDisplayConfig
+com.lidroid.xutils.bitmap.BitmapGlobalConfig
+com.lidroid.xutils.bitmap.BitmapGlobalConfig$BitmapCacheManagementTask
+com.lidroid.xutils.bitmap.PauseOnScrollListener
+com.lidroid.xutils.bitmap.callback.BitmapLoadCallBack
+com.lidroid.xutils.bitmap.callback.BitmapLoadFrom
+com.lidroid.xutils.bitmap.callback.BitmapSetter
+com.lidroid.xutils.bitmap.callback.DefaultBitmapLoadCallBack
+com.lidroid.xutils.bitmap.core.AsyncDrawable
+com.lidroid.xutils.bitmap.core.BitmapCache
+com.lidroid.xutils.bitmap.core.BitmapCache$1
+com.lidroid.xutils.bitmap.core.BitmapCache$BitmapMeta
+com.lidroid.xutils.bitmap.core.BitmapCache$MemoryCacheKey
+com.lidroid.xutils.bitmap.core.BitmapDecoder
+com.lidroid.xutils.bitmap.core.BitmapSize
+com.lidroid.xutils.bitmap.download.DefaultDownloader
+com.lidroid.xutils.bitmap.download.Downloader
+com.lidroid.xutils.bitmap.factory.BitmapFactory
+com.lidroid.xutils.cache.FileNameGenerator
+com.lidroid.xutils.cache.KeyExpiryMap:
+    private static final long serialVersionUID
+    private static final int DEFAULT_CONCURRENCY_LEVEL
+    35:36:public KeyExpiryMap(int,float,int)
+    43:44:public KeyExpiryMap(int)
+com.lidroid.xutils.cache.LruDiskCache
+com.lidroid.xutils.cache.LruDiskCache$1
+com.lidroid.xutils.cache.LruDiskCache$2
+com.lidroid.xutils.cache.LruDiskCache$Editor
+com.lidroid.xutils.cache.LruDiskCache$Editor$FaultHidingOutputStream
+com.lidroid.xutils.cache.LruDiskCache$Entry
+com.lidroid.xutils.cache.LruDiskCache$Snapshot
+com.lidroid.xutils.cache.LruDiskCache$StrictLineReader
+com.lidroid.xutils.cache.LruDiskCache$StrictLineReader$1
+com.lidroid.xutils.cache.LruMemoryCache:
+    57:59:public void setMaxSize(int)
+    128:128:public final java.lang.Object put(java.lang.Object,java.lang.Object)
+    214:214:public final boolean containsKey(java.lang.Object)
+    280:282:public final void evictAll()
+    290:290:public final synchronized int size()
+    299:299:public final synchronized int maxSize()
+    306:306:public final synchronized int hitCount()
+    314:314:public final synchronized int missCount()
+    321:321:public final synchronized int createCount()
+    328:328:public final synchronized int putCount()
+    335:335:public final synchronized int evictionCount()
+    343:343:public final synchronized java.util.Map snapshot()
+com.lidroid.xutils.cache.MD5FileNameGenerator
+com.lidroid.xutils.db.annotation.Check
+com.lidroid.xutils.db.annotation.Column
+com.lidroid.xutils.db.annotation.Finder
+com.lidroid.xutils.db.annotation.Foreign
+com.lidroid.xutils.db.annotation.Id
+com.lidroid.xutils.db.annotation.NoAutoIncrement
+com.lidroid.xutils.db.annotation.NotNull
+com.lidroid.xutils.db.annotation.Table
+com.lidroid.xutils.db.annotation.Transient
+com.lidroid.xutils.db.annotation.Unique
+com.lidroid.xutils.db.converter.BooleanColumnConverter
+com.lidroid.xutils.db.converter.ByteArrayColumnConverter
+com.lidroid.xutils.db.converter.ByteColumnConverter
+com.lidroid.xutils.db.converter.CharColumnConverter
+com.lidroid.xutils.db.converter.ColumnConverter
+com.lidroid.xutils.db.converter.ColumnConverterFactory
+com.lidroid.xutils.db.converter.DateColumnConverter
+com.lidroid.xutils.db.converter.DoubleColumnConverter
+com.lidroid.xutils.db.converter.FloatColumnConverter
+com.lidroid.xutils.db.converter.IntegerColumnConverter
+com.lidroid.xutils.db.converter.LongColumnConverter
+com.lidroid.xutils.db.converter.ShortColumnConverter
+com.lidroid.xutils.db.converter.SqlDateColumnConverter
+com.lidroid.xutils.db.converter.StringColumnConverter
+com.lidroid.xutils.db.sqlite.ColumnDbType
+com.lidroid.xutils.db.sqlite.CursorUtils
+com.lidroid.xutils.db.sqlite.CursorUtils$EntityTempCache
+com.lidroid.xutils.db.sqlite.CursorUtils$FindCacheSequence
+com.lidroid.xutils.db.sqlite.DbModelSelector
+com.lidroid.xutils.db.sqlite.FinderLazyLoader
+com.lidroid.xutils.db.sqlite.ForeignLazyLoader
+com.lidroid.xutils.db.sqlite.Selector
+com.lidroid.xutils.db.sqlite.Selector$OrderBy
+com.lidroid.xutils.db.sqlite.SqlInfo
+com.lidroid.xutils.db.sqlite.SqlInfoBuilder
+com.lidroid.xutils.db.sqlite.WhereBuilder
+com.lidroid.xutils.db.table.Column
+com.lidroid.xutils.db.table.ColumnUtils
+com.lidroid.xutils.db.table.DbModel
+com.lidroid.xutils.db.table.Finder
+com.lidroid.xutils.db.table.Foreign
+com.lidroid.xutils.db.table.Id
+com.lidroid.xutils.db.table.KeyValue
+com.lidroid.xutils.db.table.Table
+com.lidroid.xutils.db.table.TableUtils
+com.lidroid.xutils.exception.BaseException:
+    private static final long serialVersionUID
+    34:35:public BaseException(java.lang.String,java.lang.Throwable)
+com.lidroid.xutils.exception.DbException
+com.lidroid.xutils.exception.HttpException:
+    private static final long serialVersionUID
+    31:32:public HttpException(java.lang.String,java.lang.Throwable)
+    41:43:public HttpException(int)
+    60:62:public HttpException(int,java.lang.String,java.lang.Throwable)
+    69:71:public HttpException(int,java.lang.Throwable)
+    77:77:public int getExceptionCode()
+com.lidroid.xutils.http.HttpCache:
+    private static final int DEFAULT_CACHE_SIZE
+    private static final long DEFAULT_EXPIRY_TIME
+    65:66:public void setCacheSize(int)
+    69:70:public static void setDefaultExpiryTime(long)
+    77:78:public void put(java.lang.String,java.lang.String)
+    91:92:public void clear()
+    95:98:public boolean isEnabled(com.lidroid.xutils.http.client.HttpRequest$HttpMethod)
+    109:110:public void setEnabled(com.lidroid.xutils.http.client.HttpRequest$HttpMethod,boolean)
+com.lidroid.xutils.http.HttpHandler:
+    private static final int UPDATE_START
+    private static final int UPDATE_LOADING
+    private static final int UPDATE_FAILURE
+    private static final int UPDATE_SUCCESS
+    77:77:public com.lidroid.xutils.http.HttpHandler$State getState()
+    87:88:public void setRequestCallBack(com.lidroid.xutils.http.callback.RequestCallBack)
+    91:91:public com.lidroid.xutils.http.callback.RequestCallBack getRequestCallBack()
+    274:292:public void cancel()
+com.lidroid.xutils.http.HttpHandler$State:
+    321:335:public static com.lidroid.xutils.http.HttpHandler$State valueOf(int)
+    340:340:public int value()
+com.lidroid.xutils.http.RequestParams:
+    57:58:public RequestParams()
+    60:64:public RequestParams(java.lang.String)
+    71:72:public void setPriority(com.lidroid.xutils.task.Priority)
+    79:80:public void setContentType(java.lang.String)
+    88:92:public void addHeader(org.apache.http.Header)
+    101:105:public void addHeader(java.lang.String,java.lang.String)
+    113:119:public void addHeaders(java.util.List)
+    128:132:public void setHeader(org.apache.http.Header)
+    142:146:public void setHeader(java.lang.String,java.lang.String)
+    154:160:public void setHeaders(java.util.List)
+    163:167:public void addQueryStringParameter(java.lang.String,java.lang.String)
+    170:174:public void addQueryStringParameter(org.apache.http.NameValuePair)
+    177:185:public void addQueryStringParameter(java.util.List)
+    188:192:public void addBodyParameter(java.lang.String,java.lang.String)
+    195:199:public void addBodyParameter(org.apache.http.NameValuePair)
+    202:210:public void addBodyParameter(java.util.List)
+    213:217:public void addBodyParameter(java.lang.String,java.io.File)
+    220:224:public void addBodyParameter(java.lang.String,java.io.File,java.lang.String)
+    227:231:public void addBodyParameter(java.lang.String,java.io.File,java.lang.String,java.lang.String)
+    234:238:public void addBodyParameter(java.lang.String,java.io.File,java.lang.String,java.lang.String,java.lang.String)
+    241:245:public void addBodyParameter(java.lang.String,java.io.InputStream,long)
+    248:252:public void addBodyParameter(java.lang.String,java.io.InputStream,long,java.lang.String)
+    255:259:public void addBodyParameter(java.lang.String,java.io.InputStream,long,java.lang.String,java.lang.String)
+    262:271:public void setBodyEntity(org.apache.http.HttpEntity)
+com.lidroid.xutils.http.RequestParams$HeaderItem:
+    final synthetic com.lidroid.xutils.http.RequestParams this$0
+    322:325:public RequestParams$HeaderItem(com.lidroid.xutils.http.RequestParams,org.apache.http.Header)
+    327:330:public RequestParams$HeaderItem(com.lidroid.xutils.http.RequestParams,org.apache.http.Header,boolean)
+    332:335:public RequestParams$HeaderItem(com.lidroid.xutils.http.RequestParams,java.lang.String,java.lang.String)
+    337:340:public RequestParams$HeaderItem(com.lidroid.xutils.http.RequestParams,java.lang.String,java.lang.String,boolean)
+com.lidroid.xutils.http.ResponseInfo:
+    31:32:public org.apache.http.Header[] getAllHeaders()
+    36:37:public org.apache.http.Header[] getHeaders(java.lang.String)
+    41:42:public org.apache.http.Header getFirstHeader(java.lang.String)
+    46:47:public org.apache.http.Header getLastHeader(java.lang.String)
+com.lidroid.xutils.http.ResponseStream
+com.lidroid.xutils.http.SyncHttpHandler
+com.lidroid.xutils.http.callback.RequestCallBack:
+    private static final int DEFAULT_RATE
+    private static final int MIN_RATE
+    protected java.lang.Object userTag
+    36:38:public RequestCallBack(int)
+    40:43:public RequestCallBack(java.lang.Object)
+    45:48:public RequestCallBack(int,java.lang.Object)
+    60:61:public final void setRate(int)
+    64:64:public java.lang.Object getUserTag()
+    68:69:public void setUserTag(java.lang.Object)
+    72:72:public final java.lang.String getRequestUrl()
+    83:83:public void onCancelled()
+com.lidroid.xutils.http.client.DefaultSSLSocketFactory:
+    1:1:public static bridge synthetic org.apache.http.conn.ssl.SSLSocketFactory getSocketFactory()
+com.lidroid.xutils.http.client.HttpRequest:
+    53:55:public HttpRequest(com.lidroid.xutils.http.client.HttpRequest$HttpMethod)
+    64:67:public HttpRequest(com.lidroid.xutils.http.client.HttpRequest$HttpMethod,java.net.URI)
+    70:71:public com.lidroid.xutils.http.client.HttpRequest addQueryStringParameter(java.lang.String,java.lang.String)
+    75:76:public com.lidroid.xutils.http.client.HttpRequest addQueryStringParameter(org.apache.http.NameValuePair)
+    89:106:public void setRequestParams(com.lidroid.xutils.http.RequestParams)
+com.lidroid.xutils.http.client.RetryHandler:
+    private static final int RETRY_SLEEP_INTERVAL
+com.lidroid.xutils.http.client.entity.BodyParamsEntity:
+    58:59:public BodyParamsEntity(java.util.List)
+    72:74:public com.lidroid.xutils.http.client.entity.BodyParamsEntity addParameter(java.lang.String,java.lang.String)
+    78:80:public com.lidroid.xutils.http.client.entity.BodyParamsEntity addParams(java.util.List)
+com.lidroid.xutils.http.client.entity.FileUploadEntity
+com.lidroid.xutils.http.client.entity.InputStreamUploadEntity
+com.lidroid.xutils.http.client.multipart.FormBodyPart:
+    52:70:public FormBodyPart(java.lang.String,com.lidroid.xutils.http.client.multipart.content.ContentBody,java.lang.String)
+com.lidroid.xutils.http.client.multipart.HttpMultipart:
+    128:129:public HttpMultipart(java.lang.String,java.nio.charset.Charset,java.lang.String)
+    132:133:public HttpMultipart(java.lang.String,java.lang.String)
+    136:137:public void setSubType(java.lang.String)
+    140:140:public java.lang.String getSubType()
+    144:144:public java.nio.charset.Charset getCharset()
+    148:148:public com.lidroid.xutils.http.client.multipart.HttpMultipartMode getMode()
+com.lidroid.xutils.http.client.multipart.MIME:
+    public static final java.lang.String CONTENT_TYPE
+    public static final java.lang.String CONTENT_TRANSFER_ENC
+    public static final java.lang.String CONTENT_DISPOSITION
+    public static final java.lang.String ENC_8BIT
+    public static final java.lang.String ENC_BINARY
+    25:25:public MIME()
+com.lidroid.xutils.http.client.multipart.MinimalFieldHeader:
+    49:49:public java.util.List getFields()
+    65:73:public java.util.List getFields(java.lang.String)
+    78:87:public int removeFields(java.lang.String)
+    91:114:public void setField(com.lidroid.xutils.http.client.multipart.MinimalField)
+com.lidroid.xutils.http.client.multipart.MultipartEntity:
+    117:118:public MultipartEntity(com.lidroid.xutils.http.client.multipart.HttpMultipartMode)
+    134:139:public void setMultipartSubtype(java.lang.String)
+    174:175:public void addPart(java.lang.String,com.lidroid.xutils.http.client.multipart.content.ContentBody,java.lang.String)
+com.lidroid.xutils.http.client.multipart.content.AbstractContentBody:
+    50:50:public java.lang.String getMediaType()
+    54:54:public java.lang.String getSubType()
+com.lidroid.xutils.http.client.multipart.content.ByteArrayBody
+com.lidroid.xutils.http.client.multipart.content.ContentDescriptor:
+    public abstract java.lang.String getMediaType()
+    public abstract java.lang.String getSubType()
+com.lidroid.xutils.http.client.multipart.content.FileBody
+com.lidroid.xutils.http.client.multipart.content.InputStreamBody
+com.lidroid.xutils.http.client.multipart.content.StringBody:
+    40:42:public static com.lidroid.xutils.http.client.multipart.content.StringBody create(java.lang.String,java.lang.String,java.nio.charset.Charset)
+    51:51:public static com.lidroid.xutils.http.client.multipart.content.StringBody create(java.lang.String,java.nio.charset.Charset)
+    58:58:public static com.lidroid.xutils.http.client.multipart.content.StringBody create(java.lang.String)
+    97:98:public StringBody(java.lang.String,java.nio.charset.Charset)
+    115:115:public java.io.Reader getReader()
+com.lidroid.xutils.http.client.util.URIBuilder:
+    160:161:public com.lidroid.xutils.http.client.util.URIBuilder setScheme(java.lang.String)
+    169:173:public com.lidroid.xutils.http.client.util.URIBuilder setUserInfo(java.lang.String)
+    181:181:public com.lidroid.xutils.http.client.util.URIBuilder setUserInfo(java.lang.String,java.lang.String)
+    188:191:public com.lidroid.xutils.http.client.util.URIBuilder setHost(java.lang.String)
+    198:201:public com.lidroid.xutils.http.client.util.URIBuilder setPort(int)
+    208:211:public com.lidroid.xutils.http.client.util.URIBuilder setPath(java.lang.String)
+    220:223:public com.lidroid.xutils.http.client.util.URIBuilder setQuery(java.lang.String)
+    245:259:public com.lidroid.xutils.http.client.util.URIBuilder setParameter(java.lang.String,java.lang.String)
+    267:269:public com.lidroid.xutils.http.client.util.URIBuilder setFragment(java.lang.String)
+    273:273:public java.lang.String getScheme()
+    277:277:public java.lang.String getUserInfo()
+    281:281:public java.lang.String getHost()
+    285:285:public int getPort()
+    289:289:public java.lang.String getPath()
+    293:296:public java.util.List getQueryParams()
+    301:301:public java.lang.String getFragment()
+com.lidroid.xutils.http.client.util.URLEncodedUtils:
+    public static final java.lang.String CONTENT_TYPE
+    private static final java.lang.String PARAMETER_SEPARATOR
+    private static final java.lang.String NAME_VALUE_SEPARATOR
+    private static final int RADIX
+    40:40:public URLEncodedUtils()
+    51:61:public static boolean isEncoded(org.apache.http.HttpEntity)
+    76:83:public static java.util.List parse(java.net.URI)
+    99:113:public static void parse(java.util.List,java.util.Scanner)
+    342:368:private static java.lang.String urldecode(java.lang.String,java.nio.charset.Charset,boolean)
+    379:382:private static java.lang.String decodeFormFields(java.lang.String,java.lang.String)
+    393:396:private static java.lang.String decodeFormFields(java.lang.String,java.nio.charset.Charset)
+com.lidroid.xutils.task.PriorityAsyncTask:
+    private static final int MESSAGE_POST_RESULT
+    private static final int MESSAGE_POST_PROGRESS
+    50:50:public com.lidroid.xutils.task.Priority getPriority()
+    213:214:public final boolean cancel(boolean)
+    219:219:public boolean supportPause()
+    224:224:public boolean supportResume()
+    229:229:public boolean supportCancel()
+    234:234:public void pause()
+    238:238:public void resume()
+    242:243:public void cancel()
+    247:247:public boolean isPaused()
+    261:261:public final java.lang.Object get()
+    279:279:public final java.lang.Object get(long,java.util.concurrent.TimeUnit)
+    290:290:public final varargs com.lidroid.xutils.task.PriorityAsyncTask execute(java.lang.Object[])
+    326:327:public static void execute(java.lang.Runnable)
+    338:339:public static void execute(java.lang.Runnable,com.lidroid.xutils.task.Priority)
+com.lidroid.xutils.task.PriorityExecutor:
+    private static final int CORE_POOL_SIZE
+    private static final int MAXIMUM_POOL_SIZE
+    private static final int KEEP_ALIVE
+    44:44:public int getPoolSize()
+    48:51:public void setPoolSize(int)
+    54:54:public boolean isBusy()
+com.lidroid.xutils.task.PriorityObjectBlockingQueue:
+    private static final long serialVersionUID
+    164:181:public PriorityObjectBlockingQueue(java.util.Collection)
+    567:581:private void writeObject(java.io.ObjectOutputStream)
+    589:602:private void readObject(java.io.ObjectInputStream)
+com.lidroid.xutils.task.TaskHandler
+com.lidroid.xutils.util.CharsetUtils:
+    public static final java.lang.String DEFAULT_ENCODING_CHARSET
+    28:29:private CharsetUtils()
+com.lidroid.xutils.util.DoubleKeyValueMap
+com.lidroid.xutils.util.IOUtils:
+    29:30:private IOUtils()
+    42:48:public static void closeQuietly(android.database.Cursor)
+com.lidroid.xutils.util.LogUtils:
+    34:35:private LogUtils()
+    98:107:public static void d(java.lang.String,java.lang.Throwable)
+    134:143:public static void i(java.lang.String)
+    146:155:public static void i(java.lang.String,java.lang.Throwable)
+    158:167:public static void v(java.lang.String)
+    170:179:public static void v(java.lang.String,java.lang.Throwable)
+    182:191:public static void w(java.lang.String)
+    194:203:public static void w(java.lang.String,java.lang.Throwable)
+    219:228:public static void wtf(java.lang.String)
+    231:240:public static void wtf(java.lang.String,java.lang.Throwable)
+    243:252:public static void wtf(java.lang.Throwable)
+com.lidroid.xutils.util.LogUtils$CustomLogger:
+    public abstract void d(java.lang.String,java.lang.String,java.lang.Throwable)
+    public abstract void i(java.lang.String,java.lang.String)
+    public abstract void i(java.lang.String,java.lang.String,java.lang.Throwable)
+    public abstract void v(java.lang.String,java.lang.String)
+    public abstract void v(java.lang.String,java.lang.String,java.lang.Throwable)
+    public abstract void w(java.lang.String,java.lang.String)
+    public abstract void w(java.lang.String,java.lang.String,java.lang.Throwable)
+    public abstract void wtf(java.lang.String,java.lang.String)
+    public abstract void wtf(java.lang.String,java.lang.String,java.lang.Throwable)
+    public abstract void wtf(java.lang.String,java.lang.Throwable)
+com.lidroid.xutils.util.MimeTypeUtils
+com.lidroid.xutils.util.OtherUtils:
+    private static final int STRING_BUFFER_LENGTH
+    private static javax.net.ssl.SSLSocketFactory sslSocketFactory
+    42:43:private OtherUtils()
+    110:124:public static java.lang.String getDiskCacheDir(android.content.Context,java.lang.String)
+    129:133:public static long getAvailableSpace(java.io.File)
+    221:221:public static java.lang.StackTraceElement getCurrentStackTraceElement()
+    232:262:public static void trustAllHttpsURLConnection()
+com.lidroid.xutils.util.OtherUtils$1
+com.lidroid.xutils.util.PreferencesCookieStore
+com.lidroid.xutils.util.PreferencesCookieStore$SerializableCookie
+com.lidroid.xutils.view.EventListenerManager
+com.lidroid.xutils.view.EventListenerManager$DynamicHandler
+com.lidroid.xutils.view.ResLoader
+com.lidroid.xutils.view.ResType
+com.lidroid.xutils.view.ViewFinder
+com.lidroid.xutils.view.ViewInjectInfo
+com.lidroid.xutils.view.annotation.ContentView
+com.lidroid.xutils.view.annotation.PreferenceInject
+com.lidroid.xutils.view.annotation.ResInject
+com.lidroid.xutils.view.annotation.ViewInject
+com.lidroid.xutils.view.annotation.event.EventBase
+com.lidroid.xutils.view.annotation.event.OnChildClick
+com.lidroid.xutils.view.annotation.event.OnClick
+com.lidroid.xutils.view.annotation.event.OnCompoundButtonCheckedChange
+com.lidroid.xutils.view.annotation.event.OnFocusChange
+com.lidroid.xutils.view.annotation.event.OnGroupClick
+com.lidroid.xutils.view.annotation.event.OnGroupCollapse
+com.lidroid.xutils.view.annotation.event.OnGroupExpand
+com.lidroid.xutils.view.annotation.event.OnItemClick
+com.lidroid.xutils.view.annotation.event.OnItemLongClick
+com.lidroid.xutils.view.annotation.event.OnItemSelected
+com.lidroid.xutils.view.annotation.event.OnKey
+com.lidroid.xutils.view.annotation.event.OnLongClick
+com.lidroid.xutils.view.annotation.event.OnNothingSelected
+com.lidroid.xutils.view.annotation.event.OnPreferenceChange
+com.lidroid.xutils.view.annotation.event.OnPreferenceClick
+com.lidroid.xutils.view.annotation.event.OnProgressChanged
+com.lidroid.xutils.view.annotation.event.OnRadioGroupCheckedChange
+com.lidroid.xutils.view.annotation.event.OnScroll
+com.lidroid.xutils.view.annotation.event.OnScrollStateChanged
+com.lidroid.xutils.view.annotation.event.OnStartTrackingTouch
+com.lidroid.xutils.view.annotation.event.OnStopTrackingTouch
+com.lidroid.xutils.view.annotation.event.OnTabChange
+com.lidroid.xutils.view.annotation.event.OnTouch
+com.nostra13.universalimageloader.cache.disc.DiscCacheAware:
+    public abstract java.io.File getDirectory()
+    public abstract boolean remove(java.lang.String)
+    public abstract void close()
+    public abstract void clear()
+com.nostra13.universalimageloader.cache.disc.impl.BaseDiscCache:
+    public static final int DEFAULT_BUFFER_SIZE
+    public static final int DEFAULT_COMPRESS_QUALITY
+    private static final java.lang.String ERROR_ARG_NULL
+    private static final java.lang.String TEMP_IMAGE_POSTFIX
+    61:62:public BaseDiscCache(java.io.File)
+    69:70:public BaseDiscCache(java.io.File,java.io.File)
+    93:93:public java.io.File getDirectory()
+    148:148:public boolean remove(java.lang.String)
+    154:154:public void close()
+    158:164:public void clear()
+    179:180:public void setBufferSize(int)
+    183:184:public void setCompressFormat(android.graphics.Bitmap$CompressFormat)
+    187:188:public void setCompressQuality(int)
+com.nostra13.universalimageloader.cache.disc.impl.LimitedAgeDiscCache
+com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache:
+    32:33:public UnlimitedDiscCache(java.io.File)
+    40:41:public UnlimitedDiscCache(java.io.File,java.io.File)
+com.nostra13.universalimageloader.cache.disc.impl.ext.DiskLruCache:
+    static final java.lang.String JOURNAL_FILE
+    static final java.lang.String JOURNAL_FILE_TEMP
+    static final java.lang.String JOURNAL_FILE_BACKUP
+    static final java.lang.String MAGIC
+    static final java.lang.String VERSION_1
+    static final long ANY_SEQUENCE_NUMBER
+    private static final java.lang.String CLEAN
+    private static final java.lang.String DIRTY
+    private static final java.lang.String REMOVE
+    private static final java.lang.String READ
+    491:491:public java.io.File getDirectory()
+    499:499:public synchronized long getMaxSize()
+    504:504:public synchronized int getMaxFileCount()
+    512:514:public synchronized void setMaxSize(long)
+    522:522:public synchronized long size()
+    531:531:public synchronized long fileCount()
+    637:637:public synchronized boolean isClosed()
+    648:652:public synchronized void flush()
+    702:702:private static java.lang.String inputStreamToString(java.io.InputStream)
+    87:87:static synthetic com.nostra13.universalimageloader.cache.disc.impl.ext.DiskLruCache$Editor access$1700(com.nostra13.universalimageloader.cache.disc.impl.ext.DiskLruCache,java.lang.String,long)
+    87:87:static synthetic java.lang.String access$1800(java.io.InputStream)
+com.nostra13.universalimageloader.cache.disc.impl.ext.DiskLruCache$Editor:
+    781:793:public java.io.InputStream newInputStream(int)
+    801:802:public java.lang.String getString(int)
+    840:847:public void set(int,java.lang.String)
+    872:878:public void abortUnlessCommitted()
+com.nostra13.universalimageloader.cache.disc.impl.ext.DiskLruCache$Snapshot:
+    727:727:public com.nostra13.universalimageloader.cache.disc.impl.ext.DiskLruCache$Editor edit()
+    737:737:public java.io.InputStream getInputStream(int)
+    742:742:public java.lang.String getString(int)
+    747:747:public long getLength(int)
+com.nostra13.universalimageloader.cache.disc.impl.ext.LruDiscCache:
+    public static final int DEFAULT_BUFFER_SIZE
+    public static final int DEFAULT_COMPRESS_QUALITY
+    private static final java.lang.String ERROR_ARG_NULL
+    private static final java.lang.String ERROR_ARG_NEGATIVE
+    126:126:public java.io.File getDirectory()
+    192:195:public boolean remove(java.lang.String)
+    202:207:public void close()
+    212:221:public void clear()
+    228:229:public void setBufferSize(int)
+    232:233:public void setCompressFormat(android.graphics.Bitmap$CompressFormat)
+    236:237:public void setCompressQuality(int)
+com.nostra13.universalimageloader.cache.disc.impl.ext.StrictLineReader:
+    private static final byte CR
+    private static final byte LF
+com.nostra13.universalimageloader.cache.disc.impl.ext.Util:
+    30:31:private Util()
+    35:43:static java.lang.String readFully(java.io.Reader)
+com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator:
+    private static final java.lang.String HASH_ALGORITHM
+    private static final int RADIX
+com.nostra13.universalimageloader.cache.memory.BaseMemoryCache
+com.nostra13.universalimageloader.cache.memory.LimitedMemoryCache
+com.nostra13.universalimageloader.cache.memory.MemoryCacheAware:
+    public abstract void clear()
+com.nostra13.universalimageloader.cache.memory.impl.FIFOLimitedMemoryCache
+com.nostra13.universalimageloader.cache.memory.impl.FuzzyKeyMemoryCache:
+    74:75:public void clear()
+com.nostra13.universalimageloader.cache.memory.impl.LRULimitedMemoryCache
+com.nostra13.universalimageloader.cache.memory.impl.LargestLimitedMemoryCache
+com.nostra13.universalimageloader.cache.memory.impl.LimitedAgeMemoryCache
+com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache:
+    128:129:public void clear()
+com.nostra13.universalimageloader.cache.memory.impl.UsingFreqLimitedMemoryCache
+com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache
+com.nostra13.universalimageloader.core.DefaultConfigurationFactory:
+    54:137:public DefaultConfigurationFactory()
+com.nostra13.universalimageloader.core.DisplayBitmapTask:
+    private static final java.lang.String LOG_DISPLAY_IMAGE_IN_IMAGEAWARE
+    private static final java.lang.String LOG_TASK_CANCELLED_IMAGEAWARE_REUSED
+    private static final java.lang.String LOG_TASK_CANCELLED_IMAGEAWARE_COLLECTED
+com.nostra13.universalimageloader.core.DisplayImageOptions$Builder:
+    237:238:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder showStubImage(int)
+    248:249:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder showImageOnLoading(int)
+    258:259:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder showImageOnLoading(android.graphics.drawable.Drawable)
+    281:282:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder showImageForEmptyUri(android.graphics.drawable.Drawable)
+    304:305:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder showImageOnFail(android.graphics.drawable.Drawable)
+    315:316:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder resetViewBeforeLoading()
+    335:336:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder cacheInMemory()
+    352:352:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder cacheOnDisc()
+    362:362:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder cacheOnDisc(boolean)
+    396:398:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder decodingOptions(android.graphics.BitmapFactory$Options)
+    403:404:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder delayBeforeLoading(int)
+    409:410:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder extraForDownloader(java.lang.Object)
+    425:426:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder preProcessor(com.nostra13.universalimageloader.core.process.BitmapProcessor)
+    435:436:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder postProcessor(com.nostra13.universalimageloader.core.process.BitmapProcessor)
+    450:451:com.nostra13.universalimageloader.core.DisplayImageOptions$Builder syncLoading(boolean)
+    459:460:public com.nostra13.universalimageloader.core.DisplayImageOptions$Builder handler(android.os.Handler)
+com.nostra13.universalimageloader.core.ImageLoader:
+    static final java.lang.String LOG_INIT_CONFIG
+    static final java.lang.String LOG_DESTROY
+    static final java.lang.String LOG_LOAD_IMAGE_FROM_MEMORY_CACHE
+    private static final java.lang.String WARNING_RE_INIT_CONFIG
+    private static final java.lang.String ERROR_WRONG_ARGUMENTS
+    private static final java.lang.String ERROR_NOT_INIT
+    private static final java.lang.String ERROR_INIT_CONFIG_WITH_NULL
+    109:109:public boolean isInited()
+    125:126:public void displayImage(java.lang.String,com.nostra13.universalimageloader.core.imageaware.ImageAware)
+    143:144:public void displayImage(java.lang.String,com.nostra13.universalimageloader.core.imageaware.ImageAware,com.nostra13.universalimageloader.core.listener.ImageLoadingListener)
+    161:162:public void displayImage(java.lang.String,com.nostra13.universalimageloader.core.imageaware.ImageAware,com.nostra13.universalimageloader.core.DisplayImageOptions)
+    182:183:public void displayImage(java.lang.String,com.nostra13.universalimageloader.core.imageaware.ImageAware,com.nostra13.universalimageloader.core.DisplayImageOptions,com.nostra13.universalimageloader.core.listener.ImageLoadingListener)
+    286:287:public void displayImage(java.lang.String,android.widget.ImageView)
+    320:321:public void displayImage(java.lang.String,android.widget.ImageView,com.nostra13.universalimageloader.core.listener.ImageLoadingListener)
+    380:381:public void loadImage(java.lang.String,com.nostra13.universalimageloader.core.listener.ImageLoadingListener)
+    400:401:public void loadImage(java.lang.String,com.nostra13.universalimageloader.core.assist.ImageSize,com.nostra13.universalimageloader.core.listener.ImageLoadingListener)
+    444:445:public void loadImage(java.lang.String,com.nostra13.universalimageloader.core.assist.ImageSize,com.nostra13.universalimageloader.core.DisplayImageOptions,com.nostra13.universalimageloader.core.listener.ImageLoadingListener)
+    498:498:public android.graphics.Bitmap loadImageSync(java.lang.String)
+    514:514:public android.graphics.Bitmap loadImageSync(java.lang.String,com.nostra13.universalimageloader.core.DisplayImageOptions)
+    532:532:public android.graphics.Bitmap loadImageSync(java.lang.String,com.nostra13.universalimageloader.core.assist.ImageSize)
+    551:558:public android.graphics.Bitmap loadImageSync(java.lang.String,com.nostra13.universalimageloader.core.assist.ImageSize,com.nostra13.universalimageloader.core.DisplayImageOptions)
+    578:579:public com.nostra13.universalimageloader.cache.memory.MemoryCache getMemoryCache()
+    588:590:public void clearMemoryCache()
+    600:600:public com.nostra13.universalimageloader.cache.disc.DiskCache getDiscCache()
+    609:610:public com.nostra13.universalimageloader.cache.disc.DiskCache getDiskCache()
+    621:622:public void clearDiscCache()
+    630:632:public void clearDiskCache()
+    639:639:public java.lang.String getLoadingUriForView(com.nostra13.universalimageloader.core.imageaware.ImageAware)
+    647:647:public java.lang.String getLoadingUriForView(android.widget.ImageView)
+    658:659:public void cancelDisplayTask(com.nostra13.universalimageloader.core.imageaware.ImageAware)
+    668:669:public void cancelDisplayTask(android.widget.ImageView)
+    682:683:public void denyNetworkDownloads(boolean)
+    693:694:public void handleSlowNetwork(boolean)
+    702:703:public void pause()
+    707:708:public void resume()
+    718:719:public void stop()
+    727:732:public void destroy()
+com.nostra13.universalimageloader.core.ImageLoader$1
+com.nostra13.universalimageloader.core.ImageLoader$SyncImageLoadingListener
+com.nostra13.universalimageloader.core.ImageLoaderConfiguration:
+    127:127:public static com.nostra13.universalimageloader.core.ImageLoaderConfiguration createDefault(android.content.Context)
+com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder:
+    private static final java.lang.String WARNING_OVERLAP_DISK_CACHE_PARAMS
+    private static final java.lang.String WARNING_OVERLAP_DISK_CACHE_NAME_GENERATOR
+    private static final java.lang.String WARNING_OVERLAP_MEMORY_CACHE
+    private static final java.lang.String WARNING_OVERLAP_EXECUTOR
+    public static final int DEFAULT_THREAD_POOL_SIZE
+    public static final int DEFAULT_THREAD_PRIORITY
+    208:210:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder memoryCacheExtraOptions(int,int)
+    221:221:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder discCacheExtraOptions(int,int,com.nostra13.universalimageloader.core.process.BitmapProcessor)
+    234:237:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder diskCacheExtraOptions(int,int,com.nostra13.universalimageloader.core.process.BitmapProcessor)
+    254:259:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder taskExecutor(java.util.concurrent.Executor)
+    281:286:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder taskExecutorForCachedImages(java.util.concurrent.Executor)
+    359:366:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder memoryCacheSize(int)
+    379:389:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder memoryCacheSizePercentage(int)
+    414:414:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder discCacheSize(int)
+    426:433:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder diskCacheSize(int)
+    439:439:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder discCacheFileCount(int)
+    451:458:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder diskCacheFileCount(int)
+    464:464:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder discCacheFileNameGenerator(com.nostra13.universalimageloader.cache.disc.naming.FileNameGenerator)
+    474:479:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder diskCacheFileNameGenerator(com.nostra13.universalimageloader.cache.disc.naming.FileNameGenerator)
+    485:485:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder discCache(com.nostra13.universalimageloader.cache.disc.DiskCache)
+    521:522:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder imageDownloader(com.nostra13.universalimageloader.core.download.ImageDownloader)
+    532:533:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder imageDecoder(com.nostra13.universalimageloader.core.decode.ImageDecoder)
+    543:544:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder defaultDisplayImageOptions(com.nostra13.universalimageloader.core.DisplayImageOptions)
+    553:554:public com.nostra13.universalimageloader.core.ImageLoaderConfiguration$Builder writeDebugLogs()
+com.nostra13.universalimageloader.core.ImageLoaderEngine:
+    140:141:void denyNetworkDownloads(boolean)
+    151:152:void handleSlowNetwork(boolean)
+    159:160:void pause()
+    164:168:void resume()
+    178:187:void stop()
+com.nostra13.universalimageloader.core.LoadAndDisplayImageTask:
+    private static final java.lang.String LOG_WAITING_FOR_RESUME
+    private static final java.lang.String LOG_RESUME_AFTER_PAUSE
+    private static final java.lang.String LOG_DELAY_BEFORE_LOADING
+    private static final java.lang.String LOG_START_DISPLAY_IMAGE_TASK
+    private static final java.lang.String LOG_WAITING_FOR_IMAGE_LOADED
+    private static final java.lang.String LOG_GET_IMAGE_FROM_MEMORY_CACHE_AFTER_WAITING
+    private static final java.lang.String LOG_LOAD_IMAGE_FROM_NETWORK
+    private static final java.lang.String LOG_LOAD_IMAGE_FROM_DISK_CACHE
+    private static final java.lang.String LOG_RESIZE_CACHED_IMAGE_FILE
+    private static final java.lang.String LOG_PREPROCESS_IMAGE
+    private static final java.lang.String LOG_POSTPROCESS_IMAGE
+    private static final java.lang.String LOG_CACHE_IMAGE_IN_MEMORY
+    private static final java.lang.String LOG_CACHE_IMAGE_ON_DISK
+    private static final java.lang.String LOG_PROCESS_IMAGE_BEFORE_CACHE_ON_DISK
+    private static final java.lang.String LOG_TASK_CANCELLED_IMAGEAWARE_REUSED
+    private static final java.lang.String LOG_TASK_CANCELLED_IMAGEAWARE_COLLECTED
+    private static final java.lang.String LOG_TASK_INTERRUPTED
+    private static final java.lang.String ERROR_PRE_PROCESSOR_NULL
+    private static final java.lang.String ERROR_POST_PROCESSOR_NULL
+    private static final java.lang.String ERROR_PROCESSOR_FOR_DISK_CACHE_NULL
+com.nostra13.universalimageloader.core.ProcessAndDisplayImageTask:
+    private static final java.lang.String LOG_POSTPROCESS_IMAGE
+com.nostra13.universalimageloader.core.assist.FailReason:
+    37:37:public com.nostra13.universalimageloader.core.assist.FailReason$FailType getType()
+    42:42:public java.lang.Throwable getCause()
+com.nostra13.universalimageloader.core.assist.ImageSize:
+    private static final int TO_STRING_MAX_LENGHT
+    private static final java.lang.String SEPARATOR
+com.nostra13.universalimageloader.core.assist.deque.BlockingDeque:
+    public abstract void addFirst(java.lang.Object)
+    public abstract void addLast(java.lang.Object)
+    public abstract boolean offerFirst(java.lang.Object)
+    public abstract boolean offerLast(java.lang.Object)
+    public abstract void putFirst(java.lang.Object)
+    public abstract void putLast(java.lang.Object)
+    public abstract boolean offerFirst(java.lang.Object,long,java.util.concurrent.TimeUnit)
+    public abstract boolean offerLast(java.lang.Object,long,java.util.concurrent.TimeUnit)
+    public abstract java.lang.Object takeFirst()
+    public abstract java.lang.Object takeLast()
+    public abstract java.lang.Object pollFirst(long,java.util.concurrent.TimeUnit)
+    public abstract java.lang.Object pollLast(long,java.util.concurrent.TimeUnit)
+    public abstract boolean removeFirstOccurrence(java.lang.Object)
+    public abstract boolean removeLastOccurrence(java.lang.Object)
+    public abstract boolean add(java.lang.Object)
+    public abstract boolean offer(java.lang.Object)
+    public abstract void put(java.lang.Object)
+    public abstract boolean offer(java.lang.Object,long,java.util.concurrent.TimeUnit)
+    public abstract java.lang.Object remove()
+    public abstract java.lang.Object poll()
+    public abstract java.lang.Object take()
+    public abstract java.lang.Object poll(long,java.util.concurrent.TimeUnit)
+    public abstract java.lang.Object element()
+    public abstract java.lang.Object peek()
+    public abstract boolean remove(java.lang.Object)
+    public abstract boolean contains(java.lang.Object)
+    public abstract int size()
+    public abstract java.util.Iterator iterator()
+    public abstract void push(java.lang.Object)
+com.nostra13.universalimageloader.core.assist.deque.Deque:
+    public abstract void addFirst(java.lang.Object)
+    public abstract void addLast(java.lang.Object)
+    public abstract boolean offerFirst(java.lang.Object)
+    public abstract boolean offerLast(java.lang.Object)
+    public abstract java.lang.Object removeFirst()
+    public abstract java.lang.Object removeLast()
+    public abstract java.lang.Object pollFirst()
+    public abstract java.lang.Object pollLast()
+    public abstract java.lang.Object getFirst()
+    public abstract java.lang.Object getLast()
+    public abstract java.lang.Object peekFirst()
+    public abstract java.lang.Object peekLast()
+    public abstract boolean removeFirstOccurrence(java.lang.Object)
+    public abstract boolean removeLastOccurrence(java.lang.Object)
+    public abstract boolean add(java.lang.Object)
+    public abstract boolean offer(java.lang.Object)
+    public abstract java.lang.Object remove()
+    public abstract java.lang.Object poll()
+    public abstract java.lang.Object element()
+    public abstract java.lang.Object peek()
+    public abstract void push(java.lang.Object)
+    public abstract java.lang.Object pop()
+    public abstract boolean remove(java.lang.Object)
+    public abstract boolean contains(java.lang.Object)
+    public abstract int size()
+    public abstract java.util.Iterator iterator()
+    public abstract java.util.Iterator descendingIterator()
+com.nostra13.universalimageloader.core.assist.deque.LIFOLinkedBlockingDeque:
+    private static final long serialVersionUID
+com.nostra13.universalimageloader.core.assist.deque.LinkedBlockingDeque:
+    private static final long serialVersionUID
+    165:178:public LinkedBlockingDeque(java.util.Collection)
+    294:296:public void addFirst(java.lang.Object)
+    342:352:public void putFirst(java.lang.Object)
+    377:390:public boolean offerFirst(java.lang.Object,long,java.util.concurrent.TimeUnit)
+    430:432:public java.lang.Object removeLast()
+    446:451:public java.lang.Object pollLast()
+    469:477:public java.lang.Object takeLast()
+    501:513:public java.lang.Object pollLast(long,java.util.concurrent.TimeUnit)
+    530:532:public java.lang.Object getLast()
+    546:551:public java.lang.Object peekLast()
+    573:585:public boolean removeLastOccurrence(java.lang.Object)
+    738:739:public void push(java.lang.Object)
+    745:745:public java.lang.Object pop()
+    1007:1007:public java.util.Iterator descendingIterator()
+    1133:1146:private void writeObject(java.io.ObjectOutputStream)
+    1155:1167:private void readObject(java.io.ObjectInputStream)
+com.nostra13.universalimageloader.core.assist.deque.LinkedBlockingDeque$DescendingItr
+com.nostra13.universalimageloader.core.decode.BaseImageDecoder:
+    protected static final java.lang.String LOG_SUBSAMPLE_IMAGE
+    protected static final java.lang.String LOG_SCALE_IMAGE
+    protected static final java.lang.String LOG_ROTATE_IMAGE
+    protected static final java.lang.String LOG_FLIP_IMAGE
+    protected static final java.lang.String ERROR_CANT_DECODE_IMAGE
+com.nostra13.universalimageloader.core.decode.ImageDecodingInfo:
+    107:107:public java.lang.String getOriginalImageUri()
+com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer
+com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer$RoundedDrawable
+com.nostra13.universalimageloader.core.display.RoundedVignetteBitmapDisplayer
+com.nostra13.universalimageloader.core.display.RoundedVignetteBitmapDisplayer$RoundedVignetteDrawable
+com.nostra13.universalimageloader.core.download.BaseImageDownloader:
+    public static final int DEFAULT_HTTP_CONNECT_TIMEOUT
+    public static final int DEFAULT_HTTP_READ_TIMEOUT
+    protected static final int BUFFER_SIZE
+    protected static final java.lang.String ALLOWED_URI_CHARS
+    protected static final int MAX_REDIRECT_COUNT
+    protected static final java.lang.String CONTENT_CONTACTS_URI_PREFIX
+    private static final java.lang.String ERROR_UNSUPPORTED_SCHEME
+    75:79:public BaseImageDownloader(android.content.Context,int,int)
+com.nostra13.universalimageloader.core.imageaware.ImageViewAware:
+    65:66:public ImageViewAware(android.widget.ImageView,boolean)
+com.nostra13.universalimageloader.core.imageaware.NonViewAware:
+    41:42:public NonViewAware(com.nostra13.universalimageloader.core.assist.ImageSize,com.nostra13.universalimageloader.core.assist.ViewScaleType)
+com.nostra13.universalimageloader.core.imageaware.ViewAware:
+    public static final java.lang.String WARN_CANT_SET_DRAWABLE
+    public static final java.lang.String WARN_CANT_SET_BITMAP
+com.nostra13.universalimageloader.core.listener.PauseOnScrollListener
+com.nostra13.universalimageloader.utils.DiskCacheUtils
+com.nostra13.universalimageloader.utils.ImageSizeUtils:
+    private static final int DEFAULT_MAX_BITMAP_DIMENSION
+    45:46:private ImageSizeUtils()
+com.nostra13.universalimageloader.utils.IoUtils:
+    public static final int DEFAULT_BUFFER_SIZE
+    public static final int DEFAULT_IMAGE_TOTAL_SIZE
+    public static final int CONTINUE_LOADING_PERCENTAGE
+    38:39:private IoUtils()
+    52:52:public static boolean copyStream(java.io.InputStream,java.io.OutputStream,com.nostra13.universalimageloader.utils.IoUtils$CopyListener)
+com.nostra13.universalimageloader.utils.L:
+    private static final java.lang.String LOG_FORMAT
+    33:34:private L()
+    43:44:public static void enableLogging()
+    53:54:public static void disableLogging()
+    68:69:public static void writeLogs(boolean)
+    94:95:public static varargs void e(java.lang.Throwable,java.lang.String,java.lang.Object[])
+com.nostra13.universalimageloader.utils.MemoryCacheUtils:
+    private static final java.lang.String URI_AND_SIZE_SEPARATOR
+    private static final java.lang.String WIDTH_AND_HEIGHT_SEPARATOR
+    39:40:private MemoryCacheUtils()
+    68:74:public static java.util.List findCachedBitmapsForImageUri(java.lang.String,com.nostra13.universalimageloader.cache.memory.MemoryCache)
+    84:90:public static java.util.List findCacheKeysForImageUri(java.lang.String,com.nostra13.universalimageloader.cache.memory.MemoryCache)
+    100:109:public static void removeFromCache(java.lang.String,com.nostra13.universalimageloader.cache.memory.MemoryCache)
+com.nostra13.universalimageloader.utils.StorageUtils:
+    private static final java.lang.String EXTERNAL_STORAGE_PERMISSION
+    private static final java.lang.String INDIVIDUAL_DIR_NAME
+    38:39:private StorageUtils()
+    116:123:public static java.io.File getOwnCacheDirectory(android.content.Context,java.lang.String)
+com.readystatesoftware.viewbadger.BadgeView:
+    public static final int POSITION_TOP_LEFT
+    public static final int POSITION_TOP_RIGHT
+    public static final int POSITION_BOTTOM_LEFT
+    public static final int POSITION_BOTTOM_RIGHT
+    public static final int POSITION_CENTER
+    private static final int DEFAULT_MARGIN_DIP
+    private static final int DEFAULT_LR_PADDING_DIP
+    private static final int DEFAULT_CORNER_RADIUS_DIP
+    private static final int DEFAULT_POSITION
+    private static final int DEFAULT_TEXT_COLOR
+    63:64:public BadgeView(android.content.Context)
+    93:94:public BadgeView(android.content.Context,android.widget.TabWidget,int)
+    192:193:public void show(boolean)
+    201:202:public void show(android.view.animation.Animation)
+    218:219:public void hide(boolean)
+    227:228:public void hide(android.view.animation.Animation)
+    235:236:public void toggle()
+    244:245:public void toggle(boolean)
+    254:255:public void toggle(android.view.animation.Animation,android.view.animation.Animation)
+    282:287:private void toggle(boolean,android.view.animation.Animation,android.view.animation.Animation)
+    296:309:public int increment(int)
+    319:319:public int decrement(int)
+    438:440:public void setBadgeMargin(int,int)
+com.ta.utdid2.android.utils.AESUtils:
+    public static final java.lang.String TAG
+    12:12:public AESUtils()
+    76:76:public static java.lang.String toHex(java.lang.String)
+    80:80:public static java.lang.String fromHex(java.lang.String)
+com.ta.utdid2.android.utils.Base64:
+    public static final int DEFAULT
+    public static final int NO_PADDING
+    public static final int NO_WRAP
+    public static final int CRLF
+    public static final int URL_SAFE
+    public static final int NO_CLOSE
+    489:492:public static java.lang.String encodeToString(byte[],int,int,int)
+com.ta.utdid2.android.utils.Base64$Coder:
+    public abstract boolean process(byte[],int,int,boolean)
+    public abstract int maxOutputSize(int)
+com.ta.utdid2.android.utils.Base64$Decoder:
+    private static final int SKIP
+    private static final int EQUALS
+    261:261:public int maxOutputSize(int)
+com.ta.utdid2.android.utils.Base64$Encoder:
+    public static final int LINE_GROUPS
+    620:620:public int maxOutputSize(int)
+com.ta.utdid2.android.utils.IntUtils:
+    3:3:public IntUtils()
+    19:30:public static byte[] getBytes(byte[],int)
+com.ta.utdid2.android.utils.NetworkUtils
+com.ta.utdid2.android.utils.PhoneInfoUtils:
+    9:9:public PhoneInfoUtils()
+com.ta.utdid2.android.utils.StringUtils:
+    3:3:public StringUtils()
+    12:35:public static java.lang.String convertObjectToString(java.lang.Object)
+com.ta.utdid2.android.utils.SystemUtils
+com.ta.utdid2.core.persistent.FastXmlSerializer:
+    private static final int BUFFER_LEN
+com.ta.utdid2.core.persistent.MySharedPreferences:
+    public abstract int getInt(java.lang.String,int)
+    public abstract float getFloat(java.lang.String,float)
+    public abstract boolean getBoolean(java.lang.String,boolean)
+    public abstract boolean contains(java.lang.String)
+    public abstract void registerOnSharedPreferenceChangeListener(com.ta.utdid2.core.persistent.MySharedPreferences$OnSharedPreferenceChangeListener)
+    public abstract void unregisterOnSharedPreferenceChangeListener(com.ta.utdid2.core.persistent.MySharedPreferences$OnSharedPreferenceChangeListener)
+com.ta.utdid2.core.persistent.MySharedPreferences$MyEditor:
+    public abstract com.ta.utdid2.core.persistent.MySharedPreferences$MyEditor remove(java.lang.String)
+com.ta.utdid2.core.persistent.PersistentConfiguration:
+    private static final java.lang.String KEY_TIMESTAMP
+    private static final java.lang.String KEY_TIMESTAMP2
+    248:257:public void putInt(java.lang.String,int)
+    272:281:public void putBoolean(java.lang.String,boolean)
+    284:293:public void putFloat(java.lang.String,float)
+    308:317:public void remove(java.lang.String)
+    320:342:public void reload()
+    345:355:public void clear()
+    432:438:public int getInt(java.lang.String)
+    442:448:public long getLong(java.lang.String)
+    452:458:public float getFloat(java.lang.String)
+    462:468:public boolean getBoolean(java.lang.String)
+    472:478:public java.util.Map getAll()
+com.ta.utdid2.core.persistent.TransactionXMLFile:
+    public static final int MODE_WORLD_WRITEABLE
+    public static final int MODE_WORLD_READABLE
+    public static final int MODE_PRIVATE
+com.ta.utdid2.core.persistent.TransactionXMLFile$MySharedPreferencesImpl:
+    167:169:public final void registerOnSharedPreferenceChangeListener(com.ta.utdid2.core.persistent.MySharedPreferences$OnSharedPreferenceChangeListener)
+    174:176:public final void unregisterOnSharedPreferenceChangeListener(com.ta.utdid2.core.persistent.MySharedPreferences$OnSharedPreferenceChangeListener)
+    194:197:public final int getInt(java.lang.String,int)
+    208:211:public final float getFloat(java.lang.String,float)
+    215:218:public final boolean getBoolean(java.lang.String,boolean)
+    222:224:public final boolean contains(java.lang.String)
+com.ta.utdid2.core.persistent.TransactionXMLFile$MySharedPreferencesImpl$EditorImpl:
+    267:270:public final com.ta.utdid2.core.persistent.MySharedPreferences$MyEditor remove(java.lang.String)
+com.ta.utdid2.core.persistent.XmlUtils:
+    20:20:XmlUtils()
+    24:29:public static void skipCurrentTag(org.xmlpull.v1.XmlPullParser)
+    33:40:public static final int convertValueToList(java.lang.CharSequence,java.lang.String[],int)
+    45:53:public static final boolean convertValueToBoolean(java.lang.CharSequence,boolean)
+    58:96:public static final int convertValueToInt(java.lang.CharSequence,int)
+    101:104:public static final int convertValueToUnsignedInt(java.lang.String,int)
+    108:134:public static final int parseUnsignedIntAttribute(java.lang.CharSequence)
+    178:185:public static final void writeListXml(java.util.List,java.io.OutputStream)
+    479:481:public static final java.util.ArrayList readListXml(java.io.InputStream)
+    787:799:public static final void beginDocument(org.xmlpull.v1.XmlPullParser,java.lang.String)
+    805:808:public static final void nextElement(org.xmlpull.v1.XmlPullParser)
+com.ta.utdid2.device.Device:
+    19:19:long getCheckSum()
+com.ta.utdid2.device.DeviceInfo:
+    static final byte UTDID_VERSION_CODE
+    10:10:public DeviceInfo()
+com.ta.utdid2.device.UTDevice:
+    10:10:public UTDevice()
+com.ta.utdid2.device.UTUtdid:
+    private static final java.lang.String HMAC_KEY
+    static final java.lang.String UM_SETTINGS_STORAGE
+    static final java.lang.String UM_SETTINGS_STORAGE_NEW
+    private static final java.lang.String S_LOCAL_STORAGE_NAME
+    private static final java.lang.String S_LOCAL_STORAGE_KEY
+    private static final java.lang.String S_GLOBAL_PERSISTENT_CONFIG_KEY
+com.ta.utdid2.device.UTUtdidHelper:
+    63:67:public static java.lang.String generateRandomUTDID()
+com.ut.device.a:
+    16:16:private static java.lang.String a(android.content.Context)
+com.xyd.student.xydexamanalysis.BuildConfig
+com.xyd.student.xydexamanalysis.Fragment.FragmentFactory:
+    public static final int TAB_NOTICE
+    public static final int TAB_EXAM
+    public static final int TAB_WEIKE
+    public static final int TAB_OWNER
+    14:14:public FragmentFactory()
+com.xyd.student.xydexamanalysis.Fragment.NoticeFragment:
+    public static final int NOTICE_START_ACTIVITY_CODE
+    public static final int NOTICE_CODE_TOL_ACTIVITY_RESULT
+    public static final int NOTICE_CODE_SIN_ACTIVITY_RESULT
+    public static final int NOTICE_CODE_SHITIJIANG_ACTIVITY_RESULT
+    public static final int NOTICE_CODE_YOUXIU_ACTIVITY_RESULT
+    public static final int NOTICE_CODE_SHIFENTI_ACTIVITY_RESULT
+    87:92:public NoticeFragment(android.content.Context)
+    864:873:public void update()
+com.xyd.student.xydexamanalysis.Fragment.OwnerFragment:
+    private com.xyd.student.xydexamanalysis.utils.MyHttpUtil myhttpUtil
+    278:285:public static android.graphics.Bitmap readBitMap(android.content.Context,int)
+com.xyd.student.xydexamanalysis.Fragment.WeikeFragment:
+    private com.xyd.student.xydexamanalysis.application.BaseApplication baseApplication
+com.xyd.student.xydexamanalysis.InputCodeActivity:
+    private org.json.JSONObject param
+com.xyd.student.xydexamanalysis.Manifest
+com.xyd.student.xydexamanalysis.Manifest$permission
+com.xyd.student.xydexamanalysis.R:
+    10:10:public R()
+com.xyd.student.xydexamanalysis.R$anim
+com.xyd.student.xydexamanalysis.R$array
+com.xyd.student.xydexamanalysis.R$attr
+com.xyd.student.xydexamanalysis.R$bool
+com.xyd.student.xydexamanalysis.R$color
+com.xyd.student.xydexamanalysis.R$dimen
+com.xyd.student.xydexamanalysis.R$drawable
+com.xyd.student.xydexamanalysis.R$id
+com.xyd.student.xydexamanalysis.R$integer
+com.xyd.student.xydexamanalysis.R$layout
+com.xyd.student.xydexamanalysis.R$menu
+com.xyd.student.xydexamanalysis.R$raw
+com.xyd.student.xydexamanalysis.R$string
+com.xyd.student.xydexamanalysis.R$style
+com.xyd.student.xydexamanalysis.R$styleable:
+    1156:1156:public R$styleable()
+com.xyd.student.xydexamanalysis.RegisterAndForPwdActivity:
+    private com.xyd.student.xydexamanalysis.entity.Login loginuserInfo
+    587:600:private void getinsystem()
+com.xyd.student.xydexamanalysis.adapter.MyExamAdapter
+com.xyd.student.xydexamanalysis.adapter.MyExamAdapter$1
+com.xyd.student.xydexamanalysis.adapter.MyExamAdapter$ViewHolder
+com.xyd.student.xydexamanalysis.adapter.MyNoticeAdapter:
+    125:126:private void setImageDisplay(java.lang.String)
+com.xyd.student.xydexamanalysis.application.BaseApplication:
+    129:129:public static android.os.Handler getMainThreadHandler()
+    133:133:public static android.os.Looper getMainThreadLooper()
+    137:137:public static java.lang.Thread getMainThread()
+    141:141:public static int getMainThreadId()
+com.xyd.student.xydexamanalysis.constant.Constant:
+    public static final int ROWS_EXAM_LIMIT
+    public static final int ROWS_NOTICE_LIMIT
+    public static final java.lang.String SHARED_PREFERENCES
+    6:6:public Constant()
+com.xyd.student.xydexamanalysis.constant.Constants:
+    public static final int ROWS_EXAM_LIMIT
+    public static final int ROWS_NOTICE_LIMIT
+    public static final java.lang.String SHARED_PREFERENCES
+    public static final java.lang.String APP_ID
+    6:6:public Constants()
+com.xyd.student.xydexamanalysis.constant.Constants$ShowMsgActivity
+com.xyd.student.xydexamanalysis.entity.CarelessInfo:
+    24:25:public void setScoreRate(double)
+    32:33:public void setCarelessIndex(double)
+com.xyd.student.xydexamanalysis.entity.Casa_detail:
+    28:29:public void setCourseName(java.lang.String)
+    32:32:public double getScore()
+    36:37:public void setScore(double)
+    40:40:public double getClassAvgScore()
+    44:45:public void setClassAvgScore(double)
+    52:53:public void setOffset(double)
+com.xyd.student.xydexamanalysis.entity.ChargeInfo:
+    29:30:public void setPayType(int)
+    37:38:public void setFreeTime(java.lang.String)
+    45:46:public void setChargeName(java.lang.String)
+    49:49:public int getMeId()
+    53:54:public void setMeId(int)
+    57:57:public int getSeId()
+    61:62:public void setSeId(int)
+    69:70:public void setAmount(java.lang.Double)
+com.xyd.student.xydexamanalysis.entity.Exam.ExamInfo:
+    55:56:public void setMeDate(java.lang.String)
+    62:62:public int getMeId()
+    70:71:public void setMeId(int)
+    85:86:public void setMeName(java.lang.String)
+com.xyd.student.xydexamanalysis.entity.Exam.ExamInfos:
+    80:80:public int getResultCode()
+    88:89:public void setResultCode(int)
+    95:95:public java.lang.String getResultDesc()
+    103:104:public void setResultDesc(java.lang.String)
+com.xyd.student.xydexamanalysis.entity.Exam.PayInfo:
+    26:26:public int getPayStatus()
+    34:35:public void setPayStatus(int)
+com.xyd.student.xydexamanalysis.entity.Exam.SingleInfo:
+    57:58:public void setClassId(java.lang.String)
+    72:73:public void setCourseId(int)
+    102:103:public void setMeId(int)
+    117:118:public void setSeId(int)
+    132:133:public void setPersonalScore(double)
+    139:139:public int getSeFullScore()
+    147:148:public void setSeFullScore(int)
+    154:154:public com.xyd.student.xydexamanalysis.entity.Exam.PayInfo getPayInfo()
+com.xyd.student.xydexamanalysis.entity.Exam_Con
+com.xyd.student.xydexamanalysis.entity.ExplainInfo:
+    19:27:public ExplainInfo(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.util.ArrayList)
+com.xyd.student.xydexamanalysis.entity.Explain_single_info:
+    57:58:public void setDisplayName(java.lang.String)
+    65:66:public void setType(java.lang.String)
+    69:69:public int getDisplayIndex()
+    73:74:public void setDisplayIndex(int)
+    81:82:public void setDifficulty(double)
+    106:107:public void setFullScore(double)
+    114:115:public void setScore(double)
+    118:119:public void setWkId(java.lang.String)
+    126:127:public void setWkName(java.lang.String)
+    147:148:public void setErrorXywh(java.lang.String)
+    151:151:public java.lang.String getExcellentXywh()
+    155:156:public void setExcellentXywh(java.lang.String)
+    163:164:public void setPrefixUrl(java.lang.String)
+    171:172:public void setPageUrl(java.lang.String)
+    175:175:public java.lang.String getAnswerXywh()
+    179:180:public void setAnswerXywh(java.lang.String)
+com.xyd.student.xydexamanalysis.entity.ExplainquestionInfo
+com.xyd.student.xydexamanalysis.entity.Gasa_detal:
+    29:30:public void setCourseName(java.lang.String)
+    33:33:public double getScore()
+    37:38:public void setScore(double)
+    41:41:public double getGradeAvgScore()
+    45:46:public void setGradeAvgScore(double)
+    53:54:public void setOffset(double)
+com.xyd.student.xydexamanalysis.entity.Grade_CourseScore:
+    30:31:public void setScorePercentRate(int)
+    39:39:public java.lang.String getCourseId()
+    43:44:public void setCourseId(java.lang.String)
+    51:52:public void setCourseName(java.lang.String)
+    59:60:public void setScore(double)
+    67:68:public void setClassAvgScore(double)
+    75:76:public void setGradeAvgScore(double)
+    79:79:public int getClassPercentRate()
+    83:84:public void setClassPercentRate(int)
+com.xyd.student.xydexamanalysis.entity.Grade_Report:
+    36:42:public Grade_Report(java.util.ArrayList,java.util.ArrayList,java.util.ArrayList,com.xyd.student.xydexamanalysis.entity.UnbalanceInfo,java.lang.String)
+com.xyd.student.xydexamanalysis.entity.Login:
+    13:17:public Login(com.xyd.student.xydexamanalysis.entity.Login_userInfo,int,java.lang.String)
+    38:38:public int getResultCode()
+    53:53:public java.lang.String getResultDesc()
+com.xyd.student.xydexamanalysis.entity.Login_school:
+    36:37:public void setSchoolId(int)
+    43:43:public int getAreaId()
+    51:52:public void setAreaId(int)
+    66:67:public void setName(java.lang.String)
+    73:73:public java.lang.String getAreaName()
+    81:82:public void setAreaName(java.lang.String)
+    88:88:public int getStatus()
+    96:97:public void setStatus(int)
+com.xyd.student.xydexamanalysis.entity.Login_school_con
+com.xyd.student.xydexamanalysis.entity.Login_school_config:
+    private static final long serialVersionUID
+    private java.lang.String serverName
+    37:52:public Login_school_config(int,java.lang.String,java.lang.String,int,java.lang.String,int,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+    55:55:public java.lang.String getBasecenterUrl()
+    63:63:public java.lang.String getWebUrl()
+    74:74:public int getAsId()
+    89:89:public java.lang.String getAppId()
+    104:104:public java.lang.String getAppName()
+    119:119:public int getServerId()
+    134:134:public java.lang.String getServerName()
+    142:143:public void setServerName(java.lang.String)
+    149:149:public int getAreaId()
+    164:164:public java.lang.String getAreaName()
+    209:209:public java.lang.String getStatus()
+    281:281:public java.lang.String getDigital_camplusUrl()
+com.xyd.student.xydexamanalysis.entity.Login_use:
+    17:24:public Login_use(int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+com.xyd.student.xydexamanalysis.entity.Login_userInfo:
+    53:54:public void setUserId(java.lang.String)
+    60:60:public java.lang.String getLoginName()
+    68:69:public void setLoginName(java.lang.String)
+    83:84:public void setUserCode(java.lang.String)
+    90:90:public java.lang.String getSysCode()
+    98:99:public void setSysCode(java.lang.String)
+    105:105:public int getType()
+    113:114:public void setType(int)
+    120:120:public java.lang.String getEmail()
+    128:129:public void setEmail(java.lang.String)
+    135:135:public java.lang.String getMobile()
+    143:144:public void setMobile(java.lang.String)
+    158:159:public void setName(java.lang.String)
+    165:165:public java.lang.String getNickName()
+    173:174:public void setNickName(java.lang.String)
+    180:180:public int getStatus()
+    188:189:public void setStatus(int)
+    195:195:public int getAreaId()
+    203:204:public void setAreaId(int)
+    218:219:public void setSchoolId(int)
+    225:225:public int getAppUsed()
+    233:234:public void setAppUsed(int)
+com.xyd.student.xydexamanalysis.entity.Notice_Con:
+    15:20:public Notice_Con(int,int,java.util.ArrayList)
+com.xyd.student.xydexamanalysis.entity.PayInfo:
+    26:27:public void setPayStatus(int)
+    34:35:public void setChargeInfo(com.xyd.student.xydexamanalysis.entity.ChargeInfo)
+com.xyd.student.xydexamanalysis.entity.PayOrder:
+    13:17:public PayOrder(java.lang.String,java.lang.String)
+    20:20:public java.lang.String getType()
+com.xyd.student.xydexamanalysis.entity.SingleExam
+com.xyd.student.xydexamanalysis.entity.SingleNotice:
+    58:59:public void setN_studentName(java.lang.String)
+    66:67:public void setCourseId(int)
+    70:70:public int getN_meId()
+    74:75:public void setN_meId(int)
+    82:83:public void setN_meDate(java.lang.String)
+    90:91:public void setPayInfo(com.xyd.student.xydexamanalysis.entity.PayInfo)
+    98:99:public void setN_id(int)
+    106:107:public void setN_studentId(java.lang.String)
+    114:115:public void setN_subject(java.lang.String)
+    122:123:public void setN_type(java.lang.String)
+    130:131:public void setN_exam_name(java.lang.String)
+    138:139:public void setN_meid(int)
+    146:147:public void setN_seId(int)
+    154:155:public void setN_schoolId(int)
+    162:163:public void setN_classId(java.lang.String)
+    170:171:public void setN_info(java.lang.String)
+    178:179:public void setN_time(java.lang.String)
+com.xyd.student.xydexamanalysis.entity.SingleReport
+com.xyd.student.xydexamanalysis.entity.Single_classScoreInfo:
+    39:40:public void setLabel(java.lang.String)
+    46:46:public double getMinScore()
+    54:55:public void setMinScore(double)
+    61:61:public double getMaxScore()
+    69:70:public void setMaxScore(double)
+    84:85:public void setCount(int)
+    91:91:public int getIsMyFlag()
+    99:100:public void setIsMyFlag(int)
+    106:106:public java.lang.String getGroupFlag()
+    114:115:public void setGroupFlag(java.lang.String)
+com.xyd.student.xydexamanalysis.entity.Single_pageList:
+    private static final long serialVersionUID
+    39:40:public void setPrefixPageUrl(java.lang.String)
+    54:55:public void setSeId(int)
+    69:70:public void setPageIndex(int)
+    84:85:public void setPageUrl(java.lang.String)
+    99:100:public void setPageWh(java.lang.String)
+    114:115:public void setWidth(int)
+    129:130:public void setHeight(int)
+com.xyd.student.xydexamanalysis.entity.Single_scoreList:
+    private static final long serialVersionUID
+    96:97:public void setContentXy(java.lang.String)
+    111:112:public void setSeId(int)
+    126:127:public void setEqDiffculty(double)
+    141:142:public void setAnswerXy(java.lang.String)
+    156:157:public void setPageIndex(int)
+    171:172:public void setTagName(java.lang.String)
+    186:187:public void setDisplayIndex(int)
+    201:202:public void setDisplayName(java.lang.String)
+    216:217:public void setAnswerType(int)
+    231:232:public void setFullScore(double)
+    246:247:public void setPersonScore(double)
+    261:262:public void setClassScore(double)
+    276:277:public void setGradeScore(double)
+    291:292:public void setExamScore(double)
+    306:307:public void setScoreFlag(int)
+    321:322:public void setWkId(java.lang.String)
+    336:337:public void setWkName(java.lang.String)
+    351:352:public void setWkFlag(int)
+    366:367:public void setExcellentFlag(int)
+com.xyd.student.xydexamanalysis.entity.Single_subject_scores:
+    36:50:public Single_subject_scores(java.lang.String,java.util.ArrayList,java.lang.String,java.util.ArrayList,java.util.ArrayList,java.lang.String,java.lang.String,double,double,java.util.ArrayList,java.util.ArrayList,java.util.ArrayList,double)
+com.xyd.student.xydexamanalysis.entity.Single_tagInfoList:
+    48:48:public int getSeId()
+    56:57:public void setSeId(int)
+    71:72:public void setTagName(java.lang.String)
+    78:78:public int getCount()
+    86:87:public void setCount(int)
+    93:93:public double getFullScore()
+    101:102:public void setFullScore(double)
+    116:117:public void setScore(double)
+    123:123:public double getClassScore()
+    131:132:public void setClassScore(double)
+    138:138:public double getGradeScore()
+    146:147:public void setGradeScore(double)
+    153:153:public double getExamScore()
+    161:162:public void setExamScore(double)
+    176:177:public void setScoreRate(double)
+    191:192:public void setClassScoreRate(double)
+    206:207:public void setGradeScoreRate(double)
+    221:222:public void setExamScoreRate(double)
+    228:228:public int getFlag()
+    236:237:public void setFlag(int)
+com.xyd.student.xydexamanalysis.entity.UnbalanceInfo:
+    28:29:public void setMarkInfo(java.lang.String)
+    36:37:public void setAvgDegreeRate(int)
+    44:45:public void setUnbalanceList(java.util.ArrayList)
+com.xyd.student.xydexamanalysis.entity.Unbalance_detail:
+    28:29:public void setCourseName(java.lang.String)
+    32:32:public int getDegreeRate()
+    36:37:public void setDegreeRate(int)
+    40:40:public int getAvgDegreeRate()
+    44:45:public void setAvgDegreeRate(int)
+    52:53:public void setDegreeRateOffset(int)
+com.xyd.student.xydexamanalysis.entity.videoList:
+    29:30:public void setWkId(java.lang.String)
+    44:45:public void setWkName(java.lang.String)
+com.xyd.student.xydexamanalysis.entity.weike.WeiRecord:
+    67:68:public void setList(java.util.List)
+    95:95:public java.lang.String getSchoolId()
+    103:103:public java.lang.String getUserId()
+    111:111:public java.lang.String getUserType()
+com.xyd.student.xydexamanalysis.entity.weike.Weike
+com.xyd.student.xydexamanalysis.pullrefreshview.FooterLoadingLayout:
+    130:130:protected void onLoadingDrawableSet(android.graphics.drawable.Drawable)
+com.xyd.student.xydexamanalysis.pullrefreshview.HeaderLoadingLayout:
+    private static final int ROTATE_ANIM_DURATION
+    172:172:protected void onLoadingDrawableSet(android.graphics.drawable.Drawable)
+com.xyd.student.xydexamanalysis.pullrefreshview.ILoadingLayout:
+    public abstract void setState(com.xyd.student.xydexamanalysis.pullrefreshview.ILoadingLayout$State)
+    public abstract com.xyd.student.xydexamanalysis.pullrefreshview.ILoadingLayout$State getState()
+    public abstract int getContentSize()
+    public abstract void onPull(float)
+com.xyd.student.xydexamanalysis.pullrefreshview.IPullToRefresh
+com.xyd.student.xydexamanalysis.pullrefreshview.LoadingLayout:
+    protected abstract void onLoadingDrawableSet(android.graphics.drawable.Drawable)
+com.xyd.student.xydexamanalysis.pullrefreshview.PullToRefreshBase:
+    private static final int SCROLL_DURATION
+    private static final float OFFSET_RADIO
+    494:504:public void doPullRefreshing(boolean,long)
+    62:62:static synthetic int access$5(com.xyd.student.xydexamanalysis.pullrefreshview.PullToRefreshBase)
+    887:887:static synthetic void access$6(com.xyd.student.xydexamanalysis.pullrefreshview.PullToRefreshBase,int,long,long)
+com.xyd.student.xydexamanalysis.pullrefreshview.PullToRefreshBase$5
+com.xyd.student.xydexamanalysis.ui.BaseActivity:
+    54:60:public static void finishAll()
+    67:74:public static void finishAll(com.xyd.student.xydexamanalysis.ui.BaseActivity)
+    80:80:public static boolean hasActivity()
+    87:87:public static com.xyd.student.xydexamanalysis.ui.BaseActivity getForegroundActivity()
+    95:101:public static com.xyd.student.xydexamanalysis.ui.BaseActivity getCurrentActivity()
+    108:110:public void exit()
+    116:123:public void exitApp()
+com.xyd.student.xydexamanalysis.ui.ExplainQuestionActivity:
+    private android.view.View headview
+com.xyd.student.xydexamanalysis.ui.GradeReportActivity:
+    private com.xyd.student.xydexamanalysis.adapter.GradeSituationAdapter myAdapter
+    private com.xyd.student.xydexamanalysis.view.DetailTitle mDetailTitle
+    private java.lang.String studentId
+    private int schoolId
+    private int meID
+com.xyd.student.xydexamanalysis.ui.LoginActivity:
+    public static final int NOTICE_START_ACTIVITY_SCHOOL_CODE
+    public static final int NOTICE_CODE_SCHOOL_ACTIVITY_RESULT
+    private static final java.lang.String TAG
+    584:599:private android.app.Dialog NetworkNotAvilableDialog(android.content.Context)
+    947:948:public static int dp2px(android.content.Context,float)
+com.xyd.student.xydexamanalysis.ui.LoginActivity$4
+com.xyd.student.xydexamanalysis.ui.LoginSearchSchoolActivity:
+    private com.xyd.student.xydexamanalysis.entity.Login_school_con loginschoolcon
+    222:248:private void updatelist(java.lang.String)
+    401:405:public com.xyd.student.xydexamanalysis.entity.Login_school_config getSchoolCongfig(java.lang.String)
+com.xyd.student.xydexamanalysis.ui.MySaveActivity:
+    public static final int FAIL
+    public static final int SUSS
+    private com.xyd.student.xydexamanalysis.entity.weike.WeiRecord wr
+    private static final int REQUES_CODE
+    private static final int REQUES_DEL
+    private static final int NO_DATA
+com.xyd.student.xydexamanalysis.ui.PayDemoActivity:
+    public static final java.lang.String PARTNER
+    public static final java.lang.String SELLER
+    public static final java.lang.String RSA_PRIVATE
+    public static final java.lang.String RSA_PUBLIC
+    private static final int SDK_PAY_FLAG
+    private static final int SDK_CHECK_FLAG
+    277:280:public void getSDKVersion()
+com.xyd.student.xydexamanalysis.ui.QrScanActivity:
+    public static final int REQUES_PLAY
+com.xyd.student.xydexamanalysis.ui.SingReportActivity:
+    private com.xyd.student.xydexamanalysis.view.DetailTitle titleDetail
+    1195:1212:public void writeFileData(java.lang.String,java.lang.String)
+com.xyd.student.xydexamanalysis.ui.SingleQuestionActivity:
+    private com.xyd.student.xydexamanalysis.view.DetailTitle titleDetail
+    private android.util.DisplayMetrics dm
+    private android.graphics.Bitmap currentbitmp
+com.xyd.student.xydexamanalysis.ui.StudentPaperActivity:
+    191:201:private com.nostra13.universalimageloader.core.DisplayImageOptions initDisplayImageOptions()
+com.xyd.student.xydexamanalysis.ui.Update2Activity:
+    private static final int DOWNLOAD
+    private static final int DOWNLOAD_FINISH
+    private static final int EXCEPTION
+    private static final int MALFORMED
+    private static final int HOSTWRONG
+    private java.lang.String mark
+com.xyd.student.xydexamanalysis.ui.VersionIntroduction:
+    private com.xyd.student.xydexamanalysis.view.TitleBar titleBar
+com.xyd.student.xydexamanalysis.ui.ViewImageActivity:
+    private static final java.lang.String TAG
+    public static final int RESULT_CODE_NOFOUND
+    static final float MAX_SCALE
+    static final int NONE
+    static final int DRAG
+    static final int ZOOM
+com.xyd.student.xydexamanalysis.ui.weike.ScanRecordActivity:
+    public static final int FAIL
+    public static final int SUSS
+    private com.xyd.student.xydexamanalysis.entity.weike.WeiRecord wr
+    private static final int REQUES_CODE
+    private static final int REQUES_DEL
+    private static final int NO_DATA
+    212:218:private void alert()
+com.xyd.student.xydexamanalysis.ui.weike.SelectWeikeActivity:
+    public static final int FAIL
+    public static final int SUSS
+    public static final int NO_DATA
+    private com.xyd.student.xydexamanalysis.entity.weike.WeiRecord wr
+    private static final int REQUES_CODE
+    public static final int REQUEST
+com.xyd.student.xydexamanalysis.ui.weike.UpdateWeikeActivity:
+    private java.lang.String optionType
+com.xyd.student.xydexamanalysis.utils.Base64:
+    private static final int BASELENGTH
+    private static final int LOOKUPLENGTH
+    private static final int TWENTYFOURBITGROUP
+    private static final int EIGHTBIT
+    private static final int SIXTEENBIT
+    private static final int FOURBYTE
+    private static final int SIGN
+    3:3:public Base64()
+com.xyd.student.xydexamanalysis.utils.BmpMakeUtils
+com.xyd.student.xydexamanalysis.utils.DoubleUtils:
+    5:5:public DoubleUtils()
+com.xyd.student.xydexamanalysis.utils.ExamUtils:
+    8:8:public ExamUtils()
+    10:15:public static java.lang.String getTime(java.lang.String)
+com.xyd.student.xydexamanalysis.utils.GsonUtil:
+    13:13:public GsonUtil()
+    16:17:public static java.lang.Object jsonToBean(java.lang.String,java.lang.Class)
+com.xyd.student.xydexamanalysis.utils.JsonUtils:
+    56:56:public JsonUtils()
+    67:78:static java.lang.String ForJson(org.json.JSONObject,java.lang.String)
+    197:323:public static com.xyd.student.xydexamanalysis.entity.Exam_Con jsontoExamList(java.lang.String)
+    773:807:public static com.xyd.student.xydexamanalysis.entity.Login_school_con jsontoschoollist(java.lang.String)
+    811:845:public static com.xyd.student.xydexamanalysis.entity.Login_school_config jsontoschoolconfig(java.lang.String)
+com.xyd.student.xydexamanalysis.utils.JsonUtils$GetTotalListener
+com.xyd.student.xydexamanalysis.utils.LoginUtils:
+    private java.lang.String classId
+    private org.json.JSONObject param
+    49:53:public LoginUtils(com.xyd.student.xydexamanalysis.utils.LoginUtils$LoginCallback)
+    129:130:public void setLoginUser(java.lang.String)
+    138:139:public void setLoginPw(java.lang.String)
+    147:148:public void setLoginUserId(java.lang.String)
+    154:154:public java.lang.String getClassId()
+    162:163:public void setClassId(java.lang.String)
+    178:179:public void setSchoolId(int)
+    194:195:public void setStudentid(java.lang.String)
+    210:211:public void setStudentname(java.lang.String)
+    226:227:public void setFileServUrl(java.lang.String)
+    239:240:public void setWeiKeServUrl(java.lang.String)
+    250:250:void checkBackState(java.lang.String)
+com.xyd.student.xydexamanalysis.utils.MyHttpUtil:
+    public static final int RESPONSE_STATE_SUCCESS
+    public static final int RESPONSE_STATE_NO_NET
+    public static final int RESPONSE_STATE_TIMEOUT
+    public static final int RESPONSE_STATE_NONCONNECT
+    public static final int RESPONSE_STATE_ERRORMSG
+    public static final int RESPONSE_STATE_PARSEERROR
+    public static final int RESPONSE_STATE_OTHERERROR
+    public static final int RESPONSE_STATE_UNAUTHORIZED
+com.xyd.student.xydexamanalysis.utils.NetWorkUtils:
+    7:7:public NetWorkUtils()
+com.xyd.student.xydexamanalysis.utils.PayResult:
+    52:52:public java.lang.String getMemo()
+com.xyd.student.xydexamanalysis.utils.SignUtils:
+    private static final java.lang.String ALGORITHM
+    private static final java.lang.String SIGN_ALGORITHMS
+    private static final java.lang.String DEFAULT_CHARSET
+    public static final int RESULT_INVALID_PARAM
+    public static final int RESULT_CHECK_SIGN_FAILED
+    public static final int RESULT_CHECK_SIGN_SUCCEED
+    11:11:public SignUtils()
+com.xyd.student.xydexamanalysis.utils.StringUtils:
+    public static final java.lang.String UTF_8
+    21:21:public StringUtils()
+    36:47:public static varargs boolean isEquals(java.lang.String[])
+    65:73:public static java.lang.CharSequence getHighLightText(java.lang.String,int,int,int)
+    84:87:public static android.text.Spanned getHtmlStyleString(int)
+    92:92:public static java.lang.String formatFileSize(long)
+    98:139:public static java.lang.String formatFileSize(long,boolean)
+    146:166:public static java.lang.String toUtf8String(java.lang.String)
+    204:204:public static java.lang.String timeToYYYYMMdd(java.lang.String)
+com.xyd.student.xydexamanalysis.utils.SubjectIconUtil:
+    6:6:public SubjectIconUtil()
+    130:137:public static int getPayIcon(int,com.xyd.student.xydexamanalysis.entity.ChargeInfo,int)
+com.xyd.student.xydexamanalysis.utils.ToastUtils:
+    11:11:public ToastUtils()
+    34:34:public static void close()
+    37:41:public static boolean checkJsonError(android.content.Context,java.lang.Object)
+com.xyd.student.xydexamanalysis.utils.UIUtils:
+    23:23:public UIUtils()
+    30:30:public static java.lang.Thread getMainThread()
+    34:34:public static long getMainThreadId()
+    41:42:public static int dip2px(int)
+    49:50:public static int px2dip(int)
+    57:57:public static android.os.Handler getHandler()
+    64:64:public static boolean postDelayed(java.lang.Runnable,long)
+    71:71:public static boolean post(java.lang.Runnable)
+    78:79:public static void removeCallbacks(java.lang.Runnable)
+    82:82:public static android.view.View inflate(int)
+    96:96:public static java.lang.String getString(int)
+    103:103:public static java.lang.String[] getStringArray(int)
+    110:110:public static int getDimens(int)
+    117:117:public static android.graphics.drawable.Drawable getDrawable(int)
+    124:124:public static int getColor(int)
+    131:131:public static android.content.res.ColorStateList getColorStateList(int)
+    136:136:public static boolean isRunInMainThread()
+    140:145:public static void runInMainThread(java.lang.Runnable)
+    148:155:public static void startActivity(android.content.Intent)
+    161:162:public static void showToastSafe(int)
+    168:178:public static void showToastSafe(java.lang.String)
+    181:185:private static void showToast(java.lang.String)
+    191:191:public static java.lang.String[] ListStringToArray(java.util.List)
+    195:200:public static java.util.List ArrayToListString(int)
+    180:180:static synthetic void access$0(java.lang.String)
+com.xyd.student.xydexamanalysis.utils.UIUtils$1
+com.xyd.student.xydexamanalysis.utils.UpdateManager:
+    private static final int DOWNLOAD
+    private static final int DOWNLOAD_FINISH
+    private static final int EXCEPTION
+    private static final int MALFORMED
+    private static final int HOSTWRONG
+    180:217:public void showNoticeDialog(java.lang.String,java.lang.String)
+    395:405:private void installApk()
+com.xyd.student.xydexamanalysis.utils.UpdateManager$2
+com.xyd.student.xydexamanalysis.utils.UpdateManager$3
+com.xyd.student.xydexamanalysis.utils.VibratorUtil:
+    7:7:public VibratorUtil()
+    22:25:public static void Vibrate(android.app.Activity,long[],boolean)
+com.xyd.student.xydexamanalysis.view.CirclePageIndicator:
+    private static final int INVALID_POINTER
+    152:152:public boolean isCentered()
+    224:224:public boolean isSnap()
+    420:422:public void setViewPager(android.support.v4.view.ViewPager,int)
+    436:437:public void notifyDataSetChanged()
+com.xyd.student.xydexamanalysis.view.DetailTitle:
+    23:25:public DetailTitle(android.content.Context)
+    33:37:public void setTitle(int,java.lang.String,java.lang.String)
+com.xyd.student.xydexamanalysis.view.LazyViewPager:
+    private static final java.lang.String TAG
+    private static final boolean DEBUG
+    private static final boolean USE_CACHE
+    private static final int DEFAULT_OFFSCREEN_PAGES
+    private static final int MAX_SETTLE_DURATION
+    private static final int INVALID_POINTER
+    private long mFakeDragBeginTime
+    public static final int SCROLL_STATE_IDLE
+    public static final int SCROLL_STATE_DRAGGING
+    public static final int SCROLL_STATE_SETTLING
+    547:549:float distanceInfluenceForSnapDuration(float)
+    562:563:void smoothScrollTo(int,int)
+    1476:1493:public boolean beginFakeDrag()
+    1503:1526:public void endFakeDrag()
+    1538:1574:public void fakeDragBy(float)
+    1586:1586:public boolean isFakeDragging()
+com.xyd.student.xydexamanalysis.view.LazyViewPager$SimpleOnPageChangeListener
+com.xyd.student.xydexamanalysis.view.MyBarView:
+    private double value
+    private int step
+com.xyd.student.xydexamanalysis.view.MyListView:
+    private static final float radius
+    39:41:public MyListView(android.content.Context)
+com.xyd.student.xydexamanalysis.view.MyMarkerView
+com.xyd.student.xydexamanalysis.view.PageIndicator:
+    public abstract void setViewPager(android.support.v4.view.ViewPager)
+    public abstract void setViewPager(android.support.v4.view.ViewPager,int)
+    public abstract void setCurrentItem(int)
+    public abstract void setOnPageChangeListener(android.support.v4.view.ViewPager$OnPageChangeListener)
+    public abstract void notifyDataSetChanged()
+com.xyd.student.xydexamanalysis.view.RoundImage:
+    35:37:public RoundImage(android.content.Context)
+com.xyd.student.xydexamanalysis.view.ScrollInScrollView:
+    12:13:public ScrollInScrollView(android.content.Context)
+com.xyd.student.xydexamanalysis.view.TitleBar:
+    96:103:public void setLeftIcon(int,java.lang.String)
+com.xyd.student.xydexamanalysis.view.ZoomImageView$AutoScaleRunnable:
+    static final float BIGGER
+    static final float SMALLER
+com.xyd.student.xydexamanalysis.wxapi.WXPayEntryActivity:
+    private static final java.lang.String TAG
+com.xyd.student.xydexamanalysis.zxinglib.BarcodeScannerView:
+    private android.graphics.Rect mFramingRectInPreview
+    21:23:public BarcodeScannerView(android.content.Context)
+    45:46:public void startCamera(int)
+    49:55:public void startCamera(android.hardware.Camera)
+    58:59:public void startCamera()
+    62:69:public void stopCamera()
+    73:90:public synchronized android.graphics.Rect getFramingRectInPreview(int,int)
+    128:138:public void toggleFlash()
+    147:147:public boolean cameraAvailable()
+com.xyd.student.xydexamanalysis.zxinglib.CameraPreview:
+    private static final java.lang.String TAG
+    133:143:private void adjustViewSize(android.hardware.Camera$Size)
+    146:149:private android.graphics.Point convertSizeToLandscapeOrientation(android.graphics.Point)
+    154:163:private void setViewSize(int,int)
+com.xyd.student.xydexamanalysis.zxinglib.CameraUtils:
+    7:7:public CameraUtils()
+    10:10:public static android.hardware.Camera getCameraInstance()
+com.xyd.student.xydexamanalysis.zxinglib.DisplayUtils:
+    9:9:public DisplayUtils()
+com.xyd.student.xydexamanalysis.zxinglib.ScanView.ZXingScannerViewNew:
+    89:90:public void startCamera()
+    156:166:public void toggleFlash()
+com.xyd.student.xydexamanalysis.zxinglib.ViewFinderView:
+    private static final java.lang.String TAG
+    private static final int MIN_FRAME_WIDTH
+    private static final int MIN_FRAME_HEIGHT
+    private static final float LANDSCAPE_WIDTH_RATIO
+    private static final float LANDSCAPE_HEIGHT_RATIO
+    private static final int LANDSCAPE_MAX_FRAME_WIDTH
+    private static final int LANDSCAPE_MAX_FRAME_HEIGHT
+    private static final float PORTRAIT_WIDTH_RATIO
+    private static final float PORTRAIT_HEIGHT_RATIO
+    private static final int PORTRAIT_MAX_FRAME_WIDTH
+    private static final int PORTRAIT_MAX_FRAME_HEIGHT
+    private static final int POINT_SIZE
+    private static final long ANIMATION_DELAY
+    85:87:public void setupViewFinder()
+org.http.gordon.oa.command.Http_OA_Command
+org.http.gordon.oa.command.MD5
+org.http.gordon.oa.command.MyClient
+org.http.gordon.oa.command.NetCallBack
+org.http.gordon.oa.command.NetCallBack$NetCallBack_State
+org.http.gordon.oa.command.NetUtils
+org.http.gordon.oa.command.NetUtils$1
+org.http.gordon.oa.command.NetUtils$2
+org.http.gordon.oa.command.exception.MissContactException
+org.http.gordon.oa.command.exception.URLPathException
+org.json.alipay.b:
+    private int a()
+org.json.alipay.c:
+    private boolean c(java.lang.String)
+org.xclcharts.chart.BarChart:
+    private static final java.lang.String TAG
+    96:96:public org.xclcharts.renderer.XEnum$BarCenterStyle getBarCenterStyle()
+    112:113:public void hideBarEqualAxisMin()
+    120:121:public void showBarEqualAxisMin()
+    140:141:public void setAnchorDataPoint(java.util.List)
+    149:149:public java.util.List getAnchorDataPoint()
+    167:167:public java.util.List getDataSource()
+    175:178:public void setChartDirection(org.xclcharts.renderer.XEnum$Direction)
+    186:186:public org.xclcharts.renderer.XEnum$Direction getChartDirection()
+    267:275:protected int getDataAxisDetailSetMaxSize()
+    281:282:protected int getDataTickCount()
+    920:920:public org.xclcharts.event.click.BarPosition getPositionRecord(float,float)
+org.xclcharts.chart.BarData:
+    60:65:public BarData(java.lang.String,java.util.List,java.lang.Integer)
+    73:82:public BarData(java.lang.String,java.lang.Double)
+org.xclcharts.chart.LineData
+org.xclcharts.chart.LnData
+org.xclcharts.common.CurveHelper
+org.xclcharts.common.DensityUtil:
+    37:37:private DensityUtil()
+    40:40:public static float getDensity(android.content.Context)
+    55:56:public static int px2dip(android.content.Context,float)
+    63:63:public static int getScreenWidth(android.content.Context)
+    70:70:public static int getScreenHeight(android.content.Context)
+    78:81:public static int getWidth(android.view.View)
+    88:91:public static int getHeight(android.view.View)
+org.xclcharts.common.DrawHelper:
+    66:68:private void initRectF()
+    72:78:private void initPath()
+    96:100:public int randomColor()
+    123:128:public int getDarkerColor(int)
+    163:164:public float calcTextHeight(android.graphics.Paint,java.lang.String)
+org.xclcharts.common.MathHelper:
+    private static final int DEFAULT_DIV_SCALE
+    66:69:private void resetEndPointXY()
+    77:132:public android.graphics.PointF calcArcEndPointXY(float,float,float,float)
+    137:137:public android.graphics.PointF getArcEndPointF()
+    141:141:public float getPosX()
+    145:145:public float getPosY()
+    152:187:public double getDegree(float,float,float,float)
+    193:196:public double getDistance(float,float,float,float)
+    208:227:public float getSliceAngle(float,float)
+    235:237:public float getLnPlotXValPosition(float,float,double,double,double)
+    243:243:public float getLnXValPosition(float,float,double,double,double)
+    254:255:public void enabledHighPrecision()
+    355:360:public float round(float,int)
+    397:397:public double div(double,double)
+    409:420:public double div(double,double,int)
+    432:438:public double mul(double,double)
+    450:455:public double round(double,int)
+org.xclcharts.common.PointHelper
+org.xclcharts.event.click.ChartBarListener
+org.xclcharts.event.click.PlotBarPosition:
+    60:61:public void savePlotRectF(android.graphics.RectF)
+    67:67:public boolean compareF(float,float)
+org.xclcharts.event.click.PositionListener
+org.xclcharts.event.click.PositionRecord:
+    protected abstract boolean compareRange(float,float)
+    52:52:public int getDataID()
+    58:58:public int getDataChildID()
+    63:69:public int getRecordID()
+org.xclcharts.event.click.RectPosition:
+    58:59:protected void saveRectF(android.graphics.RectF)
+    63:65:public float getRadius()
+    70:79:public java.lang.String getRectInfo()
+    84:84:public android.graphics.RectF getRectF()
+    91:114:protected boolean compareRange(float,float)
+org.xclcharts.event.touch.IChartTouch
+org.xclcharts.renderer.AxesChart:
+    210:211:protected float getAxisScreenWidth()
+    234:235:protected float getAxisScreenHeight()
+    496:497:public void setAxesClosed(boolean)
+org.xclcharts.renderer.AxesChart$ClipExt:
+    1033:1034:public void setExtLeft(float)
+    1042:1043:public void setExtTop(float)
+    1051:1052:public void setExtRight(float)
+    1060:1061:public void setExtBottom(float)
+org.xclcharts.renderer.EventChart:
+    private static final java.lang.String TAG
+    81:82:public void ActiveListenItemClick()
+    89:90:public void DeactiveListenItemClick()
+    107:107:public java.util.ArrayList getPositionRecordset()
+    115:116:public void showClikedFocus()
+    128:131:private void saveSelected(int,int,int)
+    135:135:protected int getSelected()
+    141:143:protected void savePointRecord(int,int,float,float,android.graphics.RectF)
+    149:151:protected void savePointRecord(int,int,float,float,float,float,float,float)
+    170:179:protected void saveBarRecord(int,int,float,float,android.graphics.RectF)
+    186:188:protected void saveArcRecord(int,float,float,float,float,float,float,float)
+    197:198:public void extPointClickRange(int)
+    209:217:public boolean isPlotClickArea(float,float)
+    228:244:protected org.xclcharts.event.click.BarPosition getBarRecord(float,float)
+    274:276:public void showFocusPointF(android.graphics.PointF,float)
+    284:285:public void showFocusRectF(android.graphics.RectF)
+org.xclcharts.renderer.IRender
+org.xclcharts.renderer.LnChart
+org.xclcharts.renderer.XChart:
+    300:300:public float getPaddingTop()
+    309:309:public float getPaddingBottom()
+    318:318:public float getPaddingLeft()
+    327:327:public float getPaddingRight()
+    336:339:public android.graphics.PointF getCenterXY()
+    424:425:public void setApplyBackgroundColor(boolean)
+    434:439:public void setBackgroundColor(int)
+    451:474:public void setBackgroundColor(org.xclcharts.renderer.XEnum$Direction,int,int)
+    483:484:public android.graphics.Paint getBackgroundPaint()
+    492:495:public void showBorder()
+    502:505:public void showRoundBorder()
+    522:523:public org.xclcharts.renderer.plot.Border getBorder()
+    532:532:public boolean isShowBorder()
+    556:559:public void setBorderWidth(int)
+    616:625:protected boolean getClikedScaleStatus()
+    653:654:public void enableScale()
+    697:698:public void enablePanMode()
+    713:714:public void enabledCtlPanRange()
+    721:722:public void disabledCtlPanRange()
+    748:749:public void showDyLine()
+    756:757:public void hideDyLine()
+    765:765:public boolean getDyLineVisible()
+    774:775:public org.xclcharts.renderer.info.DyLine getDyLine()
+    856:857:public void enabledHighPrecision()
+org.xclcharts.renderer.XEnum:
+    32:32:public XEnum()
+org.xclcharts.renderer.XEnum$AxisTitleStyle
+org.xclcharts.renderer.XEnum$CircleType
+org.xclcharts.renderer.XEnum$CrurveLineStyle
+org.xclcharts.renderer.XEnum$DyInfoStyle
+org.xclcharts.renderer.XEnum$LabelBoxStyle
+org.xclcharts.renderer.XEnum$LabelLinePoint
+org.xclcharts.renderer.XEnum$LabelSaveType
+org.xclcharts.renderer.XEnum$Location
+org.xclcharts.renderer.XEnum$PointerStyle
+org.xclcharts.renderer.XEnum$RadarChartType
+org.xclcharts.renderer.XEnum$RoundAxisType
+org.xclcharts.renderer.XEnum$RoundTickAxisType
+org.xclcharts.renderer.XEnum$SliceLabelStyle
+org.xclcharts.renderer.XEnum$SortType
+org.xclcharts.renderer.XEnum$TickType
+org.xclcharts.renderer.XEnum$TriangleDirection
+org.xclcharts.renderer.XEnum$TriangleStyle
+org.xclcharts.renderer.axis.Axis:
+    101:102:public void show()
+    109:110:public void hide()
+    126:127:public void showAxisLine()
+    134:135:public void hideAxisLine()
+    178:179:public void showTickMarks()
+    202:203:public void showAxisLabels()
+    210:211:public void hideAxisLabels()
+    234:235:public void setTickLabelRotateAngle(float)
+org.xclcharts.renderer.axis.CategoryAxis:
+    50:51:public void setAxisSteps(double)
+    59:59:public double getAxisSteps()
+org.xclcharts.renderer.axis.DataAxis:
+    66:67:public void disableddAxisStd()
+    181:182:public void showFirstTick()
+    189:190:public void hideFirstTick()
+org.xclcharts.renderer.axis.XYAxis:
+    377:378:public void setTickLabelMargin(int)
+    396:398:public void setAxisLinxCapWH(float,float)
+    406:407:public void setAxisLineStyle(org.xclcharts.renderer.XEnum$AxisLineStyle)
+org.xclcharts.renderer.bar.Bar:
+    private static final java.lang.String TAG
+    135:135:public int getItemLabelAnchorOffset()
+    143:144:public void setItemLabelAnchorOffset(int)
+    159:160:public void setItemLabelRotateAngle(float)
+    176:186:public boolean setBarTickSpacePercent(float)
+    216:216:public double getInnerMargin()
+    235:236:public void setBarMaxPxWidth(float)
+    244:244:public float getBarMaxPxWidth()
+    253:254:public void setBarMaxPxHeight(float)
+    262:262:public float getBarMaxPxHeight()
+    380:381:public void setBarStyle(org.xclcharts.renderer.XEnum$BarStyle)
+org.xclcharts.renderer.bar.FlatBar:
+    private static final java.lang.String TAG
+    63:63:public int getFillAlpha()
+    71:72:public void setFillAlpha(int)
+org.xclcharts.renderer.info.AnchorDataPoint:
+    65:70:public AnchorDataPoint(int,int,org.xclcharts.renderer.XEnum$AnchorStyle)
+    72:76:public AnchorDataPoint(int,org.xclcharts.renderer.XEnum$AnchorStyle)
+    84:85:public void setAnchorStyle(org.xclcharts.renderer.XEnum$AnchorStyle)
+    95:96:public void setDataSeriesID(int)
+    107:108:public void setDataChildID(int)
+    112:113:public void setAnchor(java.lang.String)
+    123:124:public void setRadius(float)
+    133:134:public void setTextSize(int)
+    143:144:public void setTextColor(int)
+    153:154:public void setLineWidth(int)
+    173:174:public void setAlpha(int)
+    178:178:public int getAlpha()
+    183:184:public void setBgColor(int)
+    193:194:public void setAreaStyle(org.xclcharts.renderer.XEnum$DataAreaStyle)
+    208:210:public void setCapRectAngleWH(float,float)
+    218:219:public void setCapRectHeight(float)
+    244:245:public void setRoundRadius(int)
+org.xclcharts.renderer.info.DyInfo
+org.xclcharts.renderer.info.DyLine:
+    76:79:public void setCurrentXY(float,float)
+    87:95:public boolean isInvalidate()
+    105:106:public void setDyLineStyle(org.xclcharts.renderer.XEnum$DyLineStyle)
+    124:125:public void setLineDrawStyle(org.xclcharts.renderer.XEnum$LineStyle)
+org.xclcharts.renderer.info.PlotArcLabelInfo
+org.xclcharts.renderer.info.PlotAxisTick:
+    38:45:public PlotAxisTick(float,float,java.lang.String)
+    58:67:public PlotAxisTick(float,float,java.lang.String,float,float)
+    86:86:public float getLabelX()
+    91:92:public void setLabelX(float)
+    96:96:public float getLabelY()
+    101:102:public void setLabelY(float)
+org.xclcharts.renderer.info.PlotDataInfo:
+    53:60:public PlotDataInfo(float,float,java.lang.String)
+    62:71:public PlotDataInfo(int,float,float,java.lang.String)
+    73:82:public PlotDataInfo(int,float,float,java.lang.String,float,float)
+    85:85:public float getX()
+    89:90:public void setX(float)
+    93:93:public float getY()
+    97:98:public void setY(float)
+    101:101:public java.lang.String getLabel()
+    105:106:public void setLabel(java.lang.String)
+    109:109:public int getID()
+    113:114:public void setID(int)
+org.xclcharts.renderer.line.DotInfo
+org.xclcharts.renderer.line.PlotDot:
+    60:61:public void setColor(int)
+    69:69:public int getColor()
+    78:79:public void setRingInnerColor(int)
+    115:116:public void setDotRadius(float)
+    133:134:public void setAlpah(int)
+    142:142:public int getAlpha()
+org.xclcharts.renderer.line.PlotLine
+org.xclcharts.renderer.plot.Border:
+    protected static final int mBorderSpadding
+    79:80:public void setBorderLineColor(int)
+    88:89:public void setBorderLineStyle(org.xclcharts.renderer.XEnum$LineStyle)
+    97:98:public void setBorderRectType(org.xclcharts.renderer.XEnum$RectType)
+    124:125:public void setRoundRadius(int)
+org.xclcharts.renderer.plot.BorderRender:
+    101:122:public void renderCapRect(android.graphics.Canvas,android.graphics.RectF,float,boolean,boolean)
+    130:177:public void renderCapRound(android.graphics.Canvas,android.graphics.RectF,float,boolean,boolean)
+    184:198:public void renderRound(android.graphics.Canvas,android.graphics.RectF,float,boolean,boolean)
+org.xclcharts.renderer.plot.PlotArea:
+    101:102:public void setBackgroundColorVisible(boolean)
+    121:126:public void setBackgroundColor(boolean,int)
+    202:203:public float getPlotHeight()
+    220:221:public void extWidth(float)
+    233:234:public void setApplayGradient(boolean)
+    251:252:public void setGradientDirection(org.xclcharts.renderer.XEnum$Direction)
+    269:270:public void setGradientMode(android.graphics.Shader$TileMode)
+    287:288:public void setBeginColor(int)
+    296:297:public void setEndColor(int)
+org.xclcharts.renderer.plot.PlotGrid:
+    116:117:public void setOddRowBackgroundColor(int)
+    124:125:public void setEvenRowBackgroundColor(int)
+    140:142:public void hideHorizontalLines()
+    160:161:public void showVerticalLines()
+    168:170:public void hideVerticalLines()
+    188:189:public void showOddRowBgColor()
+    196:198:public void hideOddRowBgColor()
+    214:215:public void showEvenRowBgColor()
+    222:224:public void hideEvenRowBgColor()
+    291:292:public void setVerticalLineStyle(org.xclcharts.renderer.XEnum$LineStyle)
+    309:310:public void setHorizontalLineStyle(org.xclcharts.renderer.XEnum$LineStyle)
+org.xclcharts.renderer.plot.PlotLabel
+org.xclcharts.renderer.plot.PlotLabelRender
+org.xclcharts.renderer.plot.PlotLegend:
+    110:111:public void hideBorder()
+    118:119:public void hideBackground()
+    126:129:public void showBox()
+    136:137:public void showBorder()
+    144:145:public void showBackground()
+    170:171:public void setLabelMargin(float)
+    180:181:public void setRowSpan(float)
+    185:186:public void setColSpan(float)
+    194:194:public float getLabelMargin()
+    203:204:public void setOffsetX(float)
+    212:213:public void setOffsetY(float)
+    276:276:public org.xclcharts.renderer.plot.Border getBox()
+org.xclcharts.renderer.plot.PlotLegendRender:
+    91:92:public void setXChart(org.xclcharts.renderer.XChart)
+    127:133:public void renderLineKey(android.graphics.Canvas,java.util.List)
+    139:151:public void renderRangeBarKey(android.graphics.Canvas,java.lang.String,int)
+    156:159:private void setLnChartStatus()
+    474:486:private void convertArrayLineKey(java.util.List)
+org.xclcharts.view.GraphicalView:
+    73:74:public void refreshChart()

@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.xyd.student.xydexamanalysis.view.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height" >
+    </com.xyd.student.xydexamanalysis.view.TitleBar>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white" >
+
+        <ScrollView
+            android:id="@+id/s"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <!--
+                     <com.xyd.student.xydexamanalysis.view.DetailTitle
+                    android:id="@+id/grade_report_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+                </com.xyd.student.xydexamanalysis.view.DetailTitle>
+                -->
+
+                <TextView
+                    android:id="@+id/grade_report_title2"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:textColor="#ff9e45"
+                    android:textSize="17sp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#f3f3f3" />
+                <!-- 总体情况 -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_zongzongti" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/total_situation"
+                            android:textColor="#f8a045"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/total_situation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/xuxian3_background"
+                        android:lineSpacingExtra="5dp"
+                        android:padding="18dp"
+                        android:textColor="#858585" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical" >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="35dp"
+                            android:layout_weight="9"
+                            android:background="#ff9f44"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.5"
+                                android:gravity="center"
+                                android:text="科目"
+                                android:textColor="#ffffff"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1.5"
+                                android:gravity="center"
+                                android:text="得分"
+                                android:textColor="#ffffff"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="班级均分"
+                                android:textColor="#ffffff"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="年级均分"
+                                android:textColor="#ffffff"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:text="得分评价"
+                                android:textColor="#ffffff"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
+                        <com.xyd.student.xydexamanalysis.view.MyGradeScrollListView
+                            android:id="@+id/grade_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:divider="@color/login_devideline"
+                            android:dividerHeight="0dp"
+                            android:scrollbars="none" />
+
+                        <ImageView
+                            android:id="@+id/grade_loade_more"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="10dp"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/xia" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#f3f3f3" />
+
+                <!-- 偏科分析 -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/icon_zongpianke" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center_vertical"
+                            android:text="@string/dine_analyze"
+                            android:textColor="#a6c72d"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/dine_situation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/xuxian_background"
+                        android:lineSpacingExtra="5dp"
+                        android:padding="7.5dp"
+                        android:textColor="#858585" />
+
+                    <!-- 图表内容 -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical" >
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dip"
+                                android:text="偏差"
+                                android:textColor="@color/black"
+                                android:textSize="13sp" />
+
+                            <LinearLayout
+                                android:layout_width="220dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentRight="true"
+                                android:orientation="horizontal" >
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="30dp"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal" >
+
+                                    <ImageView
+                                        android:layout_width="10dp"
+                                        android:layout_height="10dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:background="#6ac34c" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="2dp"
+                                        android:gravity="center_vertical"
+                                        android:singleLine="true"
+                                        android:text="低于学科百分等级"
+                                        android:textColor="#6ac14c"
+                                        android:textSize="11sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="30dp"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal" >
+
+                                    <ImageView
+                                        android:layout_width="10dp"
+                                        android:layout_height="10dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:background="#ff9f44" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="2dp"
+                                        android:gravity="center_vertical"
+                                        android:singleLine="true"
+                                        android:text="高于学科百分等级"
+                                        android:textColor="#ffa534"
+                                        android:textSize="11sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/dine_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#f3f3f3" />
+
+                <!-- 班级分析 -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="51dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/icon_zongbianji" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="@string/ban_analyze"
+                            android:textColor="#ff9c46"
+                            android:textSize="17sp" />
+                    </LinearLayout>
+
+                    <!-- 图表内容 -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:orientation="vertical" >
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dip"
+                                android:text="偏差"
+                                android:textColor="@color/black"
+                                android:textSize="13sp" />
+
+                            <LinearLayout
+                                android:layout_width="220dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentRight="true"
+                                android:orientation="horizontal" >
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="30dp"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal" >
+
+                                    <ImageView
+                                        android:layout_width="10dp"
+                                        android:layout_height="10dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:background="#6ac34c" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="2dp"
+                                        android:gravity="center_vertical"
+                                        android:singleLine="true"
+                                        android:text="低于班级平均分"
+                                        android:textColor="#6ac14c"
+                                        android:textSize="11sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="30dp"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal" >
+
+                                    <ImageView
+                                        android:layout_width="10dp"
+                                        android:layout_height="10dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:background="#ff9f44" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="2dp"
+                                        android:gravity="center_vertical"
+                                        android:singleLine="true"
+                                        android:text="高于班级平均分"
+                                        android:textColor="#ffa534"
+                                        android:textSize="11sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/class_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="#f3f3f3" />
+                <!-- 年级分析 -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="320dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp" 
+                    android:background="@drawable/allgrade_background">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/nian" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:text="@string/nian_analyze"
+                            android:textColor="#ff9c46"
+                            android:textSize="17sp" />
+                    </LinearLayout>
+
+                    <!-- 图表内容 -->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:orientation="vertical" 
+                        >
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="10dip"
+                                android:text="偏差"
+                                android:textColor="@color/black"
+                                android:textSize="13sp" />
+
+                            <LinearLayout
+                                android:layout_width="220dp"
+                                android:layout_height="30dp"
+                                android:layout_alignParentRight="true"
+                                android:orientation="horizontal" >
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="30dp"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal" >
+
+                                    <ImageView
+                                        android:layout_width="10dp"
+                                        android:layout_height="10dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:background="#6ac34c" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="2dp"
+                                        android:gravity="center_vertical"
+                                        android:singleLine="true"
+                                        android:text="低于年级平均分"
+                                        android:textColor="#6ac14c"
+                                        android:textSize="11sp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="30dp"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal" >
+
+                                    <ImageView
+                                        android:layout_width="10dp"
+                                        android:layout_height="10dp"
+                                        android:layout_gravity="center_vertical"
+                                        android:background="#ff9f44" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="2dp"
+                                        android:gravity="center_vertical"
+                                        android:singleLine="true"
+                                        android:text="高于年级平均分"
+                                        android:textColor="#ffa534"
+                                        android:textSize="11sp" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/grade_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <include
+            layout="@layout/loading_empty_prompt_linear"
+            android:visibility="visible" />
+
+        <include layout="@layout/loading_prompt_linear" />
+    </FrameLayout>
+
+</LinearLayout>

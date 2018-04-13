@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_exam_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:cacheColorHint="@color/no_color" >
+
+    <com.xyd.student.xydexamanalysis.pullrefreshview.PullToRefreshListView
+        android:id="@+id/my_exam_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@null" />
+
+    <include
+        layout="@layout/loading_empty_prompt_linear"
+        android:visibility="gone" />
+
+    <include layout="@layout/loading_prompt_linear" />
+
+</FrameLayout>

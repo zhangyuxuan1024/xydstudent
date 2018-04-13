@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="175dp"
+    android:background="@drawable/weike_dialog_bg"
+    android:minHeight="125dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/weike_tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="59dp"
+        android:gravity="center"
+        android:textColor="#474747"
+        android:textSize="17sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="38dp" >
+
+        <TextView
+            android:id="@+id/weike_tv_left"
+            android:layout_width="115.5dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="21dp"
+            android:background="@drawable/dialog_true_or_false"
+            android:gravity="center"
+            android:textColor="#909090"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/weike_tv_right"
+            android:layout_width="115.5dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="21dp"
+            android:background="@drawable/dialog_true_or_false"
+            android:gravity="center"
+            android:textColor="#ff9e45" 
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+</LinearLayout>

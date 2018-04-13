@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_root"
+    android:layout_width="match_parent"
+    android:layout_height="204dp"
+    android:background="@drawable/weike_dialog_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/update_title"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="更换标题"
+            android:textColor="#8e8e8f"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/weike_name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/weike_edittext_bg"
+            android:gravity="left|center_vertical"
+            android:hint="最多可输入12个字符"
+            android:maxLength="12"
+            android:paddingLeft="18dp"
+            android:singleLine="true"
+            android:textColor="#707070"
+            android:textColorHint="#c5c5c5"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/weike_cancel"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="21dp"
+            android:background="@drawable/dialog_true_or_false"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="#525252"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/weike_update"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="21dp"
+            android:background="@drawable/update_wk_name_tv_bg"
+            android:gravity="center"
+            android:text="修改"
+            android:textColor="#525252" />
+    </RelativeLayout>
+
+</LinearLayout>

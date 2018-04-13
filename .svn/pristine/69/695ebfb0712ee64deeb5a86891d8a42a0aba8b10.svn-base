@@ -1,0 +1,269 @@
+package com.xyd.student.xydexamanalysis.adapter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import com.xyd.student.xydexamanalysis.R;
+import com.xyd.student.xydexamanalysis.entity.weike.WeiRecord;
+import com.xyd.student.xydexamanalysis.ui.WebViewActivity;
+import com.xyd.student.xydexamanalysis.ui.weike.ScanRecordActivity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+public class WeikeRecordAdapter extends BaseAdapter implements
+		android.view.View.OnClickListener {
+	private Context context;
+	private List<WeiRecord> list;
+	private View.OnClickListener editClick;
+	private View.OnClickListener likeClick;
+	private boolean flag;
+
+	public WeikeRecordAdapter(Context context, List<WeiRecord> list) {
+		this.context = context;
+		this.list = list;
+	}
+
+	public void setEditClick(View.OnClickListener editClick) {
+		this.editClick = editClick;
+	}
+
+	public void setLikeClick(View.OnClickListener likeClick) {
+		this.likeClick = likeClick;
+	}
+
+	@Override
+	public int getCount() {
+		if (list.size() == 0) {
+			return 0;
+		}
+		return list.size() + 1;
+	}
+
+	@Override
+	public Object getItem(int arg0) {
+		return list.get(arg0);
+	}
+
+	@Override
+	public long getItemId(int arg0) {
+		return arg0;
+	}
+
+	@Override
+	public int getItemViewType(int position) {
+		int ret = 0;
+		if (position != 0) {
+			ret = 1;
+		}
+		return ret;
+	}
+
+	@Override
+	public int getViewTypeCount() {
+		return 2;
+	}
+
+	@Override
+	public View getView(int p, View v, ViewGroup arg2) {
+		if (getItemViewType(p) == 0) {
+			v = bindTitle(p, v, arg2);
+		} else if (getItemViewType(p) == 1) {
+			if (!isFlag()) {
+				v = bindContent(p, v, arg2);
+			} else {
+				v = bindContentSelect(p, v, arg2);
+			}
+		}
+		return v;
+	}
+
+	public View bindTitle(int p, View v, ViewGroup arg2) {
+		ViewTitleHolder holder = null;
+		if (v == null) {
+			v = LayoutInflater.from(context).inflate(
+					R.layout.weike_recorder_item_title, null);
+			holder = new ViewTitleHolder();
+			holder.tv = (TextView) v.findViewById(R.id.weike_item_title_tv);
+			v.setTag(holder);
+		} else {
+			holder = (ViewTitleHolder) v.getTag();
+		}
+		WeiRecord wr = list.get(p);
+		String time = wr.getIndbtime();
+		int d = 0,m=0,y = 0;
+		int w = 0;
+		String t = time,t1,t2,t3,t4;
+		t1 = t.substring(t.lastIndexOf("-")+1);
+		t = t.substring(0,t.lastIndexOf("-"));
+		t2 = t.substring(t.lastIndexOf("-")+1);
+		t3 = t.substring(0,t.lastIndexOf("-"));
+		try{
+			d = Integer.parseInt(t1);
+			m = Integer.parseInt(t2);
+			y = Integer.parseInt(t3);
+			w= (d+2*m+3*(m+1)/5+y+y/4-y/100+y/400)%7;
+		}catch(Exception e){
+			
+		}
+		t4 = getDay(w);
+		
+		long now_time = System.currentTimeMillis();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String td = df.format(new Date());
+		Date as = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
+		String yd = df.format(as);
+		if (time.contains(td)) {
+			time = "今天";
+		} else if (time.contains(yd)) {
+			time = "昨天";
+		} else {
+			if (time.contains(" ")) {
+				time = time.substring(0, time.indexOf(" "));
+			}else{
+				time = time+"  "+t4;
+			}
+		}
+		holder.tv.setText(time);
+		return v;
+	}
+
+	public View bindContent(int p, View v, ViewGroup arg2) {
+		ViewContentHolder holder = null;
+		if (v == null) {
+			v = LayoutInflater.from(context).inflate(
+					R.layout.weike_recorder_item_content, null);
+			holder = new ViewContentHolder();
+			holder.tv = (TextView) v.findViewById(R.id.weike_item_content_tv);
+			holder.iv_update = (ImageView) v
+					.findViewById(R.id.weike_item_content_update);
+			holder.iv_like = (ImageView) v
+					.findViewById(R.id.weike_item_content_like);
+			v.setTag(holder);
+		} else {
+			holder = (ViewContentHolder) v.getTag();
+		}
+		WeiRecord wr = list.get(p - 1);
+		holder.tv.setText(wr.getWkName());
+		if (wr.isClickEdit()) {
+			holder.iv_update.setImageDrawable(context.getResources()
+					.getDrawable(R.drawable.ic_xiugai_pressed));
+		} else {
+			holder.iv_update.setImageDrawable(context.getResources()
+					.getDrawable(R.drawable.ic_xiugai));
+		}
+		if (wr.isClickLike()) {
+			holder.iv_like.setImageDrawable(context.getResources().getDrawable(
+					R.drawable.ic_shoucang_pressed));
+		} else {
+			holder.iv_like.setImageDrawable(context.getResources().getDrawable(
+					R.drawable.ic_shoucang));
+		}
+		holder.iv_update.setOnClickListener(editClick);
+		holder.iv_like.setOnClickListener(likeClick);
+		holder.iv_update.setTag(wr.getWkUrl());
+		holder.iv_like.setTag(wr);
+		holder.tv.setOnClickListener(this);
+		holder.tv.setTag(wr.getWkUrl());
+		return v;
+	}
+
+	public View bindContentSelect(int p, View v, ViewGroup arg2) {
+		ViewContentHolder holder = null;
+		if (v == null) {
+			v = LayoutInflater.from(context).inflate(
+					R.layout.weike_recorder_item_content_select, null);
+			holder = new ViewContentHolder();
+			holder.tv = (TextView) v.findViewById(R.id.weike_item_content_tv_2);
+			holder.iv_update = (ImageView) v
+					.findViewById(R.id.weike_item_content_update_2);
+			v.setTag(holder);
+		} else {
+			holder = (ViewContentHolder) v.getTag();
+		}
+		WeiRecord wr = list.get(p - 1);
+		holder.tv.setText(wr.getWkName());
+		if (wr.isSave()) {
+			holder.iv_update.setImageDrawable(context.getResources()
+					.getDrawable(R.drawable.ic_fuxuan_pressed));
+		} else {
+			holder.iv_update.setImageDrawable(context.getResources()
+					.getDrawable(R.drawable.ic_fuxuan));
+		}
+		holder.iv_update.setOnClickListener(editClick);
+		holder.iv_update.setTag(wr.getWkUrl());
+		holder.tv.setOnClickListener(this);
+		holder.tv.setTag(wr.getWkUrl());
+		return v;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+
+	class ViewTitleHolder {
+		TextView tv;
+	}
+
+	public class ViewContentHolder {
+		TextView tv;
+		ImageView iv_update, iv_like;
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.weike_item_content_tv:
+			String url = (String) v.getTag();
+			Intent intent = new Intent(context, WebViewActivity.class);
+			intent.putExtra("url", url);
+			context.startActivity(intent);
+			break;
+		case R.id.weike_item_content_tv_2:
+			url = (String) v.getTag();
+			intent = new Intent(context, WebViewActivity.class);
+			intent.putExtra("url", url);
+			context.startActivity(intent);
+			break;
+		}
+	}
+	private String getDay(int t){
+		String ret = "";
+		switch(t){
+		case 0:
+			ret = "星期一";
+			break;
+		case 1:
+			ret = "星期二";
+			break;
+		case 2:
+			ret = "星期三";
+			break;
+		case 3:
+			ret = "星期四";
+			break;
+		case 4:
+			ret = "星期五";
+			break;
+		case 5:
+			ret = "星期六";
+			break;
+		case 6:
+			ret = "星期日";
+			break;
+		}
+		return ret;
+	}
+}

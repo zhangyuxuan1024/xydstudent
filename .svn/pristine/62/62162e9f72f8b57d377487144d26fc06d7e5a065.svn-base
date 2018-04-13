@@ -1,0 +1,369 @@
+package com.xyd.student.xydexamanalysis.entity;
+
+import java.io.Serializable;
+
+public class Single_scoreList implements Serializable {
+
+	/**
+	 * Lichg
+	 */
+	private static final long serialVersionUID = 1L;
+	private int seId;
+	private String tagName;
+	private int displayIndex;
+	private String displayName;
+	private int answerType;
+	private double fullScore;
+	private double personScore;
+	private double classScore;
+	private double gradeScore;
+	private double examScore;
+	private int scoreFlag;
+	private String wkId;
+	private String wkName;
+	private int wkFlag;
+	private int excellentFlag;
+	private double eqDiffculty;
+	private String answerXy;
+	private String contentXy;
+	private int pageIndex;
+
+	public Single_scoreList() {
+		super();
+	}
+
+	public Single_scoreList(int seId, String tagName, int displayIndex,
+			String displayName, int answerType, double fullScore,
+			double personScore, double classScore, double gradeScore,
+			double examScore, int scoreFlag, String wkId, String wkName,
+			int wkFlag, int excellentFlag, double eqDiffculty, String answerXy,
+			String contentXy, int pageIndex) {
+		super();
+		this.seId = seId;
+		this.tagName = tagName;
+		this.displayIndex = displayIndex;
+		this.displayName = displayName;
+		this.answerType = answerType;
+		this.fullScore = fullScore;
+		this.personScore = personScore;
+		this.classScore = classScore;
+		this.gradeScore = gradeScore;
+		this.examScore = examScore;
+		this.scoreFlag = scoreFlag;
+		this.wkId = wkId;
+		this.wkName = wkName;
+		this.wkFlag = wkFlag;
+		this.excellentFlag = excellentFlag;
+		this.eqDiffculty = eqDiffculty;
+		this.answerXy = answerXy;
+		this.contentXy = contentXy;
+		this.pageIndex = pageIndex;
+	}
+
+	@Override
+	public String toString() {
+		return "Single_scoreList [seId=" + seId + ", tagName=" + tagName
+				+ ", displayIndex=" + displayIndex + ", displayName="
+				+ displayName + ", answerType=" + answerType + ", fullScore="
+				+ fullScore + ", personScore=" + personScore + ", classScore="
+				+ classScore + ", gradeScore=" + gradeScore + ", examScore="
+				+ examScore + ", scoreFlag=" + scoreFlag + ", wkId=" + wkId
+				+ ", wkName=" + wkName + ", wkFlag=" + wkFlag
+				+ ", excellentFlag=" + excellentFlag + ", eqDiffculty="
+				+ eqDiffculty + ", answerXy=" + answerXy + ", contentXy="
+				+ contentXy + ", pageIndex=" + pageIndex + ", getContentXy()="
+				+ getContentXy() + ", getSeId()=" + getSeId()
+				+ ", getEqDiffculty()=" + getEqDiffculty() + ", getAnswerXy()="
+				+ getAnswerXy() + ", getPageIndex()=" + getPageIndex()
+				+ ", getTagName()=" + getTagName() + ", getDisplayIndex()="
+				+ getDisplayIndex() + ", getDisplayName()=" + getDisplayName()
+				+ ", getAnswerType()=" + getAnswerType() + ", getFullScore()="
+				+ getFullScore() + ", getPersonScore()=" + getPersonScore()
+				+ ", getClassScore()=" + getClassScore() + ", getGradeScore()="
+				+ getGradeScore() + ", getExamScore()=" + getExamScore()
+				+ ", getScoreFlag()=" + getScoreFlag() + ", getWkId()="
+				+ getWkId() + ", getWkName()=" + getWkName() + ", getWkFlag()="
+				+ getWkFlag() + ", getExcellentFlag()=" + getExcellentFlag()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
+	}
+
+	public String getContentXy() {
+		return contentXy;
+	}
+
+	public void setContentXy(String contentXy) {
+		this.contentXy = contentXy;
+	}
+
+	/**
+	 * @return the seId
+	 */
+	public int getSeId() {
+		return seId;
+	}
+
+	/**
+	 * @param seId
+	 *            the seId to set
+	 */
+	public void setSeId(int seId) {
+		this.seId = seId;
+	}
+
+	/**
+	 * @return the eqDiffculty
+	 */
+	public double getEqDiffculty() {
+		return eqDiffculty;
+	}
+
+	/**
+	 * @param eqDiffculty
+	 *            the eqDiffculty to set
+	 */
+	public void setEqDiffculty(double eqDiffculty) {
+		this.eqDiffculty = eqDiffculty;
+	}
+
+	/**
+	 * @return the answerXy
+	 */
+	public String getAnswerXy() {
+		return answerXy;
+	}
+
+	/**
+	 * @param answerXy
+	 *            the answerXy to set
+	 */
+	public void setAnswerXy(String answerXy) {
+		this.answerXy = answerXy;
+	}
+
+	/**
+	 * @return the pageIndex
+	 */
+	public int getPageIndex() {
+		return pageIndex;
+	}
+
+	/**
+	 * @param pageIndex
+	 *            the pageIndex to set
+	 */
+	public void setPageIndex(int pageIndex) {
+		this.pageIndex = pageIndex;
+	}
+
+	/**
+	 * @return the tagName
+	 */
+	public String getTagName() {
+		return tagName;
+	}
+
+	/**
+	 * @param tagName
+	 *            the tagName to set
+	 */
+	public void setTagName(String tagName) {
+		this.tagName = tagName;
+	}
+
+	/**
+	 * @return the displayIndex
+	 */
+	public int getDisplayIndex() {
+		return displayIndex;
+	}
+
+	/**
+	 * @param displayIndex
+	 *            the displayIndex to set
+	 */
+	public void setDisplayIndex(int displayIndex) {
+		this.displayIndex = displayIndex;
+	}
+
+	/**
+	 * @return the displayName
+	 */
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	/**
+	 * @param displayName
+	 *            the displayName to set
+	 */
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	/**
+	 * @return the answerType
+	 */
+	public int getAnswerType() {
+		return answerType;
+	}
+
+	/**
+	 * @param answerType
+	 *            the answerType to set
+	 */
+	public void setAnswerType(int answerType) {
+		this.answerType = answerType;
+	}
+
+	/**
+	 * @return the fullScore
+	 */
+	public double getFullScore() {
+		return fullScore;
+	}
+
+	/**
+	 * @param fullScore
+	 *            the fullScore to set
+	 */
+	public void setFullScore(double fullScore) {
+		this.fullScore = fullScore;
+	}
+
+	/**
+	 * @return the personScore
+	 */
+	public double getPersonScore() {
+		return personScore;
+	}
+
+	/**
+	 * @param personScore
+	 *            the personScore to set
+	 */
+	public void setPersonScore(double personScore) {
+		this.personScore = personScore;
+	}
+
+	/**
+	 * @return the classScore
+	 */
+	public double getClassScore() {
+		return classScore;
+	}
+
+	/**
+	 * @param classScore
+	 *            the classScore to set
+	 */
+	public void setClassScore(double classScore) {
+		this.classScore = classScore;
+	}
+
+	/**
+	 * @return the gradeScore
+	 */
+	public double getGradeScore() {
+		return gradeScore;
+	}
+
+	/**
+	 * @param gradeScore
+	 *            the gradeScore to set
+	 */
+	public void setGradeScore(double gradeScore) {
+		this.gradeScore = gradeScore;
+	}
+
+	/**
+	 * @return the examScore
+	 */
+	public double getExamScore() {
+		return examScore;
+	}
+
+	/**
+	 * @param examScore
+	 *            the examScore to set
+	 */
+	public void setExamScore(double examScore) {
+		this.examScore = examScore;
+	}
+
+	/**
+	 * @return the scoreFlag
+	 */
+	public int getScoreFlag() {
+		return scoreFlag;
+	}
+
+	/**
+	 * @param scoreFlag
+	 *            the scoreFlag to set
+	 */
+	public void setScoreFlag(int scoreFlag) {
+		this.scoreFlag = scoreFlag;
+	}
+
+	/**
+	 * @return the wkId
+	 */
+	public String getWkId() {
+		return wkId;
+	}
+
+	/**
+	 * @param wkId
+	 *            the wkId to set
+	 */
+	public void setWkId(String wkId) {
+		this.wkId = wkId;
+	}
+
+	/**
+	 * @return the wkName
+	 */
+	public String getWkName() {
+		return wkName;
+	}
+
+	/**
+	 * @param wkName
+	 *            the wkName to set
+	 */
+	public void setWkName(String wkName) {
+		this.wkName = wkName;
+	}
+
+	/**
+	 * @return the wkFlag
+	 */
+	public int getWkFlag() {
+		return wkFlag;
+	}
+
+	/**
+	 * @param wkFlag
+	 *            the wkFlag to set
+	 */
+	public void setWkFlag(int wkFlag) {
+		this.wkFlag = wkFlag;
+	}
+
+	/**
+	 * @return the excellentFlag
+	 */
+	public int getExcellentFlag() {
+		return excellentFlag;
+	}
+
+	/**
+	 * @param excellentFlag
+	 *            the excellentFlag to set
+	 */
+	public void setExcellentFlag(int excellentFlag) {
+		this.excellentFlag = excellentFlag;
+	}
+
+}

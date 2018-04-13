@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="9" >
+
+    <TextView
+        android:id="@+id/kemu"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        android:textColor="#232323"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/defen"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1.5"
+        android:gravity="center"
+        android:textColor="#232323"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/class_avg"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:textColor="#232323"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/grade_avg"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:textColor="#232323"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/pingjia"
+        android:layout_width="0dip"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:contentDescription="@string/app_name"
+        android:gravity="center"
+        android:textColor="@color/black" />
+
+</LinearLayout>
